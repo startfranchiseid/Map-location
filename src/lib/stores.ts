@@ -14,6 +14,14 @@ export const searchQuery = writable<string>('');
 // Loading states
 export const isLoading = writable<boolean>(true);
 
+// Map & Navigation stores
+export type MapStyleType = 'default' | 'satellite' | 'terrain' | '3d';
+export const mapStyle = writable<MapStyleType>('default');
+export const userLocation = writable<{ lat: number; lng: number } | null>(null);
+export const isNavigating = writable<boolean>(false);
+export const navigationTarget = writable<Outlet | null>(null);
+export const routeCoordinates = writable<[number, number][]>([]);
+
 // Derived store for filtered outlets
 export const filteredOutlets = derived(
     [outlets, brands, selectedBrands, selectedCategory, searchQuery],

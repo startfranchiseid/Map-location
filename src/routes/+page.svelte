@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import Header from "$lib/components/Header.svelte";
     import Sidebar from "$lib/components/Sidebar.svelte";
-    import Map from "$lib/components/Map.svelte";
+    import MapComponent from "$lib/components/Map.svelte";
     import { brands, outlets, selectedBrands, isLoading } from "$lib/stores";
     import { getBrands, getAllOutletsWithBrands } from "$lib/pocketbase";
 
@@ -75,6 +75,7 @@
                 });
 
                 const processOutlets = (outlets: any[], region?: string) => {
+                    if (!outlets) return;
                     for (const outlet of outlets) {
                         if (
                             outlet.coordinates?.lat &&
@@ -89,6 +90,8 @@
                                 region: region || "",
                                 latitude: outlet.coordinates.lat,
                                 longitude: outlet.coordinates.lng,
+                                created: new Date().toISOString(),
+                                updated: new Date().toISOString(),
                             });
                         }
                     }
@@ -128,6 +131,6 @@
 
     <main class="main-content">
         <Sidebar />
-        <Map />
+        <MapComponent />
     </main>
 </div>

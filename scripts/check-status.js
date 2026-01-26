@@ -3,11 +3,20 @@
  */
 import PocketBase from 'pocketbase';
 
-const pb = new PocketBase('http://76.13.22.182');
+const pb = new PocketBase('http://76.13.22.182:8080');
 
 async function main() {
-    // Auth
-    await pb.collection('_superusers').authWithPassword('startfranchise.id@gmail.com', 'Admin.startfranchise@123');
+    // Auth (Manual fetch bypass)
+    console.log('🔐 Authenticating...');
+    const authRes = await fetch('http://76.13.22.182:8080/api/admins/auth-with-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identity: 'startfranchise.id@gmail.com', password: 'Admin.startfranchise@123' })
+    });
+
+    if (!authRes.ok) throw new Error(`Auth failed: ${authRes.statusText}`);
+    const authData = await authRes.json();
+    pb.authStore.save(authData.token, authData.admin);
     console.log('✅ Authenticated\n');
 
     // Get collections

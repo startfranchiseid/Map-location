@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const PB_URL = 'http://76.13.22.182';
+const PB_URL = 'http://76.13.22.182:8080';
 const ADMIN_EMAIL = 'startfranchise.id@gmail.com';
 const ADMIN_PASSWORD = 'Admin.startfranchise@123';
 
@@ -30,13 +30,26 @@ async function main() {
 
     // Authenticate
     console.log('\n🔐 Authenticating...');
+    const authRes = await fetch(`${PB_URL}/api/admins/auth-with-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identity: ADMIN_EMAIL, password: ADMIN_PASSWORD })
+    });
+
+    if (!authRes.ok) throw new Error(`Auth failed: ${authRes.statusText}`);
+    const authData = await authRes.json();
+    pb.authStore.save(authData.token, authData.admin);
+    console.log('   ✅ Authenticated (Fetch Bypass)');
+
+    /* SDK Auth - Disabled
     try {
-        await pb.collection('_superusers').authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
+        await pb.admins.authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
         console.log('   ✅ Authenticated');
     } catch (e) {
         console.error('   ❌ Auth failed:', e.message);
         return;
     }
+    */
 
     // Load JSON data
     console.log('\n📂 Loading JSON data...');
