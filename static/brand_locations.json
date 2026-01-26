@@ -1,0 +1,3267 @@
+{
+  "lastUpdated": "2026-01-22",
+  "brands": [
+    {
+      "brandName": "Luuca",
+      "category": "Food & Beverage",
+      "website": "https://luucaindonesia.id/outlet/",
+      "totalOutlets": 95,
+      "regions": [
+        {
+          "region": "Kalimantan Barat",
+          "outlets": [
+            {
+              "name": "LUUCA URAY BAWADI, PONTIANAK",
+              "address": "Komplek Java Square, Jl. Uray Bawadi, Sungai Bangkong, Pontianak Kota",
+              "city": "Pontianak",
+              "coordinates": {
+                "lat": -0.0263,
+                "lng": 109.3425
+              }
+            },
+            {
+              "name": "LUUCA AYANI MEGAMALL, PONTIANAK",
+              "address": "Jl. Jenderal Ahmad Yani, Parit Tokaya, Kec. Pontianak Selatan",
+              "city": "Pontianak",
+              "coordinates": {
+                "lat": -0.0389,
+                "lng": 109.3289
+              }
+            },
+            {
+              "name": "LUUCA TANJUNG PURA, PONTIANAK",
+              "address": "Jl. Tanjung Pura No. 238, Benua Melayu Laut, Pontianak Selatan",
+              "city": "Pontianak",
+              "coordinates": {
+                "lat": -0.0312,
+                "lng": 109.3156
+              }
+            },
+            {
+              "name": "LUUCA MARTADINATA, PONTIANAK",
+              "address": "Jl. Re. Martadinata, Sungai Jawi Dalam, Pontianak Barat",
+              "city": "Pontianak",
+              "coordinates": {
+                "lat": -0.0234,
+                "lng": 109.3012
+              }
+            },
+            {
+              "name": "LUUCA SINTANG",
+              "address": "Jl. Lintas Melawi, Ladang, Sintang, Kabupaten Sintang",
+              "city": "Sintang",
+              "coordinates": {
+                "lat": 0.0789,
+                "lng": 111.4956
+              }
+            },
+            {
+              "name": "LUUCA PANCASILA, PONTIANAK",
+              "address": "Jl. Gusti Hamzah No. 7, Sungai Jawi, Pontianak Kota",
+              "city": "Pontianak",
+              "coordinates": {
+                "lat": -0.0178,
+                "lng": 109.3201
+              }
+            },
+            {
+              "name": "LUUCA SUNGAI RAYA DALAM, PONTIANAK",
+              "address": "Jl. Sungai Raya Dalam, Bangka Belitung Darat, Pontianak Darat, Kubu Raya",
+              "city": "Kubu Raya",
+              "coordinates": {
+                "lat": -0.0456,
+                "lng": 109.3567
+              }
+            },
+            {
+              "name": "LUUCA PADAT KARYA, PONTIANAK",
+              "address": "Jl. Padat Karya, Bansir Darat, Pontianak Tenggara",
+              "city": "Pontianak",
+              "coordinates": {
+                "lat": -0.0567,
+                "lng": 109.3678
+              }
+            },
+            {
+              "name": "LUUCA ANEKA PAVILION, PONTIANAK",
+              "address": "Jl. Sutan Syahrir, Akcaya, Pontianak Selatan",
+              "city": "Pontianak",
+              "coordinates": {
+                "lat": -0.0345,
+                "lng": 109.3234
+              }
+            },
+            {
+              "name": "LUUCA TANJUNG RAYA, PONTIANAK",
+              "address": "Jl. Tj. Raya II (Samping Gg. 85), Banjar Serasan, Pontianak Timur",
+              "city": "Pontianak",
+              "coordinates": {
+                "lat": -0.0123,
+                "lng": 109.3789
+              }
+            },
+            {
+              "name": "LUUCA S. PARMAN, PONTIANAK",
+              "address": "Komplek Ruko Villa Palma, Jl. Letjen S. Parman No. A6, Benua Melayu Darat, Pontianak Selatan",
+              "city": "Pontianak",
+              "coordinates": {
+                "lat": -0.0398,
+                "lng": 109.3145
+              }
+            },
+            {
+              "name": "LUUCA NANGA PINOH",
+              "address": "Paal, Kec. Nanga Pinoh, Melawi",
+              "city": "Melawi",
+              "coordinates": {
+                "lat": -0.3567,
+                "lng": 111.7523
+              }
+            },
+            {
+              "name": "LUUCA KETAPANG",
+              "address": "Jl. DR. Sutomo, Kantor, Kec. Delta Pawan Kabupaten Ketapang",
+              "city": "Ketapang",
+              "coordinates": {
+                "lat": -1.8289,
+                "lng": 109.9756
+              }
+            },
+            {
+              "name": "LUUCA ALIANYANG, SINGKAWANG",
+              "address": "Jl. Alianyang No.20a, Melayu, Singkawang Baru, Kota Singkawang",
+              "city": "Singkawang",
+              "coordinates": {
+                "lat": 0.9067,
+                "lng": 108.9789
+              }
+            },
+            {
+              "name": "LUUCA GRAND MALL, SINGKAWANG",
+              "address": "Jl. Alianyang, Pasiran, Kec. Singkawang Baru Kota Singkawang",
+              "city": "Singkawang",
+              "coordinates": {
+                "lat": 0.9078,
+                "lng": 108.9812
+              }
+            },
+            {
+              "name": "LUUCA SAMBAS",
+              "address": "Jl. Tabrani No.442, Saing Rambi Kec. Sambas, Kab. Sambas",
+              "city": "Sambas",
+              "coordinates": {
+                "lat": 1.3567,
+                "lng": 109.2934
+              }
+            },
+            {
+              "name": "LUUCA SIANTAN, PONTIANAK",
+              "address": "Jl. Khatulistiwa, Siantan Tengah, Kec. Pontianak Utara, Kota Pontianak",
+              "city": "Pontianak",
+              "coordinates": {
+                "lat": 0.0123,
+                "lng": 109.3456
+              }
+            },
+            {
+              "name": "LUUCA OCTO, KUBU RAYA",
+              "address": "Jl. Ahmad Yani II, Sungai Raya, Kec. Sungai Raya, Kabupaten Kubu Raya",
+              "city": "Kubu Raya",
+              "coordinates": {
+                "lat": -0.0234,
+                "lng": 109.4012
+              }
+            },
+            {
+              "name": "LUUCA GAIA MALL CITY, KUBU RAYA",
+              "address": "Jl. Arteri Supadio, Sungai Raya, Kec. Sungai Raya, Kabupaten Kubu Raya",
+              "city": "Kubu Raya",
+              "coordinates": {
+                "lat": -0.0567,
+                "lng": 109.4234
+              }
+            }
+          ]
+        },
+        {
+          "region": "Kalimantan Timur",
+          "outlets": [
+            {
+              "name": "LUUCA PENTACITY MALL, BALIKPAPAN",
+              "address": "Jl. Jenderal Sudirman No.47, Gn. Bahagia, Kecamatan Balikpapan Selatan, Kota Balikpapan",
+              "city": "Balikpapan",
+              "coordinates": {
+                "lat": -1.2678,
+                "lng": 116.8312
+              }
+            },
+            {
+              "name": "LUUCA BIGMALL, SAMARINDA",
+              "address": "Jl. Big Mall, Karang Asam Ulu, Kec. Sungai Kunjang, Kota Samarinda",
+              "city": "Samarinda",
+              "coordinates": {
+                "lat": -0.4978,
+                "lng": 117.1234
+              }
+            }
+          ]
+        },
+        {
+          "region": "Kalimantan Selatan",
+          "outlets": [
+            {
+              "name": "LUUCA DUTA MALL, BANJARMASIN",
+              "address": "Jl. A. Yani No. KM 3, Hotel Mercure, Gadang, Melayu, Kec. Banjarmasin Tengah, Kota Banjarmasin",
+              "city": "Banjarmasin",
+              "coordinates": {
+                "lat": -3.3167,
+                "lng": 114.5923
+              }
+            }
+          ]
+        },
+        {
+          "region": "DKI Jakarta",
+          "outlets": [
+            {
+              "name": "LUUCA GREEN PRAMUKA SQUARE",
+              "address": "Jl. Jenderal Ahmad Yani No.Kav.49, Rawasari, Kec. Cemp. Putih, Kota Jakarta Pusat",
+              "city": "Jakarta Pusat",
+              "coordinates": {
+                "lat": -6.1889,
+                "lng": 106.8678
+              }
+            },
+            {
+              "name": "LUUCA BENDUNGAN HILIR",
+              "address": "Jl. Bendungan Hilir, RT 13/RW 6, Bendungan Hilir, Tanah Abang, Jakarta Pusat",
+              "city": "Jakarta Pusat",
+              "coordinates": {
+                "lat": -6.2012,
+                "lng": 106.8123
+              }
+            },
+            {
+              "name": "LUUCA JPM DUKUH ATAS",
+              "address": "Jl. Setia Budi Tengah No.29 2, RT.2/RW.3, Kuningan, Setia Budi, Kecamatan Setiabudi, Kota Jakarta Selatan",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2078,
+                "lng": 106.8234
+              }
+            },
+            {
+              "name": "LUUCA KOTA KASABLANKA",
+              "address": "Jl. Raya Casablanca, RT.14/RW.5, Menteng Dalam, Kec. Tebet, Kota Jakarta Selatan",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2234,
+                "lng": 106.8412
+              }
+            },
+            {
+              "name": "LUUCA CENTRAL PARK",
+              "address": "Jl. Letjen S. Parman No.Kav. 28, Tj. Duren Utara, Kec. Grogol petamburan, Kota Jakarta Barat",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1767,
+                "lng": 106.7889
+              }
+            },
+            {
+              "name": "LUUCA CITRA GARDEN 8",
+              "address": "Jl. Sunset Avenue No.5, Pegadungan, Kec. Kalideres, Kota Jakarta Barat",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1234,
+                "lng": 106.7012
+              }
+            },
+            {
+              "name": "LUUCA GREENLAKE CITY",
+              "address": "Komplek Green Lake City Blok E No.007, Duri Kosambi, Cengkareng, Jakarta Barat",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1456,
+                "lng": 106.7234
+              }
+            },
+            {
+              "name": "LUUCA KALIDERES",
+              "address": "Daan Tampak Siring Blok 3A, RT 8/RW 12, Kalideres, Jakarta Barat",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1345,
+                "lng": 106.6978
+              }
+            },
+            {
+              "name": "LUUCA KEMANGGISAN",
+              "address": "Jl. Kyai H. Taisir No.11 NO 88G, RT.3/RW.11, Palmerah, Kec. Palmerah, Kota Jakarta Barat",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1889,
+                "lng": 106.7867
+              }
+            },
+            {
+              "name": "LUUCA LIPPO MALL PURI",
+              "address": "Lippo Puri Kembangan, Jl. Puri Agung No.1, Kembangan Sel., Kec. Kembangan, Kota Jakarta Barat",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1567,
+                "lng": 106.7456
+              }
+            },
+            {
+              "name": "LUUCA MALL TAMAN ANGGREK",
+              "address": "Jl. Letjen S. Parman Tj. Duren Selatan, Grogol Petamburan, Jakarta Barat",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1789,
+                "lng": 106.7912
+              }
+            },
+            {
+              "name": "LUUCA PLUIT",
+              "address": "Muara Karang 259, Blok A6U Kav. 22, Jakarta Utara",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1234,
+                "lng": 106.7889
+              }
+            },
+            {
+              "name": "LUUCA PONDOK KELAPA",
+              "address": "Jl. Pd. Kelapa Raya L9, Pondok Kelapa, Durensawit, Jakarta Timur",
+              "city": "Jakarta Timur",
+              "coordinates": {
+                "lat": -6.2567,
+                "lng": 106.9234
+              }
+            }
+          ]
+        },
+        {
+          "region": "Banten",
+          "outlets": [
+            {
+              "name": "LUUCA GADING SERPONG",
+              "address": "Ruko Maggiore Paramount Land. 53 A Cihuni, Pagedangan, Tangerang",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.2456,
+                "lng": 106.6234
+              }
+            },
+            {
+              "name": "LUUCA PORIS",
+              "address": "Ruko Poris Garden Blok A2 No.1B, RT 001/RW 006, Cipondoh Indah, Tangerang",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.1789,
+                "lng": 106.6567
+              }
+            },
+            {
+              "name": "LUUCA GRAHA RAYA",
+              "address": "Jl. Kby. Utama No.19 Blok G1, RT.2/RW.9, Paku Jaya, Kec. Serpong Utara, Kota Tangerang Selatan",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2789,
+                "lng": 106.6789
+              }
+            },
+            {
+              "name": "LUUCA PIK 2",
+              "address": "10-11 Rukan La Riviera RLBC NO 12 boulevard, Salembaran, Kec. Kosambi, Kabupaten Tangerang",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.0567,
+                "lng": 106.6789
+              }
+            },
+            {
+              "name": "LUUCA LIVING WORLD ALAM SUTERA",
+              "address": "Mall Living World Jl. Alam Sutera Boulevard No.Kav. 21, Pakulonan, Kec. Serpong Utara, Kota Tangerang Selatan",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2345,
+                "lng": 106.6456
+              }
+            },
+            {
+              "name": "LUUCA SUPERMALL KARAWACI",
+              "address": "Jl. Boulevard Diponegoro No.105, Bencongan, Kec. Klp. Dua, Kabupaten Tangerang",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.2234,
+                "lng": 106.6234
+              }
+            },
+            {
+              "name": "LUUCA BINTARO EXCHANGE",
+              "address": "Jl. Lkr. BXC Mall, Pd. Jaya, Kec. Pd. Aren, Tangerang",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2789,
+                "lng": 106.7123
+              }
+            },
+            {
+              "name": "LUUCA PAMULANG",
+              "address": "Jl. Pamulang Permai No.1, Pamulang Bar., Kec. Pamulang, Kota Tangerang Selatan",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.3456,
+                "lng": 106.7234
+              }
+            },
+            {
+              "name": "LUUCA CITRA RAYA",
+              "address": "Ruko Melia Street Market, Jl. Citra Raya Boulevard X No.5r, Mekar Bakti, Panongan, Tangerang",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.2567,
+                "lng": 106.5234
+              }
+            },
+            {
+              "name": "LUUCA MALL TANGERANG CITY",
+              "address": "Jl. Jenderal Sudirman No.1, RT.001/RW.005, Babakan, Kec. Tangerang, Kota Tangerang",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.1678,
+                "lng": 106.6345
+              }
+            }
+          ]
+        },
+        {
+          "region": "Jawa Barat",
+          "outlets": [
+            {
+              "name": "LUUCA MEKARWANGI, BANDUNG",
+              "address": "Jl. Mekar Utama No. 43, Mekarwangi, Bojongloa Kidul, Bandung",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9456,
+                "lng": 107.5789
+              }
+            },
+            {
+              "name": "LUUCA HARAPAN INDAH, BEKASI",
+              "address": "Jl. Boulevard Hijau Raya, RT.006/RW.030, Pejuang, Kecamatan Medan Satria, Kota Bekasi",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.1789,
+                "lng": 107.0123
+              }
+            },
+            {
+              "name": "LUUCA CITRA GRAND CIBUBUR, BEKASI",
+              "address": "Citra Grand Cibubur, Jl. Alternatif Cibubur, Jatikarya, Jatisampurna, Bekasi",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.3345,
+                "lng": 106.9234
+              }
+            },
+            {
+              "name": "LUUCA TAMAN GALAXY PARK, BEKASI",
+              "address": "Grand Galaxy City, Jl. Grand Galaxy Boulevard, Blok RGF 5, Bekasi",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.2789,
+                "lng": 106.9567
+              }
+            },
+            {
+              "name": "LUUCA PAKUWON MALL, BEKASI",
+              "address": "Lantai 2, Jl. Raya Pekayon No 002, Pekayon Jaya, Kec. Bekasi Sel. Kota Bekasi",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.2567,
+                "lng": 106.9789
+              }
+            },
+            {
+              "name": "LUUCA GRAND WISATA BEKASI",
+              "address": "Ruko New Westfield ER 5 no 2, RT.002/RW.010, Mustikajaya, Kec. Mustika Jaya, Kota Bekasi",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.2678,
+                "lng": 107.0234
+              }
+            },
+            {
+              "name": "LUUCA RAMAYANA GARUT",
+              "address": "Jl. Guntur No.40, Pakuwon, Kec. Garut Kota, Kabupaten Garut",
+              "city": "Garut",
+              "coordinates": {
+                "lat": -7.2234,
+                "lng": 107.9012
+              }
+            },
+            {
+              "name": "LUUCA PANGANDARAN",
+              "address": "Jl. Kidang Pananjung No.181, Pangandaran, Kec. Pangandaran, Kab. Pangandaran",
+              "city": "Pangandaran",
+              "coordinates": {
+                "lat": -7.6867,
+                "lng": 108.6512
+              }
+            },
+            {
+              "name": "LUUCA CIBINONG CITY MALL, BOGOR",
+              "address": "Cibinong City Mall, Jl. Tegar Beriman No.1, Pakansari, Cibinong, Bogor",
+              "city": "Bogor",
+              "coordinates": {
+                "lat": -6.4789,
+                "lng": 106.8456
+              }
+            },
+            {
+              "name": "LUUCA PARUNG PANJANG, BOGOR",
+              "address": "Jl. Sentraland Blvd, Parung Panjang, Kec. Parung Panjang, Kabupaten Bogor",
+              "city": "Bogor",
+              "coordinates": {
+                "lat": -6.3456,
+                "lng": 106.5678
+              }
+            },
+            {
+              "name": "LUUCA CSB MALL, CIREBON",
+              "address": "Super Blok, Jl. Cipto Mangunkusumo No.26 Lantai LG, Pekiringan, Kec. Kesambi, Kota Cirebon",
+              "city": "Cirebon",
+              "coordinates": {
+                "lat": -6.7234,
+                "lng": 108.5512
+              }
+            },
+            {
+              "name": "LUUCA SUMEDANG",
+              "address": "Gg. Ita, Kotakaler, Kec. Sumedang Utara, Kabupaten Sumedang",
+              "city": "Sumedang",
+              "coordinates": {
+                "lat": -6.8567,
+                "lng": 107.9234
+              }
+            }
+          ]
+        },
+        {
+          "region": "Jawa Tengah",
+          "outlets": [
+            {
+              "name": "LUUCA CIPUTRA MALL, SEMARANG",
+              "address": "Lt. Dasar, Jl. Simpang Lima No.1, Pekunden, Semarang",
+              "city": "Semarang",
+              "coordinates": {
+                "lat": -6.9867,
+                "lng": 110.4234
+              }
+            },
+            {
+              "name": "LUUCA UPTOWN MALL BSB CITY, SEMARANG",
+              "address": "Jl. Rm. Hadisoebeno Sosro Wardoyo, Pesantren, Kec. Mijen, Kota Semarang",
+              "city": "Semarang",
+              "coordinates": {
+                "lat": -7.0567,
+                "lng": 110.3234
+              }
+            },
+            {
+              "name": "LUUCA KALIBODRI, SALATIGA",
+              "address": "Jl. Kalibodri, Kutowinangun Kidul, Kec. Tingkir, Kota Salatiga",
+              "city": "Salatiga",
+              "coordinates": {
+                "lat": -7.3345,
+                "lng": 110.4978
+              }
+            }
+          ]
+        },
+        {
+          "region": "DI Yogyakarta",
+          "outlets": [
+            {
+              "name": "LUUCA SETURAN, YOGYAKARTA",
+              "address": "Jl. Seturan Raya No.1, Kledokan, Caturtunggal, Kec. Depok, Kabupaten Sleman",
+              "city": "Sleman",
+              "coordinates": {
+                "lat": -7.7789,
+                "lng": 110.4012
+              }
+            }
+          ]
+        },
+        {
+          "region": "Solo/Surakarta",
+          "outlets": [
+            {
+              "name": "LUUCA SQUARE MALL, SOLO",
+              "address": "Jl. Slamet Riyadi No.451-455, Pajang, Kec. Laweyan, Kota Surakarta",
+              "city": "Surakarta",
+              "coordinates": {
+                "lat": -7.5678,
+                "lng": 110.7923
+              }
+            },
+            {
+              "name": "LUUCA GATOT SUBROTO, SOLO",
+              "address": "Jl. Gatot Subroto No.42, Kemlayan, Kec. Serengan, Kota Surakarta",
+              "city": "Surakarta",
+              "coordinates": {
+                "lat": -7.5789,
+                "lng": 110.8012
+              }
+            }
+          ]
+        },
+        {
+          "region": "Jawa Timur",
+          "outlets": [
+            {
+              "name": "LUUCA PAKUWON CITY, SURABAYA",
+              "address": "Jl. Kejawan Putih Mutiara Ruko Patos FRI-7 Pakuwon City Sukolilo, Mulyorejo, Surabaya",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.2789,
+                "lng": 112.7923
+              }
+            },
+            {
+              "name": "LUUCA ROYAL PLAZA, SURABAYA",
+              "address": "Jl. A Yani Frontage Barat No.16, Wonokromo, Kec. Wonokromo, Surabaya",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.3234,
+                "lng": 112.7345
+              }
+            },
+            {
+              "name": "LUUCA BG JUNCTION, SURABAYA",
+              "address": "BG Junction Mall, Jl. Bubutan No.1-7 lt L2 foodcourt, Bubutan, Kec. Bubutan, Surabaya",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.2567,
+                "lng": 112.7234
+              }
+            },
+            {
+              "name": "LUUCA PAKUWON MALL, SURABAYA",
+              "address": "Jl. Mayjend. Jonosewojo, Babatan, Kec. Wiyung, Surabaya",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.3156,
+                "lng": 112.6789
+              }
+            },
+            {
+              "name": "LUUCA TUNJUNGAN PLAZA, SURABAYA",
+              "address": "Tunjungan Plaza, Kedungdoro, Kec. Tegalsari, Surabaya",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.2612,
+                "lng": 112.7389
+              }
+            },
+            {
+              "name": "LUUCA PLAZA SURABAYA, SURABAYA",
+              "address": "No.34 Lt, Plaza Surabaya, Jl. Pemuda No.2, Embong Kaliasin, Kec. Genteng, Surabaya",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.2567,
+                "lng": 112.7456
+              }
+            },
+            {
+              "name": "LUUCA CIPUTRA WORLD, SURABAYA",
+              "address": "Gunung Sari, Dukuhpakis, Surabaya",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.2934,
+                "lng": 112.7012
+              }
+            },
+            {
+              "name": "LUUCA GALAXY MALL, SURABAYA",
+              "address": "Mulyorejo, Kec. Mulyorejo, Surabaya",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.2789,
+                "lng": 112.7789
+              }
+            },
+            {
+              "name": "LUUCA SUNCITY MALL, SIDOARJO",
+              "address": "Jl. Pahlawan, Rw6, Sidokumpul, Kec. Sidoarjo, Kabupaten Sidoarjo",
+              "city": "Sidoarjo",
+              "coordinates": {
+                "lat": -7.4567,
+                "lng": 112.7123
+              }
+            },
+            {
+              "name": "LUUCA LIPPO PLAZA, SIDOARJO",
+              "address": "Jl. Jati Raya No.1, Jati, Kec. Sidoarjo, Kabupaten Sidoarjo",
+              "city": "Sidoarjo",
+              "coordinates": {
+                "lat": -7.4567,
+                "lng": 112.7234
+              }
+            },
+            {
+              "name": "LUUCA MALANG TOWN SQUARE, MALANG",
+              "address": "Jl. Veteran No.2, Penanggungan, Kec. Klojen, Kota Malang",
+              "city": "Malang",
+              "coordinates": {
+                "lat": -7.9789,
+                "lng": 112.6234
+              }
+            },
+            {
+              "name": "LUUCA MOG, MALANG",
+              "address": "Jl. Kawi, Kauman, Klojen, Kota Malang",
+              "city": "Malang",
+              "coordinates": {
+                "lat": -7.9812,
+                "lng": 112.6289
+              }
+            },
+            {
+              "name": "LUUCA SUNRISE MALL, MOJOKERTO",
+              "address": "Jl. Benteng Pancasila No.9, Mergelo, Balongsari, Kec. Magersari, Kota Mojokerto",
+              "city": "Mojokerto",
+              "coordinates": {
+                "lat": -7.4678,
+                "lng": 112.4234
+              }
+            },
+            {
+              "name": "LUUCA ICON MALL, GRESIK",
+              "address": "Icon Mall, Gresik 2F No.33, Kembangan, Kec. Kebomas, Kabupaten Gresik",
+              "city": "Gresik",
+              "coordinates": {
+                "lat": -7.1567,
+                "lng": 112.6456
+              }
+            }
+          ]
+        },
+        {
+          "region": "Sumatera Utara",
+          "outlets": [
+            {
+              "name": "LUUCA CENTRE POINT MALL, MEDAN",
+              "address": "Lower Ground (LG) I-10A, Centre Point Mall",
+              "city": "Medan",
+              "coordinates": {
+                "lat": 3.5789,
+                "lng": 98.6789
+              }
+            },
+            {
+              "name": "LUUCA PLAZA MEDAN FAIR",
+              "address": "Plaza Medan Fair, Jl. Gatot Subroto No.30, Sekip, Kec. Medan Petisah, Kota Medan",
+              "city": "Medan",
+              "coordinates": {
+                "lat": 3.5712,
+                "lng": 98.6823
+              }
+            }
+          ]
+        },
+        {
+          "region": "Bangka Belitung",
+          "outlets": [
+            {
+              "name": "LUUCA PANGKAL PINANG",
+              "address": "Jl. Jenderal Sudirman, Gedung Nasional, Taman Sari, Kota Pangkal Pinang",
+              "city": "Pangkal Pinang",
+              "coordinates": {
+                "lat": -2.1234,
+                "lng": 106.1123
+              }
+            }
+          ]
+        },
+        {
+          "region": "Riau & Kepulauan Riau",
+          "outlets": [
+            {
+              "name": "LUUCA PANAM PEKANBARU",
+              "address": "Jl. HR. Soebrantas, Tuah Karya, Tampan, Pekanbaru",
+              "city": "Pekanbaru",
+              "coordinates": {
+                "lat": 0.4678,
+                "lng": 101.4234
+              }
+            },
+            {
+              "name": "LUUCA BENGKONG BATAM",
+              "address": "Jl. Golden City Residence, F12 di depan pasar UKM Cheng hoo gp, Ruko, Tj. Buntung, Kec. Bengkong, Kota Batam",
+              "city": "Batam",
+              "coordinates": {
+                "lat": 1.0456,
+                "lng": 104.0134
+              }
+            },
+            {
+              "name": "LUUCA GREEN LAND BATAM",
+              "address": "Jl. Raja M Tahir, Tlk. Tering, Kec. Batam Kota, Kota Batam",
+              "city": "Batam",
+              "coordinates": {
+                "lat": 1.0567,
+                "lng": 104.0289
+              }
+            },
+            {
+              "name": "LUUCA BATU AJI BATAM",
+              "address": "Komplek Pertokoan, Jl. Sentosa Perdana Blok Mawar No.19, Sungai Langkai, Kec. Sagulung, Kota Batam",
+              "city": "Batam",
+              "coordinates": {
+                "lat": 1.0234,
+                "lng": 103.9678
+              }
+            },
+            {
+              "name": "LUUCA TANJUNG PINANG KEPRI",
+              "address": "Jl. Arah Tj. Uban – Tj. Pinang Ruko No.16, Air Raja, Kec. Tanjungpinang Tim., Kota Tanjung Pinang",
+              "city": "Tanjung Pinang",
+              "coordinates": {
+                "lat": 0.9234,
+                "lng": 104.4512
+              }
+            }
+          ]
+        },
+        {
+          "region": "Sulawesi Selatan",
+          "outlets": [
+            {
+              "name": "LUUCA MALL PANAKKUKANG, MAKASSAR",
+              "address": "Unnamed Road, Masale, Kec. Panakkukang, Kota Makassar",
+              "city": "Makassar",
+              "coordinates": {
+                "lat": -5.1567,
+                "lng": 119.4289
+              }
+            },
+            {
+              "name": "LUUCA TRANS STUDIO MALL, MAKASSAR",
+              "address": "Jl Metro Tj.Bunga, Maccini Sombala Kec.Tamalate, Kota Makassar",
+              "city": "Makassar",
+              "coordinates": {
+                "lat": -5.1789,
+                "lng": 119.3956
+              }
+            }
+          ]
+        },
+        {
+          "region": "Sulawesi Utara",
+          "outlets": [
+            {
+              "name": "LUUCA FRESHMART BAHU MALL, MANADO",
+              "address": "Jl. Pertokoan Bahu Mall No. S-01, Kec. Malayang, Kota Manado",
+              "city": "Manado",
+              "coordinates": {
+                "lat": 1.4567,
+                "lng": 124.8234
+              }
+            }
+          ]
+        },
+        {
+          "region": "Bali",
+          "outlets": [
+            {
+              "name": "LUUCA SUNSET ROAD, SEMINYAK",
+              "address": "Jl. Sunset Road No.1, Seminyak, Kec. Kuta Utara, Kabupaten Badung, Bali",
+              "city": "Badung",
+              "coordinates": {
+                "lat": -8.6934,
+                "lng": 115.1678
+              }
+            }
+          ]
+        },
+        {
+          "region": "Nusa Tenggara Barat",
+          "outlets": [
+            {
+              "name": "LUUCA EPICENTRUM MALL LOMBOK",
+              "address": "Jl. Sriwijaya No.333, Punia, Kec. Mataram, Kota Mataram",
+              "city": "Mataram",
+              "coordinates": {
+                "lat": -8.5789,
+                "lng": 116.1234
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brandName": "Barber Smart",
+      "category": "Personal Care / Barbershop",
+      "website": "https://www.barbersmart.id/",
+      "totalOutlets": 24,
+      "outlets": [
+        {
+          "name": "Barbersmart Condet",
+          "address": "Jl. Raya Tengah, Kramat Jati",
+          "city": "Jakarta Timur",
+          "coordinates": {
+            "lat": -6.2834,
+            "lng": 106.8712
+          }
+        },
+        {
+          "name": "Barbersmart Dukuh",
+          "address": "Jl. Dukuh V Dalam, Dukuh",
+          "city": "Jakarta Timur",
+          "coordinates": {
+            "lat": -6.2567,
+            "lng": 106.8523
+          }
+        },
+        {
+          "name": "Barbersmart Duren Sawit",
+          "address": "Jl. Swadaya Raya, Duren Sawit",
+          "city": "Jakarta Timur",
+          "coordinates": {
+            "lat": -6.2412,
+            "lng": 106.9012
+          }
+        },
+        {
+          "name": "Barbersmart Bintara",
+          "address": "Bintara Jaya",
+          "city": "Bekasi",
+          "coordinates": {
+            "lat": -6.2345,
+            "lng": 106.9678
+          }
+        },
+        {
+          "name": "Barbersmart Bintara Dua",
+          "address": "Komplek Departemen Dalam Negri, Duren Sawit",
+          "city": "Jakarta Timur",
+          "coordinates": {
+            "lat": -6.2456,
+            "lng": 106.9123
+          }
+        },
+        {
+          "name": "Barbersmart Lubangbuaya",
+          "address": "Jl. Rw. Binong, Lubang Buaya",
+          "city": "Jakarta Timur",
+          "coordinates": {
+            "lat": -6.3012,
+            "lng": 106.9234
+          }
+        },
+        {
+          "name": "Barbersmart Pondok Kelapa",
+          "address": "Jl. Kapin Raya, Pondok Kelapa",
+          "city": "Jakarta Timur",
+          "coordinates": {
+            "lat": -6.2567,
+            "lng": 106.9345
+          }
+        },
+        {
+          "name": "Barbersmart Cinunuk",
+          "address": "Jl. Raya Cinunuk",
+          "city": "Bandung",
+          "coordinates": {
+            "lat": -6.9234,
+            "lng": 107.7123
+          }
+        },
+        {
+          "name": "Barbersmart Ciracas",
+          "address": "Jl. Raya Centex, Ciracas",
+          "city": "Jakarta Timur",
+          "coordinates": {
+            "lat": -6.3123,
+            "lng": 106.8789
+          }
+        },
+        {
+          "name": "Barbersmart Balikpapan",
+          "address": "Jl. Term., Batu Ampar",
+          "city": "Balikpapan",
+          "coordinates": {
+            "lat": -1.2456,
+            "lng": 116.8567
+          }
+        },
+        {
+          "name": "Barbersmart Cikampek",
+          "address": "Jl. Perum Cikampek Baru",
+          "city": "Karawang",
+          "coordinates": {
+            "lat": -6.4012,
+            "lng": 107.4567
+          }
+        },
+        {
+          "name": "Barbersmart Pondok Bambu",
+          "address": "Jalan Betung Raya, Pondok Bambu",
+          "city": "Jakarta Timur",
+          "coordinates": {
+            "lat": -6.2456,
+            "lng": 106.9078
+          }
+        },
+        {
+          "name": "Barbersmart Jatimakmur",
+          "address": "Jl. Kemang Sari No.rt07/11, Jatimakmur",
+          "city": "Bekasi",
+          "coordinates": {
+            "lat": -6.2789,
+            "lng": 107.0012
+          }
+        },
+        {
+          "name": "Barbersmart Pejaten",
+          "address": "Jalan Amil No. 6, Pejaten",
+          "city": "Jakarta Selatan",
+          "coordinates": {
+            "lat": -6.2789,
+            "lng": 106.8345
+          }
+        },
+        {
+          "name": "Barbersmart Jagakarsa",
+          "address": "Jalan Raya Jagakarsa, RT.2/RW.5, Jagakarsa",
+          "city": "Jakarta Selatan",
+          "coordinates": {
+            "lat": -6.3234,
+            "lng": 106.8234
+          }
+        },
+        {
+          "name": "Barbersmart Cinere",
+          "address": "Jalan Raya Gandul Cinere (Tower A Unit GF18)",
+          "city": "Depok",
+          "coordinates": {
+            "lat": -6.3456,
+            "lng": 106.7789
+          }
+        },
+        {
+          "name": "Barbersmart Gunungsindur",
+          "address": "Perumahan Bukit Serpong Indah, Gunungsindur",
+          "city": "Bogor",
+          "coordinates": {
+            "lat": -6.3567,
+            "lng": 106.6789
+          }
+        },
+        {
+          "name": "Barbersmart Cimanggis",
+          "address": "Cimanggis",
+          "city": "Depok",
+          "coordinates": {
+            "lat": -6.3678,
+            "lng": 106.8678
+          }
+        },
+        {
+          "name": "Barbersmart Pekayon",
+          "address": "Jl. Kalisari Pekayon",
+          "city": "Bekasi",
+          "coordinates": {
+            "lat": -6.2678,
+            "lng": 106.9789
+          }
+        },
+        {
+          "name": "Barbersmart Cipondoh",
+          "address": "Cipondoh",
+          "city": "Tangerang",
+          "coordinates": {
+            "lat": -6.2012,
+            "lng": 106.6789
+          }
+        },
+        {
+          "name": "Barbersmart Taman Cibodas",
+          "address": "Taman Cibodas",
+          "city": "Tangerang",
+          "coordinates": {
+            "lat": -6.2345,
+            "lng": 106.6234
+          }
+        },
+        {
+          "name": "Barbersmart Serang",
+          "address": "Jl. Raya Puri Anggrek",
+          "city": "Serang",
+          "coordinates": {
+            "lat": -6.1234,
+            "lng": 106.1567
+          }
+        },
+        {
+          "name": "Barbersmart Bekasi Utara",
+          "address": "Jl. Kali Abang Bungur, Medan Satria",
+          "city": "Bekasi",
+          "coordinates": {
+            "lat": -6.1789,
+            "lng": 107.0234
+          }
+        },
+        {
+          "name": "Barbersmart Kencana Residence",
+          "address": "Kencana Residence",
+          "city": "Jakarta",
+          "coordinates": {
+            "lat": -6.2234,
+            "lng": 106.8567
+          }
+        }
+      ]
+    },
+    {
+      "brandName": "UMC UCMAS Indonesia",
+      "category": "Education / Mental Arithmetic",
+      "website": "https://www.ucmasindonesia.com/",
+      "totalOutlets": 35,
+      "regions": [
+        {
+          "region": "DKI Jakarta",
+          "outlets": [
+            {
+              "name": "Kantor Pusat UCMAS Indonesia",
+              "address": "Rukan Mediterania, Jl. Boulevard Gading Raya Blok AA No.26, Kelapa Gading",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1567,
+                "lng": 106.8956
+              }
+            },
+            {
+              "name": "UCMAS Little Ello Park View",
+              "address": "Ruko Park View ZC 1 No 22, Kelapa Gading Barat",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1678,
+                "lng": 106.8789
+              }
+            },
+            {
+              "name": "UCMAS Kelapa Gading",
+              "address": "Mediterania Kelapa Gading",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1589,
+                "lng": 106.8912
+              }
+            },
+            {
+              "name": "UCMAS Griya Inti Sentosa",
+              "address": "Jl. Griya Agung Blok O No. 91 Sunter Agung",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1345,
+                "lng": 106.8678
+              }
+            },
+            {
+              "name": "UCMAS Pembangunan",
+              "address": "Pembangunan III Dalam No. 3 Petojo Utara",
+              "city": "Jakarta Pusat",
+              "coordinates": {
+                "lat": -6.1678,
+                "lng": 106.8234
+              }
+            },
+            {
+              "name": "UCMAS Cempaka Putih",
+              "address": "Jl. Jenderal A Yani Kav. 68 Cempaka Putih",
+              "city": "Jakarta Pusat",
+              "coordinates": {
+                "lat": -6.1789,
+                "lng": 106.8678
+              }
+            },
+            {
+              "name": "UCMAS Taman Duta Mas",
+              "address": "Komp. Taman Duta Mas B 9 / 33 Jelambar",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1456,
+                "lng": 106.7789
+              }
+            },
+            {
+              "name": "UCMAS Pasar Minggu",
+              "address": "Jl. Pasar Minggu",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2856,
+                "lng": 106.8456
+              }
+            },
+            {
+              "name": "UCMAS Cipinang",
+              "address": "Jl. Cipinang Baru Raya",
+              "city": "Jakarta Timur",
+              "coordinates": {
+                "lat": -6.2234,
+                "lng": 106.8789
+              }
+            }
+          ]
+        },
+        {
+          "region": "Jawa Timur",
+          "outlets": [
+            {
+              "name": "UCMAS Smart Kidz Ponorogo",
+              "address": "Jl. Diponegoro No.17",
+              "city": "Ponorogo",
+              "coordinates": {
+                "lat": -7.8678,
+                "lng": 111.4612
+              }
+            },
+            {
+              "name": "UMC Dukuh Kupang Surabaya",
+              "address": "Jl. Raya Dukuh Kupang Barat No. 9",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.2789,
+                "lng": 112.7234
+              }
+            },
+            {
+              "name": "UMC Panjang Jiwo Surabaya",
+              "address": "Jln. Raya Panjang Jiwo Permai No.26",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.3012,
+                "lng": 112.7567
+              }
+            },
+            {
+              "name": "UMC HR Muhammad Surabaya",
+              "address": "Ruko HR. Muhammad Square A-22",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.2912,
+                "lng": 112.6789
+              }
+            },
+            {
+              "name": "UMC Jemur Andayani Surabaya",
+              "address": "Jl. Jemur Andayani XXII No.20",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.3123,
+                "lng": 112.7345
+              }
+            },
+            {
+              "name": "UCMAS Malang",
+              "address": "Jl. Ananas 29",
+              "city": "Malang",
+              "coordinates": {
+                "lat": -7.9789,
+                "lng": 112.6345
+              }
+            },
+            {
+              "name": "UCMAS Tuban",
+              "address": "Jl. M. Sudiro 46",
+              "city": "Tuban",
+              "coordinates": {
+                "lat": -6.8989,
+                "lng": 112.0456
+              }
+            },
+            {
+              "name": "UCMAS Sidoarjo",
+              "address": "Jl. Raya Sidoarjo",
+              "city": "Sidoarjo",
+              "coordinates": {
+                "lat": -7.4523,
+                "lng": 112.7123
+              }
+            },
+            {
+              "name": "UCMAS Mojokerto",
+              "address": "Jl. Raya Mojokerto",
+              "city": "Mojokerto",
+              "coordinates": {
+                "lat": -7.4712,
+                "lng": 112.4234
+              }
+            },
+            {
+              "name": "UCMAS Kediri",
+              "address": "Jl. Raya Kediri",
+              "city": "Kediri",
+              "coordinates": {
+                "lat": -7.8234,
+                "lng": 112.0178
+              }
+            }
+          ]
+        },
+        {
+          "region": "Jawa Tengah",
+          "outlets": [
+            {
+              "name": "UCMAS Wonosobo",
+              "address": "Jl. Ahmad Yani No. 136",
+              "city": "Wonosobo",
+              "coordinates": {
+                "lat": -7.3567,
+                "lng": 109.9012
+              }
+            },
+            {
+              "name": "UCMAS Banjarnegara",
+              "address": "Jl. Letjend Suprapto 60 A",
+              "city": "Banjarnegara",
+              "coordinates": {
+                "lat": -7.3978,
+                "lng": 109.6934
+              }
+            }
+          ]
+        },
+        {
+          "region": "Jawa Barat",
+          "outlets": [
+            {
+              "name": "UCMAS Bekasi",
+              "address": "Jl. Raya Bekasi",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.2412,
+                "lng": 107.0012
+              }
+            },
+            {
+              "name": "UCMAS Bandung",
+              "address": "Jl. Raya Bandung",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9234,
+                "lng": 107.6012
+              }
+            },
+            {
+              "name": "UCMAS Bogor",
+              "address": "Jl. Raya Bogor",
+              "city": "Bogor",
+              "coordinates": {
+                "lat": -6.5956,
+                "lng": 106.8012
+              }
+            },
+            {
+              "name": "UCMAS Depok",
+              "address": "Jl. Margonda Raya",
+              "city": "Depok",
+              "coordinates": {
+                "lat": -6.3789,
+                "lng": 106.8312
+              }
+            }
+          ]
+        },
+        {
+          "region": "Bali",
+          "outlets": [
+            {
+              "name": "UCMAS Denpasar",
+              "address": "Jl. Raya Denpasar",
+              "city": "Denpasar",
+              "coordinates": {
+                "lat": -8.6567,
+                "lng": 115.2189
+              }
+            },
+            {
+              "name": "UCMAS Sanur",
+              "address": "Jl. Raya Sanur",
+              "city": "Denpasar",
+              "coordinates": {
+                "lat": -8.7012,
+                "lng": 115.2567
+              }
+            },
+            {
+              "name": "UCMAS Kuta",
+              "address": "Jl. Raya Kuta",
+              "city": "Badung",
+              "coordinates": {
+                "lat": -8.7234,
+                "lng": 115.1789
+              }
+            },
+            {
+              "name": "UCMAS Ubud",
+              "address": "Jl. Raya Ubud",
+              "city": "Gianyar",
+              "coordinates": {
+                "lat": -8.5178,
+                "lng": 115.2634
+              }
+            },
+            {
+              "name": "UCMAS Seminyak",
+              "address": "Jl. Raya Seminyak",
+              "city": "Badung",
+              "coordinates": {
+                "lat": -8.6912,
+                "lng": 115.1623
+              }
+            },
+            {
+              "name": "UCMAS Tabanan",
+              "address": "Jl. Raya Tabanan",
+              "city": "Tabanan",
+              "coordinates": {
+                "lat": -8.5567,
+                "lng": 115.1234
+              }
+            },
+            {
+              "name": "UCMAS Gianyar",
+              "address": "Jl. Raya Gianyar",
+              "city": "Gianyar",
+              "coordinates": {
+                "lat": -8.5423,
+                "lng": 115.3234
+              }
+            }
+          ]
+        },
+        {
+          "region": "Banten",
+          "outlets": [
+            {
+              "name": "UCMAS Tangerang",
+              "address": "Jl. Raya Tangerang",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.1789,
+                "lng": 106.6345
+              }
+            }
+          ]
+        },
+        {
+          "region": "Sulawesi",
+          "outlets": [
+            {
+              "name": "UCMAS Makassar",
+              "address": "Jl. Raya Makassar",
+              "city": "Makassar",
+              "coordinates": {
+                "lat": -5.1456,
+                "lng": 119.4312
+              }
+            },
+            {
+              "name": "UCMAS Manado",
+              "address": "Jl. Raya Manado",
+              "city": "Manado",
+              "coordinates": {
+                "lat": 1.4789,
+                "lng": 124.8456
+              }
+            },
+            {
+              "name": "UCMAS Kendari",
+              "address": "Jl. Raya Kendari",
+              "city": "Kendari",
+              "coordinates": {
+                "lat": -3.9989,
+                "lng": 122.5134
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brandName": "Laundry Klin",
+      "category": "Laundry Services",
+      "website": "https://www.laundryklin.com/outlet",
+      "totalOutlets": 235,
+      "regions": [
+        {
+          "region": "DKI Jakarta",
+          "outlets": [
+            {
+              "name": "LaundryKlin Palem",
+              "address": "Apartemen Paradise Mansion, Jl. Satu Maret No.9, Pegadungan, Kalideres, Jakarta Barat",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1234,
+                "lng": 106.7012
+              }
+            },
+            {
+              "name": "LaundryKlin Green Bay Pluit",
+              "address": "Apartment Green Bay Pluit",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1123,
+                "lng": 106.7889
+              }
+            },
+            {
+              "name": "LaundryKlin Penggilingan",
+              "address": "Jl Amalia no 76 RT 01 RW 06, Penggilingan, Cakung",
+              "city": "Jakarta Timur",
+              "coordinates": {
+                "lat": -6.2234,
+                "lng": 106.9345
+              }
+            },
+            {
+              "name": "LaundryKlin Kemayoran",
+              "address": "Jl. Kemayoran Timur No.47, Kemayoran",
+              "city": "Jakarta Pusat",
+              "coordinates": {
+                "lat": -6.1567,
+                "lng": 106.8567
+              }
+            },
+            {
+              "name": "LaundryKlin Apartemen Gardenia",
+              "address": "Apartemen Gardenia Boulevard, Jl. Warung Jati Barat No 21b, Pasar Minggu",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2789,
+                "lng": 106.8456
+              }
+            },
+            {
+              "name": "LaundryKlin Gading Elok",
+              "address": "Jl gading elok utara no 38A, Kelapa Gading Timur",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1456,
+                "lng": 106.9012
+              }
+            },
+            {
+              "name": "LaundryKlin Mediterania Kelapa Gading",
+              "address": "Jl. Boulevard Gading Raya Blok Aa No.17, Kelapa Gading",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1567,
+                "lng": 106.8945
+              }
+            },
+            {
+              "name": "LaundryKlin Point Rasuna",
+              "address": "Apartemen Taman Rasuna tower 7 lt. 4",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2234,
+                "lng": 106.8345
+              }
+            },
+            {
+              "name": "LaundryKlin Biak Gambir",
+              "address": "Jl. Biak No 29 A, Cideng, Gambir",
+              "city": "Jakarta Pusat",
+              "coordinates": {
+                "lat": -6.1678,
+                "lng": 106.8123
+              }
+            },
+            {
+              "name": "LaundryKlin Cipinang Besar",
+              "address": "Jl. Cipinang Besar No.21, Jatinegara",
+              "city": "Jakarta Timur",
+              "coordinates": {
+                "lat": -6.2234,
+                "lng": 106.8789
+              }
+            },
+            {
+              "name": "LaundryKlin Menteng",
+              "address": "Jl. Sukabumi no 31, Menteng",
+              "city": "Jakarta Pusat",
+              "coordinates": {
+                "lat": -6.1934,
+                "lng": 106.8345
+              }
+            },
+            {
+              "name": "LaundryKlin Pulo Gebang",
+              "address": "Pulo Gebang Permai Blok 10/20",
+              "city": "Jakarta Timur",
+              "coordinates": {
+                "lat": -6.2345,
+                "lng": 106.9456
+              }
+            },
+            {
+              "name": "LaundryKlin Kota Tua",
+              "address": "Roa malaka utara no 15, Tambora",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1345,
+                "lng": 106.8123
+              }
+            },
+            {
+              "name": "LaundryKlin Pulo Asem",
+              "address": "Jl. Pulo Asem Raya No. 8, Pulo Gadung",
+              "city": "Jakarta Timur",
+              "coordinates": {
+                "lat": -6.1789,
+                "lng": 106.8945
+              }
+            },
+            {
+              "name": "LaundryKlin Jatinegara",
+              "address": "Jl. Bekasi Timur I No.11 A, Jatinegara",
+              "city": "Jakarta Timur",
+              "coordinates": {
+                "lat": -6.2145,
+                "lng": 106.8678
+              }
+            },
+            {
+              "name": "LaundryKlin Mahoni",
+              "address": "Jl Semangka No 46, Koja",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1234,
+                "lng": 106.9012
+              }
+            },
+            {
+              "name": "LaundryKlin Cleon Park",
+              "address": "Ruko Cleon Park No.26, Jakarta Garden City, Cakung",
+              "city": "Jakarta Timur",
+              "coordinates": {
+                "lat": -6.2234,
+                "lng": 106.9567
+              }
+            },
+            {
+              "name": "LaundryKlin Cempaka Putih",
+              "address": "Jl. Cempaka Putih Tengah 2 no.40",
+              "city": "Jakarta Pusat",
+              "coordinates": {
+                "lat": -6.1789,
+                "lng": 106.8678
+              }
+            },
+            {
+              "name": "LaundryKlin Pondok Indah",
+              "address": "Jl. Pinang Nikel I Blok Pq No.28, Kebayoran Lama",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2789,
+                "lng": 106.7834
+              }
+            },
+            {
+              "name": "LaundryKlin Sentra Timur",
+              "address": "Apartemen Sentra Timur Residence, Pulo Gebang",
+              "city": "Jakarta Timur",
+              "coordinates": {
+                "lat": -6.2256,
+                "lng": 106.9345
+              }
+            },
+            {
+              "name": "LaundryKlin Tebet Utara",
+              "address": "Jl. Tebet Utara Dalam Raya No.29",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2345,
+                "lng": 106.8512
+              }
+            },
+            {
+              "name": "LaundryKlin JGC",
+              "address": "Ruko Savoy B2/2 Jakarta Garden City, Cakung",
+              "city": "Jakarta Timur",
+              "coordinates": {
+                "lat": -6.2345,
+                "lng": 106.9567
+              }
+            },
+            {
+              "name": "LaundryKlin Tebet Barat",
+              "address": "Jl. Tebet Barat Raya No.18",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2267,
+                "lng": 106.8456
+              }
+            },
+            {
+              "name": "LaundryKlin Pondok Kelapa",
+              "address": "Jl. Pd. Kelapa Raya No.Blok 14/2, Duren Sawit",
+              "city": "Jakarta Timur",
+              "coordinates": {
+                "lat": -6.2567,
+                "lng": 106.9234
+              }
+            },
+            {
+              "name": "LaundryKlin Lebak Bulus",
+              "address": "Jalan Lebak Bulus III No. 7, Cilandak",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2945,
+                "lng": 106.7789
+              }
+            },
+            {
+              "name": "LaundryKlin Mampang",
+              "address": "Jl. Mampang Prapatan VIII No.6a",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2456,
+                "lng": 106.8234
+              }
+            },
+            {
+              "name": "LaundryKlin Rawajati",
+              "address": "Jl. Rawajati Timur Blok K, nomor 19 Kalibata",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2567,
+                "lng": 106.8567
+              }
+            },
+            {
+              "name": "LaundryKlin Pademangan",
+              "address": "Jl Pademangan 3, GG 22 NO 312",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1234,
+                "lng": 106.8456
+              }
+            },
+            {
+              "name": "LaundryKlin Joglo Raya",
+              "address": "Jl. Joglo Raya, depan perumahan Kopkamtib",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.2012,
+                "lng": 106.7234
+              }
+            },
+            {
+              "name": "LaundryKlin Citra Garden 7",
+              "address": "Jl. Citra Garden VII Blok E 3 no 8, Kalideres",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1345,
+                "lng": 106.6978
+              }
+            },
+            {
+              "name": "LaundryKlin Sunter Elok",
+              "address": "Sunter Elok Blok C15 Rt 12 Rw 02",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1345,
+                "lng": 106.8789
+              }
+            },
+            {
+              "name": "LaundryKlin Kalibata",
+              "address": "Apartment Kalibata City, Tower Cendana",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2567,
+                "lng": 106.8567
+              }
+            },
+            {
+              "name": "LaundryKlin Kartini",
+              "address": "Jalan Kartini IV, No. 25, Sawah Besar",
+              "city": "Jakarta Pusat",
+              "coordinates": {
+                "lat": -6.1567,
+                "lng": 106.8234
+              }
+            },
+            {
+              "name": "LaundryKlin Perdatam",
+              "address": "Jl. Pancoran Timur Raya, No. 35, Pancoran",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2456,
+                "lng": 106.8456
+              }
+            },
+            {
+              "name": "LaundryKlin Palmerah",
+              "address": "Jalan KH Taisir Nomor 7B Palmerah",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1889,
+                "lng": 106.7889
+              }
+            },
+            {
+              "name": "LaundryKlin Karang Tengah",
+              "address": "Jl. Karang Tengah Raya No.46, Lebak Bulus",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2945,
+                "lng": 106.7678
+              }
+            },
+            {
+              "name": "LaundryKlin Karbela",
+              "address": "Jalan karbela barat no.9, Setiabudi",
+              "city": "Jakarta Selatan",
+              "coordinates": {
+                "lat": -6.2123,
+                "lng": 106.8234
+              }
+            },
+            {
+              "name": "LaundryKlin Manhattan MOI",
+              "address": "Mall of Indonesia, Blok M no 10, Kelapa Gading",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1456,
+                "lng": 106.8912
+              }
+            },
+            {
+              "name": "LaundryKlin Metro",
+              "address": "Apartment Metro, Jalan Metro Kencana V",
+              "city": "Jakarta Utara",
+              "coordinates": {
+                "lat": -6.1567,
+                "lng": 106.8789
+              }
+            },
+            {
+              "name": "LaundryKlin Pasar Baru",
+              "address": "Jl. Gereja Ayam No 15A, Pasar Baru",
+              "city": "Jakarta Pusat",
+              "coordinates": {
+                "lat": -6.1678,
+                "lng": 106.8345
+              }
+            },
+            {
+              "name": "LaundryKlin Pangeran Jayakarta",
+              "address": "Jalan Pangeran Jayakarta No. 4C, Mangga Dua Selatan",
+              "city": "Jakarta Pusat",
+              "coordinates": {
+                "lat": -6.1456,
+                "lng": 106.8234
+              }
+            },
+            {
+              "name": "LaundryKlin Ciracas",
+              "address": "DevTroy Mansion Jalan Raya Ciracas No. 9A",
+              "city": "Jakarta Timur",
+              "coordinates": {
+                "lat": -6.3012,
+                "lng": 106.8789
+              }
+            },
+            {
+              "name": "LaundryKlin Gajah Mada",
+              "address": "Jalan Thalib 1 no 33C, Gajah Mada",
+              "city": "Jakarta Pusat",
+              "coordinates": {
+                "lat": -6.1567,
+                "lng": 106.8123
+              }
+            },
+            {
+              "name": "LaundryKlin Syahdan",
+              "address": "Syahdan, Rawa Belong 2B No.27-28, Palmerah",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1889,
+                "lng": 106.7867
+              }
+            },
+            {
+              "name": "LaundryKlin Milano",
+              "address": "Ruko Royal Palm Blok A 3, Kalideres",
+              "city": "Jakarta Barat",
+              "coordinates": {
+                "lat": -6.1234,
+                "lng": 106.6978
+              }
+            }
+          ]
+        },
+        {
+          "region": "Jawa Barat",
+          "outlets": [
+            {
+              "name": "LaundryKlin Mekarsari Bekasi",
+              "address": "Jl. Mekar Sari No.34, Bekasi Timur",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.2345,
+                "lng": 107.0012
+              }
+            },
+            {
+              "name": "LaundryKlin Siliwangi Tasikmalaya",
+              "address": "Jl. Siliwangi No.14, Tasikmalaya",
+              "city": "Tasikmalaya",
+              "coordinates": {
+                "lat": -7.3456,
+                "lng": 108.2234
+              }
+            },
+            {
+              "name": "LaundryKlin Buah Batu",
+              "address": "Jl. RH Hasan Saputra Raya No 17, Bandung",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9345,
+                "lng": 107.6234
+              }
+            },
+            {
+              "name": "LaundryKlin Perwira Bekasi",
+              "address": "Jl KH Muchtar Tabrani, Bekasi Utara",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.1789,
+                "lng": 107.0123
+              }
+            },
+            {
+              "name": "LaundryKlin Kembar BDG",
+              "address": "Jl. Kembar VIII No.53, Regol, Bandung",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9234,
+                "lng": 107.6012
+              }
+            },
+            {
+              "name": "LaundryKlin Riung Bandung",
+              "address": "Jl Riung Gede Permai block a no 10, Gedebage",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9456,
+                "lng": 107.6789
+              }
+            },
+            {
+              "name": "LaundryKlin Mutiara Gading City",
+              "address": "Komplek Mutiara Gading City Blok R-11, Tarumajaya",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.1234,
+                "lng": 106.9789
+              }
+            },
+            {
+              "name": "LaundryKlin Cicadas",
+              "address": "Jl A. Yani No 827, Kiaracondong, Bandung",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9123,
+                "lng": 107.6345
+              }
+            },
+            {
+              "name": "LaundryKlin Rancaekek",
+              "address": "Jln. Nusa Indah Raya no.105, Rancaekek",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9567,
+                "lng": 107.7534
+              }
+            },
+            {
+              "name": "LaundryKlin Cemara Bandung",
+              "address": "Jalan Cemara No 50, Pasteur, Sukajadi",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.8934,
+                "lng": 107.5789
+              }
+            },
+            {
+              "name": "LaundryKlin Gegerkalong",
+              "address": "Jl Gegerkalong Girang Baru no 2C",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.8734,
+                "lng": 107.5934
+              }
+            },
+            {
+              "name": "LaundryKlin Cibadak",
+              "address": "Jl. Cibadak No.207, Astanaanyar, Bandung",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9234,
+                "lng": 107.5789
+              }
+            },
+            {
+              "name": "LaundryKlin Setiabudi Bandung",
+              "address": "Jl. Setiabudi No. 280, Ledeng",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.8634,
+                "lng": 107.6012
+              }
+            },
+            {
+              "name": "LaundryKlin Kawaluyaan",
+              "address": "Jl. Cidurian Utara No.76A, Kiaracondong",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9234,
+                "lng": 107.6456
+              }
+            },
+            {
+              "name": "LaundryKlin Sarimanah",
+              "address": "Jl. Sarimanah Raya No. 31, Sarijadi",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.8789,
+                "lng": 107.5678
+              }
+            },
+            {
+              "name": "LaundryKlin Gateway Pasteur",
+              "address": "Apartment Gateway Pasteur, Jl. Gunung Batu 203",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.8934,
+                "lng": 107.5834
+              }
+            },
+            {
+              "name": "LaundryKlin Margahayu",
+              "address": "Jl. Jupiter Tengah No.1A, Buahbatu",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9456,
+                "lng": 107.6345
+              }
+            },
+            {
+              "name": "LaundryKlin Dipatiukur",
+              "address": "Jl. Dipatiukur No. 92, Coblong",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.8934,
+                "lng": 107.6123
+              }
+            },
+            {
+              "name": "LaundryKlin Mekarwangi",
+              "address": "Jl. Mekarpuspita No. 39 B, Cibaduyut",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9567,
+                "lng": 107.5789
+              }
+            },
+            {
+              "name": "LaundryKlin Cikutra",
+              "address": "Jl. Cibeunying Kolot No. 9, Cigadung",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.8856,
+                "lng": 107.6234
+              }
+            },
+            {
+              "name": "LaundryKlin Antapani",
+              "address": "Jalan Parakansaat No. 9",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9123,
+                "lng": 107.6567
+              }
+            },
+            {
+              "name": "LaundryKlin Batununggal",
+              "address": "Jalan Batununggal IV No. 35",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9345,
+                "lng": 107.6234
+              }
+            },
+            {
+              "name": "LaundryKlin Cihampelas",
+              "address": "Jalan Cihampelas No. 193 A, Coblong",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.8934,
+                "lng": 107.6012
+              }
+            },
+            {
+              "name": "LaundryKlin Buana Peta",
+              "address": "Jalan H.M Basori No. 32, Kopo, Bojongloa Kaler",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9456,
+                "lng": 107.5789
+              }
+            },
+            {
+              "name": "LaundryKlin Kopo",
+              "address": "Jalan Taman Kopo Indah 1 Blok F No. 19",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9567,
+                "lng": 107.5678
+              }
+            },
+            {
+              "name": "LaundryKlin Gagak",
+              "address": "Jalan Gagak No. 50",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9123,
+                "lng": 107.6012
+              }
+            },
+            {
+              "name": "LaundryKlin PVJ",
+              "address": "Paris Van Java Mall",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.8934,
+                "lng": 107.5934
+              }
+            },
+            {
+              "name": "LaundryKlin Sukajadi",
+              "address": "Jalan Sukagalih No. 45, Sukajadi",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.8834,
+                "lng": 107.5834
+              }
+            },
+            {
+              "name": "LaundryKlin Terusan Buah Batu",
+              "address": "Jl. Terusan Buah Batu No.300, Bandung Kidul",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9567,
+                "lng": 107.6345
+              }
+            },
+            {
+              "name": "LaundryKlin Sarijadi",
+              "address": "Jl. Sarijadi Raya No. 91",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.8789,
+                "lng": 107.5734
+              }
+            },
+            {
+              "name": "LaundryKlin Cijagra",
+              "address": "Jalan Cijagra No. 69",
+              "city": "Bandung",
+              "coordinates": {
+                "lat": -6.9345,
+                "lng": 107.6234
+              }
+            },
+            {
+              "name": "LaundryKlin Segara City",
+              "address": "Ruko Galea RSC 2 no 12, Tarumajaya",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.1123,
+                "lng": 106.9678
+              }
+            },
+            {
+              "name": "LaundryKlin Jatiwarna",
+              "address": "Jln Raya Hankam No.7, Pondok Melati",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.3012,
+                "lng": 106.9234
+              }
+            },
+            {
+              "name": "LaundryKlin Arana",
+              "address": "Ruko Arana 1x3 No 19, Tarumajaya",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.1234,
+                "lng": 106.9789
+              }
+            },
+            {
+              "name": "LaundryKlin Harapan Indah",
+              "address": "Ruko Duta Bumi Blok D9/03, Kota Harapan Indah",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.1567,
+                "lng": 107.0012
+              }
+            },
+            {
+              "name": "LaundryKlin Hankam Raya",
+              "address": "Jl. Raya Hankam No.320, Pondok Melati",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.2789,
+                "lng": 106.9456
+              }
+            },
+            {
+              "name": "LaundryKlin Gardenia Utara",
+              "address": "Jl. Gardenia Utara BR 1 No.8, Grand Galaxy City",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.2567,
+                "lng": 106.9678
+              }
+            },
+            {
+              "name": "LaundryKlin Matahari",
+              "address": "Jl. Matahari Raya No 1 Blok 417, Jakasetia",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.2456,
+                "lng": 106.9567
+              }
+            },
+            {
+              "name": "LaundryKlin Kranggan",
+              "address": "Jalan Sawo Raya, Bekasi",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.3234,
+                "lng": 106.9345
+              }
+            },
+            {
+              "name": "LaundryKlin Lagoon Avenue",
+              "address": "Jl. Raya Candrabraga, Pekayon Jaya, Bekasi Selatan",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.2678,
+                "lng": 106.9789
+              }
+            },
+            {
+              "name": "LaundryKlin Galaxy",
+              "address": "Ruko Sporadis BD 123 C, Grand Galaxy Boulevard",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.2567,
+                "lng": 106.9567
+              }
+            },
+            {
+              "name": "LaundryKlin Harvest",
+              "address": "Ruko Orchid Harvest City, Cikarageman",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.3012,
+                "lng": 107.0234
+              }
+            },
+            {
+              "name": "LaundryKlin Bintara",
+              "address": "Jalan Bintara 4, No. 14, Bekasi Barat",
+              "city": "Bekasi",
+              "coordinates": {
+                "lat": -6.2234,
+                "lng": 106.9512
+              }
+            },
+            {
+              "name": "LaundryKlin CASela Depok",
+              "address": "Jl. Cagar Alam Sel. No.32A, Pancoran Mas",
+              "city": "Depok",
+              "coordinates": {
+                "lat": -6.3789,
+                "lng": 106.8234
+              }
+            },
+            {
+              "name": "LaundryKlin Pesona Depok",
+              "address": "Jl. Margonda Raya No.100, Beji",
+              "city": "Depok",
+              "coordinates": {
+                "lat": -6.3721,
+                "lng": 106.8312
+              }
+            },
+            {
+              "name": "LaundryKlin Beji",
+              "address": "Jl. Kh. M. Usman no 183 D, Beji",
+              "city": "Depok",
+              "coordinates": {
+                "lat": -6.3678,
+                "lng": 106.8256
+              }
+            },
+            {
+              "name": "LaundryKlin Depok",
+              "address": "Jalan Merdeka No 3, Sukmajaya",
+              "city": "Depok",
+              "coordinates": {
+                "lat": -6.3856,
+                "lng": 106.8345
+              }
+            },
+            {
+              "name": "LaundryKlin Wahana Jatiranggon",
+              "address": "Jalan Wahana Raya Blok B2, Jatiranggon",
+              "city": "Depok",
+              "coordinates": {
+                "lat": -6.3212,
+                "lng": 106.9012
+              }
+            },
+            {
+              "name": "LaundryKlin Margonda Shoes",
+              "address": "Jl. Margonda Raya No.475, Pondok Cina",
+              "city": "Depok",
+              "coordinates": {
+                "lat": -6.3678,
+                "lng": 106.8289
+              }
+            },
+            {
+              "name": "LaundryKlin Karawang",
+              "address": "Jl. HS.Ronggo Waluyo, Telukjambe Timur",
+              "city": "Karawang",
+              "coordinates": {
+                "lat": -6.3234,
+                "lng": 107.3012
+              }
+            },
+            {
+              "name": "LaundryKlin Subang",
+              "address": "Perumahan Bumi Pagaden Permai 2",
+              "city": "Subang",
+              "coordinates": {
+                "lat": -6.5678,
+                "lng": 107.7567
+              }
+            },
+            {
+              "name": "LaundryKlin Kebon Kopi Cimahi",
+              "address": "Jl. Kebon Kopi No.3 A, Cibeureum, Cimahi",
+              "city": "Cimahi",
+              "coordinates": {
+                "lat": -6.8934,
+                "lng": 107.5234
+              }
+            },
+            {
+              "name": "LaundryKlin Cimahi",
+              "address": "Jl. Moh. K. Wiganda Sasmita No.002",
+              "city": "Cimahi",
+              "coordinates": {
+                "lat": -6.8789,
+                "lng": 107.5345
+              }
+            },
+            {
+              "name": "LaundryKlin Bogor",
+              "address": "Jl. Taman Cimanggu Raya, Tanah Sareal",
+              "city": "Bogor",
+              "coordinates": {
+                "lat": -6.5789,
+                "lng": 106.7856
+              }
+            },
+            {
+              "name": "LaundryKlin Cibinong",
+              "address": "Jl Pahlawan Sabeki No.105 A, Bojong Gede",
+              "city": "Bogor",
+              "coordinates": {
+                "lat": -6.4678,
+                "lng": 106.8234
+              }
+            },
+            {
+              "name": "LaundryKlin SSIW Diklat",
+              "address": "Jl. Pusdik Reskrim Polri, Cisarua",
+              "city": "Bogor",
+              "coordinates": {
+                "lat": -6.6567,
+                "lng": 106.9234
+              }
+            },
+            {
+              "name": "LaundryKlin Tajur",
+              "address": "Jl. Raya Tajur No.58, Bogor Selatan",
+              "city": "Bogor",
+              "coordinates": {
+                "lat": -6.6234,
+                "lng": 106.8012
+              }
+            },
+            {
+              "name": "LaundryKlin Sentul City",
+              "address": "Pasar Bersih Sentul City Ruko Blok R No. H1",
+              "city": "Bogor",
+              "coordinates": {
+                "lat": -6.5789,
+                "lng": 106.8678
+              }
+            },
+            {
+              "name": "LaundryKlin Cibubur Boulevard",
+              "address": "Perumahan Cibubur Country Ruko RBOJ 38, Gunung Putri",
+              "city": "Bogor",
+              "coordinates": {
+                "lat": -6.4234,
+                "lng": 106.9012
+              }
+            },
+            {
+              "name": "LaundryKlin Cikeas Cibubur",
+              "address": "Jl. Letda Nasir No. 80, Gunung Putri",
+              "city": "Bogor",
+              "coordinates": {
+                "lat": -6.4567,
+                "lng": 106.9123
+              }
+            }
+          ]
+        },
+        {
+          "region": "Banten",
+          "outlets": [
+            {
+              "name": "LaundryKlin Bintaro",
+              "address": "Jl. Pondok Jaya No. 43, Pondok Aren",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2678,
+                "lng": 106.7234
+              }
+            },
+            {
+              "name": "LaundryKlin Gading Serpong",
+              "address": "Medang, Pagedangan",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.2456,
+                "lng": 106.6234
+              }
+            },
+            {
+              "name": "LaundryKlin PCI Cilegon",
+              "address": "Komplek PCI BLOK E19 No.1, Cibeber",
+              "city": "Cilegon",
+              "coordinates": {
+                "lat": -6.0234,
+                "lng": 106.0123
+              }
+            },
+            {
+              "name": "LaundryKlin Nobibara Serang",
+              "address": "Jl. Yudistira 13, Kramatwatu",
+              "city": "Serang",
+              "coordinates": {
+                "lat": -6.0789,
+                "lng": 106.1234
+              }
+            },
+            {
+              "name": "LaundryKlin Pranadita Serang",
+              "address": "Jl. Kp Baru RT02/RW 05, Cipocok Jaya",
+              "city": "Serang",
+              "coordinates": {
+                "lat": -6.1234,
+                "lng": 106.1456
+              }
+            },
+            {
+              "name": "LaundryKlin PIK 2",
+              "address": "Rumah Kantor La Riviera PIK 2, Blok B No. 16",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.0567,
+                "lng": 106.6789
+              }
+            },
+            {
+              "name": "LaundryKlin Medina Karawaci",
+              "address": "Apartment Medina, Jl. Kelapa Dua Raya No.93",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.2234,
+                "lng": 106.6123
+              }
+            },
+            {
+              "name": "LaundryKlin Modernland",
+              "address": "Jl. Premier Park 2 no C 11",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.1989,
+                "lng": 106.6345
+              }
+            },
+            {
+              "name": "LaundryKlin Villa Bandara",
+              "address": "Villa taman bandara blok a7 no 11a, Dadap",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.1234,
+                "lng": 106.6567
+              }
+            },
+            {
+              "name": "LaundryKlin Situ Gintung",
+              "address": "Jalan Gn. Raya No. 2, Ciputat Timur",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.3012,
+                "lng": 106.7456
+              }
+            },
+            {
+              "name": "LaundryKlin Hanjuang BSD",
+              "address": "Jl Hanjuang H2/18 Sektor 1.1 Selatan, BSD City",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2789,
+                "lng": 106.6678
+              }
+            },
+            {
+              "name": "LaundryKlin Piazza BSD",
+              "address": "Piazza at The Mozia, BSD, Lengkong Kulon",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2834,
+                "lng": 106.6789
+              }
+            },
+            {
+              "name": "LaundryKlin BSD Serpong",
+              "address": "Ruko Granada, Jalan Kencana Raya BSD",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2912,
+                "lng": 106.6567
+              }
+            },
+            {
+              "name": "LaundryKlin BSD City",
+              "address": "Apartement Casa De Parco, Jalan BSD Raya Utama",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2834,
+                "lng": 106.6634
+              }
+            },
+            {
+              "name": "LaundryKlin Puspitek",
+              "address": "Jalan Raya Puspitek, Babakan",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.3234,
+                "lng": 106.6789
+              }
+            },
+            {
+              "name": "LaundryKlin Ceger",
+              "address": "Jl Ceger Raya Pabuaran Barat No. 5",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.3123,
+                "lng": 106.7234
+              }
+            },
+            {
+              "name": "LaundryKlin Hutama Karya",
+              "address": "Kademangan, Setu",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.3345,
+                "lng": 106.6789
+              }
+            },
+            {
+              "name": "LaundryKlin Point Cirendeu",
+              "address": "Jalan Raya Cirendeu Ciputat",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2945,
+                "lng": 106.7456
+              }
+            },
+            {
+              "name": "LaundryKlin Cordoba BSD",
+              "address": "Plaza Cordoba BSD, Blok I No. 11",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2912,
+                "lng": 106.6678
+              }
+            },
+            {
+              "name": "LaundryKlin Lengkong BSD",
+              "address": "Jl. Lengkong Gudang Timur No. 4, Serpong",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2878,
+                "lng": 106.6734
+              }
+            },
+            {
+              "name": "LaundryKlin Akasa BSD",
+              "address": "Apartement Akasa BSD Pure Living No. Kios Blok R1 No.12",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2856,
+                "lng": 106.6789
+              }
+            },
+            {
+              "name": "LaundryKlin Serdang",
+              "address": "Jl. Raya Waringin Kurung Km 2, Harjatani",
+              "city": "Serang",
+              "coordinates": {
+                "lat": -6.1012,
+                "lng": 106.1567
+              }
+            },
+            {
+              "name": "LaundryKlin Temu Putih",
+              "address": "Jl. Temu Putih, Ciwaduk",
+              "city": "Cilegon",
+              "coordinates": {
+                "lat": -6.0345,
+                "lng": 106.0234
+              }
+            },
+            {
+              "name": "LaundryKlin Gondangdia Bintaro",
+              "address": "Jl. Puyuh Timur Blok EH 4 No.10 Sektor 5, Bintaro Jaya",
+              "city": "Tangerang Selatan",
+              "coordinates": {
+                "lat": -6.2534,
+                "lng": 106.7178
+              }
+            },
+            {
+              "name": "LaundryKlin Karawaci",
+              "address": "Perumnas 2 Ruko Taman Borobudur 1, Karawaci",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.2234,
+                "lng": 106.6234
+              }
+            },
+            {
+              "name": "LaundryKlin Citra Maja",
+              "address": "Citra Maja Raya, Ruko Citra B33/128",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.3456,
+                "lng": 106.4234
+              }
+            },
+            {
+              "name": "LaundryKlin Gading Serpong Market",
+              "address": "Pasar Modern Paramount, Boulevard Raya Gading Serpong",
+              "city": "Tangerang",
+              "coordinates": {
+                "lat": -6.2345,
+                "lng": 106.6234
+              }
+            }
+          ]
+        },
+        {
+          "region": "Jawa Timur",
+          "outlets": [
+            {
+              "name": "LaundryKlin Triple S Surabaya",
+              "address": "Menanggal Utara no 58B",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.3234,
+                "lng": 112.7234
+              }
+            },
+            {
+              "name": "LaundryKlin Manukan",
+              "address": "Jl. Manukan Lor Blok 3K No.9",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.2567,
+                "lng": 112.6789
+              }
+            },
+            {
+              "name": "LaundryKlin Kertajaya",
+              "address": "Jl. Kertajaya IV Raya, No. 21-23, Gubeng",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.2789,
+                "lng": 112.7567
+              }
+            },
+            {
+              "name": "LaundryKlin Kendalsari",
+              "address": "Ruko Nirwana Executive Jln. Raya Kendalsari Rk. No. 76, Rungkut",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.3123,
+                "lng": 112.7789
+              }
+            },
+            {
+              "name": "LaundryKlin Dharmawangsa",
+              "address": "Jl. Raya Dharmawangsa No. 90, Gubeng",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.2834,
+                "lng": 112.7567
+              }
+            },
+            {
+              "name": "LaundryKlin Surabaya Barat",
+              "address": "Northwest Boulevard NV2 no 17, Citraland",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.2912,
+                "lng": 112.6567
+              }
+            },
+            {
+              "name": "LaundryKlin Ketintang",
+              "address": "Jl. Ketintang No.47, Gayungan",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.3234,
+                "lng": 112.7234
+              }
+            },
+            {
+              "name": "LaundryKlin Siwalankerto",
+              "address": "Jalan Siwalankerto No. 147, Wonocolo",
+              "city": "Surabaya",
+              "coordinates": {
+                "lat": -7.3345,
+                "lng": 112.7345
+              }
+            },
+            {
+              "name": "LaundryKlin Menganti",
+              "address": "Jalan Raya Bringkang, Menganti",
+              "city": "Gresik",
+              "coordinates": {
+                "lat": -7.2567,
+                "lng": 112.5789
+              }
+            },
+            {
+              "name": "LaundryKlin Malang",
+              "address": "Jalan Puncak Jaya Ujung, Kav 7",
+              "city": "Malang",
+              "coordinates": {
+                "lat": -7.9567,
+                "lng": 112.6234
+              }
+            },
+            {
+              "name": "LaundryKlin Dirgantara Malang",
+              "address": "Jl. Dirgantara, Lesanpuro, Kedungkandang",
+              "city": "Malang",
+              "coordinates": {
+                "lat": -7.9789,
+                "lng": 112.6567
+              }
+            },
+            {
+              "name": "LaundryKlin Blitar",
+              "address": "Ruko Jl. Kalimantan 42A",
+              "city": "Blitar",
+              "coordinates": {
+                "lat": -8.0956,
+                "lng": 112.1567
+              }
+            }
+          ]
+        },
+        {
+          "region": "Jawa Tengah & Yogyakarta",
+          "outlets": [
+            {
+              "name": "LaundryKlin Sampangan",
+              "address": "Jl. Menoreh Raya 19B",
+              "city": "Semarang",
+              "coordinates": {
+                "lat": -6.9945,
+                "lng": 110.4012
+              }
+            },
+            {
+              "name": "LaundryKlin Cordova Semarang",
+              "address": "Cordova Edupartment Building, Jl. Bukit Sari Raya, Banyumanik",
+              "city": "Semarang",
+              "coordinates": {
+                "lat": -7.0456,
+                "lng": 110.4234
+              }
+            },
+            {
+              "name": "LaundryKlin BSB Semarang",
+              "address": "Beranda Galeria A12B, Mijen",
+              "city": "Semarang",
+              "coordinates": {
+                "lat": -7.0567,
+                "lng": 110.3234
+              }
+            },
+            {
+              "name": "LaundryKlin Soekarno Hatta",
+              "address": "JL. Soekarno Hatta 179, Semarang",
+              "city": "Semarang",
+              "coordinates": {
+                "lat": -6.9678,
+                "lng": 110.4567
+              }
+            },
+            {
+              "name": "LaundryKlin Sompok Baru",
+              "address": "Jl. Sompok Baru No.86, Lamper Kidul",
+              "city": "Semarang",
+              "coordinates": {
+                "lat": -6.9956,
+                "lng": 110.4234
+              }
+            },
+            {
+              "name": "LaundryKlin Pekalongan",
+              "address": "Jln. Bina Griya no.641, Medono, Pekalongan Barat",
+              "city": "Pekalongan",
+              "coordinates": {
+                "lat": -6.8912,
+                "lng": 109.6789
+              }
+            },
+            {
+              "name": "LaundryKlin Cilacap",
+              "address": "Jl. Rinjani No.121, Sidanegara",
+              "city": "Cilacap",
+              "coordinates": {
+                "lat": -7.7234,
+                "lng": 109.0123
+              }
+            },
+            {
+              "name": "LaundryKlin Purwokerto",
+              "address": "Jl. Jendral Sudirman No.373",
+              "city": "Purwokerto",
+              "coordinates": {
+                "lat": -7.4234,
+                "lng": 109.2345
+              }
+            },
+            {
+              "name": "LaundryKlin Purbalingga",
+              "address": "Jalan Mayjend Sungkono, Sebrang Pasar Segamas",
+              "city": "Purbalingga",
+              "coordinates": {
+                "lat": -7.3912,
+                "lng": 109.3634
+              }
+            },
+            {
+              "name": "LaundryKlin Boyolali",
+              "address": "Banarjo RT 5/5, Gagaksipat, Ngemplak",
+              "city": "Boyolali",
+              "coordinates": {
+                "lat": -7.5234,
+                "lng": 110.6012
+              }
+            },
+            {
+              "name": "LaundryKlin CaturTunggal",
+              "address": "Jalan Bougenville, No. 01, Karang Gayam, Depok, Sleman",
+              "city": "Yogyakarta",
+              "coordinates": {
+                "lat": -7.7689,
+                "lng": 110.3934
+              }
+            },
+            {
+              "name": "LaundryKlin Mataram",
+              "address": "Jl. Selokan Mataram No 50",
+              "city": "Yogyakarta",
+              "coordinates": {
+                "lat": -7.7789,
+                "lng": 110.4012
+              }
+            },
+            {
+              "name": "LaundryKlin ConCat",
+              "address": "Jl. Prawiro Kuat No.129, Condongcatur, Depok, Sleman",
+              "city": "Yogyakarta",
+              "coordinates": {
+                "lat": -7.7567,
+                "lng": 110.3989
+              }
+            },
+            {
+              "name": "LaundryKlin Cempaka Yogya",
+              "address": "Jalan Cempaka No.60 Condong Catur, Sleman",
+              "city": "Yogyakarta",
+              "coordinates": {
+                "lat": -7.7656,
+                "lng": 110.3956
+              }
+            }
+          ]
+        },
+        {
+          "region": "Sumatera",
+          "outlets": [
+            {
+              "name": "LaundryKlin Durian Walk Medan",
+              "address": "Jl. Hj Muhammad Said",
+              "city": "Medan",
+              "coordinates": {
+                "lat": 3.5789,
+                "lng": 98.6789
+              }
+            },
+            {
+              "name": "LaundryKlin Padang Sidempuan",
+              "address": "Jl. Sudirman ex Merdeka No. 104",
+              "city": "Padang Sidempuan",
+              "coordinates": {
+                "lat": 1.3789,
+                "lng": 99.2789
+              }
+            },
+            {
+              "name": "LaundryKlin Palembang",
+              "address": "Ruko Graha Raflesia Blok Q, Jl. Sako Baru",
+              "city": "Palembang",
+              "coordinates": {
+                "lat": -2.9234,
+                "lng": 104.7567
+              }
+            },
+            {
+              "name": "LaundryKlin PHDM Palembang",
+              "address": "Jalan RE Martadinata Komplek PHDM 12 no 105",
+              "city": "Palembang",
+              "coordinates": {
+                "lat": -2.9456,
+                "lng": 104.7345
+              }
+            },
+            {
+              "name": "LaundryKlin Jambi",
+              "address": "Jl. Jend A Thalib No.76 Simpang IV Sipin",
+              "city": "Jambi",
+              "coordinates": {
+                "lat": -1.5912,
+                "lng": 103.6012
+              }
+            },
+            {
+              "name": "LaundryKlin RB Siagian Jambi",
+              "address": "Jl. RB Siagian RT 22, Jambi Selatan",
+              "city": "Jambi",
+              "coordinates": {
+                "lat": -1.6234,
+                "lng": 103.6234
+              }
+            },
+            {
+              "name": "LaundryKlin Lampung",
+              "address": "JL. RAYA WAY HUWI, JATI AGUNG, LAMPUNG SELATAN",
+              "city": "Lampung",
+              "coordinates": {
+                "lat": -5.4234,
+                "lng": 105.2678
+              }
+            },
+            {
+              "name": "LaundryKlin Lumba Lumba Pekanbaru",
+              "address": "Lumba Lumba Harapan Raya, Tangkerang Selatan",
+              "city": "Pekanbaru",
+              "coordinates": {
+                "lat": 0.5234,
+                "lng": 101.4567
+              }
+            },
+            {
+              "name": "LaundryKlin Harapan Raya Pekanbaru",
+              "address": "Jl. Surabaya No. 96 B, Tangkerang Selatan",
+              "city": "Pekanbaru",
+              "coordinates": {
+                "lat": 0.5156,
+                "lng": 101.4678
+              }
+            },
+            {
+              "name": "LaundryKlin Sukajadi Pekanbaru",
+              "address": "Jl. Balam Ujung No. 25, Sukajadi",
+              "city": "Pekanbaru",
+              "coordinates": {
+                "lat": 0.4934,
+                "lng": 101.4234
+              }
+            },
+            {
+              "name": "LaundryKlin Delima Pekanbaru",
+              "address": "Ruko Hijau S-05, Jl. Melati Indah, Delima",
+              "city": "Pekanbaru",
+              "coordinates": {
+                "lat": 0.4789,
+                "lng": 101.4389
+              }
+            },
+            {
+              "name": "LaundryKlin Dharma Bakti Pekanbaru",
+              "address": "Jalan Sidodadi no 8, Labuh Baru Barat",
+              "city": "Pekanbaru",
+              "coordinates": {
+                "lat": 0.5012,
+                "lng": 101.4123
+              }
+            },
+            {
+              "name": "LaundryKlin Seroja Pekanbaru",
+              "address": "JALAN SEROJA NO.48 A",
+              "city": "Pekanbaru",
+              "coordinates": {
+                "lat": 0.5089,
+                "lng": 101.4456
+              }
+            }
+          ]
+        },
+        {
+          "region": "Kalimantan",
+          "outlets": [
+            {
+              "name": "LaundryKlin Karang Anyar Tarakan",
+              "address": "Jl. Jend. Sudirman No 9 RT 17, Tarakan Barat",
+              "city": "Tarakan",
+              "coordinates": {
+                "lat": 3.3234,
+                "lng": 117.5789
+              }
+            },
+            {
+              "name": "LaundryKlin Samarinda Seberang",
+              "address": "Jl. Sultan Hasanuddin No. 13 Baqa",
+              "city": "Samarinda",
+              "coordinates": {
+                "lat": -0.4934,
+                "lng": 117.1234
+              }
+            },
+            {
+              "name": "LaundryKlin Samarinda",
+              "address": "Jl. Danau Toba No.21, Sungai Pinang Luar",
+              "city": "Samarinda",
+              "coordinates": {
+                "lat": -0.4789,
+                "lng": 117.1456
+              }
+            },
+            {
+              "name": "LaundryKlin Pisa Palangkaraya",
+              "address": "Jl. Temanggung Tilung Induk, Jekan Raya",
+              "city": "Palangka Raya",
+              "coordinates": {
+                "lat": -2.2234,
+                "lng": 113.9234
+              }
+            },
+            {
+              "name": "LaundryKlin Palangka Raya",
+              "address": "Jl. Sangga Buana I No. 668",
+              "city": "Palangka Raya",
+              "coordinates": {
+                "lat": -2.2134,
+                "lng": 113.9345
+              }
+            },
+            {
+              "name": "LaundryKlin Tabalong",
+              "address": "Pembataan, Murung Pudak, Tabalong",
+              "city": "Tabalong",
+              "coordinates": {
+                "lat": -2.3456,
+                "lng": 115.4567
+              }
+            },
+            {
+              "name": "LaundryKlin Ruko Bandar Balikpapan",
+              "address": "Jl. Jend Sudirman, Ruko Bandar Blok C No 07",
+              "city": "Balikpapan",
+              "coordinates": {
+                "lat": -1.2678,
+                "lng": 116.8234
+              }
+            },
+            {
+              "name": "LaundryKlin Balikpapan",
+              "address": "Jalan Jendral Ahmad Yani No. 37",
+              "city": "Balikpapan",
+              "coordinates": {
+                "lat": -1.2567,
+                "lng": 116.8456
+              }
+            }
+          ]
+        },
+        {
+          "region": "Sulawesi",
+          "outlets": [
+            {
+              "name": "LaundryKlin Cendrawasih Makassar",
+              "address": "Jl. Cendrawasih No 242, Marisoh",
+              "city": "Makassar",
+              "coordinates": {
+                "lat": -5.1567,
+                "lng": 119.4234
+              }
+            },
+            {
+              "name": "LaundryKlin Dr Sutomo Manado",
+              "address": "Jl. Dr Sutomo No 10A, Pinaesaan Wenang",
+              "city": "Manado",
+              "coordinates": {
+                "lat": 1.4789,
+                "lng": 124.8456
+              }
+            },
+            {
+              "name": "LaundryKlin PLC Bitung",
+              "address": "Gedung Peoplesight Learning Center (PLC) Jalan 46",
+              "city": "Bitung",
+              "coordinates": {
+                "lat": 1.4456,
+                "lng": 125.1234
+              }
+            }
+          ]
+        },
+        {
+          "region": "Bali & Nusa Tenggara",
+          "outlets": [
+            {
+              "name": "LaundryKlin Renon Bali",
+              "address": "Jl. Tukad Yeh Aya No.99x, Renon, Denpasar Selatan",
+              "city": "Denpasar",
+              "coordinates": {
+                "lat": -8.6789,
+                "lng": 115.2234
+              }
+            },
+            {
+              "name": "LaundryKlin Denpasar",
+              "address": "Jalan Seroja no 59, Tonja, Denpasar Utara",
+              "city": "Denpasar",
+              "coordinates": {
+                "lat": -8.6345,
+                "lng": 115.2123
+              }
+            },
+            {
+              "name": "LaundryKlin Singaraja",
+              "address": "Jl. Srikandi no 10x, Baktiseraga",
+              "city": "Singaraja",
+              "coordinates": {
+                "lat": -8.1234,
+                "lng": 115.0912
+              }
+            },
+            {
+              "name": "LaundryKlin Lombok",
+              "address": "Jl. Yos Sudarso 118, Ampenan",
+              "city": "Mataram",
+              "coordinates": {
+                "lat": -8.5789,
+                "lng": 116.0867
+              }
+            }
+          ]
+        },
+        {
+          "region": "Kepulauan Riau",
+          "outlets": [
+            {
+              "name": "LaundryKlin Amanah Tiban Batam",
+              "address": "Komp. Ruko Golden Wealth Blok C No. 2, Tiban Baru",
+              "city": "Batam",
+              "coordinates": {
+                "lat": 1.0456,
+                "lng": 104.0234
+              }
+            },
+            {
+              "name": "LaundryKlin Batam",
+              "address": "Ruko Golden Gate Blok A No 6",
+              "city": "Batam",
+              "coordinates": {
+                "lat": 1.0567,
+                "lng": 104.0345
+              }
+            },
+            {
+              "name": "LaundryKlin Pemuda Tanjung Pinang",
+              "address": "Jalan Pemuda, No 10A",
+              "city": "Tanjung Pinang",
+              "coordinates": {
+                "lat": 0.9234,
+                "lng": 104.4512
+              }
+            },
+            {
+              "name": "LaundryKlin KM 11 Tanjung Pinang",
+              "address": "Jl. Arah Tj. Uban Km. 11 No 15",
+              "city": "Tanjung Pinang",
+              "coordinates": {
+                "lat": 0.9345,
+                "lng": 104.4634
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
