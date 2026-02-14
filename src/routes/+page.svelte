@@ -4,6 +4,7 @@
     import Sidebar from "$lib/components/Sidebar.svelte";
     import MapComponent from "$lib/components/Map.svelte";
     import OutletDetail from "$lib/components/OutletDetail.svelte";
+    import AiChat from "$lib/components/AiChat.svelte";
     import { brands, outlets, selectedBrands, isLoading } from "$lib/stores";
     import { getBrands, getAllOutletsWithBrands } from "$lib/pocketbase";
 
@@ -157,5 +158,6 @@
         <Sidebar />
         <MapComponent />
         <OutletDetail />
+        <AiChat />
     </main>
 </div>

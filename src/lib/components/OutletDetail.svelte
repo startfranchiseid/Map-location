@@ -123,11 +123,7 @@
     {@const images = getAllImages(outlet)}
 
     <!-- Backdrop overlay -->
-    <button
-        class="detail-backdrop"
-        onclick={closeDetail}
-        aria-label="Close detail"
-    ></button>
+    <!-- Backdrop removed to allow interaction with map -->
 
     <div class="detail-panel">
         <div class="detail-view">
@@ -518,7 +514,7 @@
     .detail-panel {
         position: fixed;
         top: 96px;
-        right: 16px;
+        right: 0; /* Docked to right */
         bottom: 16px;
         width: 400px;
         z-index: 800;
@@ -526,11 +522,10 @@
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
         border: 1px solid var(--border-color);
-        border-radius: 20px;
+        border-right: none;
+        border-radius: 20px 0 0 20px; /* Rounded only on left */
         overflow: hidden;
-        box-shadow:
-            0 8px 40px rgba(0, 0, 0, 0.3),
-            0 0 0 1px rgba(139, 92, 246, 0.1);
+        box-shadow: -5px 0 30px rgba(0, 0, 0, 0.2);
         animation: slideInRight 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 

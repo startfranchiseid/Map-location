@@ -11,11 +11,11 @@
 </script>
 
 <header class="floating-header">
-    <div class="header-left">
+    <div class="header-left" style="width: 360px; justify-content: center;">
         <div class="logo">
             <div
                 class="logo-icon"
-                style="width: auto; height: 42px; border-radius: 0; background: transparent; box-shadow: none; margin-left: 10px;"
+                style="width: auto; height: 42px; border-radius: 0; background: transparent; box-shadow: none;"
             >
                 <img
                     src="https://images.squarespace-cdn.com/content/v1/682ec1d094b8a51d6d2c11f2/86851417-4055-4325-a7a3-3600441e6fcd/2025-05-22+13.33.35.jpg?format=1500w"

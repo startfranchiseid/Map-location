@@ -24,9 +24,13 @@
 		"vite": "^7.2.6"
 	},
 	"dependencies": {
+		"@ai-sdk/google": "^3.0.29",
+		"@ai-sdk/openai": "^3.0.29",
+		"ai": "^6.0.86",
 		"dotenv": "^17.2.3",
 		"maplibre-gl": "^5.16.0",
 		"node-fetch": "^3.3.2",
+		"openai": "^6.22.0",
 		"pg": "^8.17.2",
 		"pocketbase": "^0.26.6"
 	}
