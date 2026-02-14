@@ -11,6 +11,7 @@
         isNavigating,
         navigationTarget,
         routeCoordinates,
+        selectedOutlet,
         type MapStyleType,
     } from "$lib/stores";
     import { getLogoUrl } from "$lib/pocketbase";
@@ -25,6 +26,10 @@
     let isMapStylePanelOpen = false;
     let isLocating = false;
     let routeLayer: string | null = null;
+    let clusterSourceAdded = false;
+
+    // Brand logo cache for performance
+    const brandLogoCache = new Map<string, string>();
 
     // Map styles configuration
     const mapStyles = {
@@ -222,15 +227,241 @@
     }
 
     function updateMarkers(outlets: Outlet[]) {
+        // Clear old markers
         markers.forEach((m) => m.remove());
         markers = [];
+        // Clear unclustered markers from cluster mode
+        unclusteredMarkers.forEach(m => m.remove());
+        unclusteredMarkers = [];
+
+        // For large datasets, use clustering via GeoJSON source
+        if (outlets.length > 100) {
+            updateMarkersWithClustering(outlets);
+            return;
+        }
+
+        // For smaller datasets, use individual markers
+        updateMarkersIndividual(outlets);
+    }
+
+    // Track unclustered markers created in cluster mode
+    let unclusteredMarkers: maplibregl.Marker[] = [];
+
+    function updateMarkersWithClustering(outlets: Outlet[]) {
+        // Create GeoJSON FeatureCollection
+        const geojson: GeoJSON.FeatureCollection = {
+            type: 'FeatureCollection',
+            features: outlets.map(outlet => ({
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [outlet.longitude, outlet.latitude]
+                },
+                properties: {
+                    id: outlet.id,
+                    name: outlet.name,
+                    brand: outlet.brand,
+                    address: outlet.address,
+                    city: outlet.city,
+                    region: outlet.region
+                }
+            }))
+        };
+
+        // Add or update source
+        if (map.getSource('outlets')) {
+            (map.getSource('outlets') as maplibregl.GeoJSONSource).setData(geojson);
+        } else {
+            // Add clustering source
+            map.addSource('outlets', {
+                type: 'geojson',
+                data: geojson,
+                cluster: true,
+                clusterMaxZoom: 14,
+                clusterRadius: 50
+            });
+
+            // Cluster circles
+            map.addLayer({
+                id: 'clusters',
+                type: 'circle',
+                source: 'outlets',
+                filter: ['has', 'point_count'],
+                paint: {
+                    'circle-color': [
+                        'step',
+                        ['get', 'point_count'],
+                        '#51bbd6',
+                        10, '#f1f075',
+                        50, '#f28cb1'
+                    ],
+                    'circle-radius': [
+                        'step',
+                        ['get', 'point_count'],
+                        20, 10,
+                        30, 50,
+                        40
+                    ],
+                    'circle-stroke-width': 2,
+                    'circle-stroke-color': '#fff'
+                }
+            });
+
+            // Cluster count labels
+            map.addLayer({
+                id: 'cluster-count',
+                type: 'symbol',
+                source: 'outlets',
+                filter: ['has', 'point_count'],
+                layout: {
+                    'text-field': '{point_count_abbreviated}',
+                    'text-font': ['Open Sans Bold'],
+                    'text-size': 12
+                },
+                paint: {
+                    'text-color': '#000'
+                }
+            });
+
+            // Click handlers for clusters
+            map.on('click', 'clusters', async (e) => {
+                const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+                const clusterId = features[0].properties.cluster_id;
+                const source = map.getSource('outlets') as maplibregl.GeoJSONSource;
+                
+                const zoom = await source.getClusterExpansionZoom(clusterId);
+                map.easeTo({
+                    center: (features[0].geometry as GeoJSON.Point).coordinates as [number, number],
+                    zoom: zoom
+                });
+            });
+
+            // Cursor styling for clusters
+            map.on('mouseenter', 'clusters', () => {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+            map.on('mouseleave', 'clusters', () => {
+                map.getCanvas().style.cursor = '';
+            });
+
+            clusterSourceAdded = true;
+        }
+
+        // Use 'render' event to show brand logo markers for unclustered points
+        const renderUnclusteredMarkers = () => {
+            if (!map.getSource('outlets')) return;
+
+            // Remove old unclustered markers
+            unclusteredMarkers.forEach(m => m.remove());
+            unclusteredMarkers = [];
+
+            // Query unclustered point features currently visible
+            const features = map.querySourceFeatures('outlets', {
+                filter: ['!', ['has', 'point_count']]
+            });
+
+            // Deduplicate by id (querySourceFeatures can return duplicates)
+            const seen = new Set<string>();
+            for (const feature of features) {
+                const props = feature.properties;
+                if (!props || seen.has(props.id)) continue;
+                seen.add(props.id);
+
+                const coords = (feature.geometry as GeoJSON.Point).coordinates as [number, number];
+                const brand = $brands.find(b => b.id === props.brand);
+                const brandName = brand?.name || 'Unknown';
+
+                let logoUrl = brandLogoCache.get(props.brand);
+                if (logoUrl === undefined && brand) {
+                    logoUrl = getLogoUrl('brands', brand.id, brand.logo);
+                    brandLogoCache.set(props.brand, logoUrl);
+                }
+
+                const el = document.createElement('div');
+                el.className = 'custom-marker-wrapper';
+                el.style.cursor = 'pointer';
+
+                if (logoUrl) {
+                    el.innerHTML = `
+                        <div style="width:36px;height:36px;background:white;border-radius:50%;border:2px solid white;box-shadow:0 3px 10px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:transform 0.2s;">
+                            <img src="${logoUrl}" alt="${brandName}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+                        </div>
+                    `;
+                } else {
+                    el.innerHTML = `<div class="custom-marker" style="background:#8b5cf6;"><i class="fas fa-store"></i></div>`;
+                }
+
+                el.addEventListener('mouseenter', () => {
+                    const inner = el.firstElementChild as HTMLElement;
+                    if (inner) inner.style.transform = 'scale(1.25)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    const inner = el.firstElementChild as HTMLElement;
+                    if (inner) inner.style.transform = 'scale(1)';
+                });
+
+                el.addEventListener('click', (evt) => {
+                    evt.stopPropagation();
+                    const outlet = outlets.find(o => o.id === props.id);
+                    if (outlet) {
+                        selectedOutlet.set(outlet);
+                        const sidebar = document.getElementById('sidebar');
+                        if (sidebar && sidebar.classList.contains('hidden')) {
+                            sidebar.classList.remove('hidden');
+                        }
+                        map.flyTo({
+                            center: coords,
+                            zoom: 16,
+                            padding: { left: 400 }
+                        });
+                    }
+                });
+
+                const marker = new maplibregl.Marker({ element: el })
+                    .setLngLat(coords)
+                    .addTo(map);
+
+                unclusteredMarkers.push(marker);
+            }
+        };
+
+        // Remove previous listener if any
+        map.off('render', renderUnclusteredMarkers);
+        // Debounced render to avoid too many updates
+        let renderTimer: ReturnType<typeof setTimeout> | null = null;
+        const debouncedRender = () => {
+            if (renderTimer) clearTimeout(renderTimer);
+            renderTimer = setTimeout(renderUnclusteredMarkers, 100);
+        };
+        map.on('moveend', debouncedRender);
+        map.on('zoomend', debouncedRender);
+        // Also run once immediately
+        renderUnclusteredMarkers();
+    }
+
+    function updateMarkersIndividual(outlets: Outlet[]) {
+        // Remove clustering layers if they exist
+        if (clusterSourceAdded) {
+            ['clusters', 'cluster-count'].forEach(layer => {
+                if (map.getLayer(layer)) map.removeLayer(layer);
+            });
+            if (map.getSource('outlets')) map.removeSource('outlets');
+            clusterSourceAdded = false;
+        }
+        // Clear unclustered markers
+        unclusteredMarkers.forEach(m => m.remove());
+        unclusteredMarkers = [];
 
         outlets.forEach((outlet) => {
             const brand = $brands.find((b) => b.id === outlet.brand);
             const brandName = brand?.name || "Unknown";
-            const logoUrl = brand
-                ? getLogoUrl("brands", brand.id, brand.logo)
-                : "";
+            
+            // Use cached logo URL
+            let logoUrl = brandLogoCache.get(outlet.brand);
+            if (logoUrl === undefined && brand) {
+                logoUrl = getLogoUrl("brands", brand.id, brand.logo);
+                brandLogoCache.set(outlet.brand, logoUrl);
+            }
 
             // Create Custom Marker
             const el = document.createElement("div");
@@ -268,27 +499,24 @@
                 .addTo(map);
 
             el.addEventListener("click", () => {
+                // Remove existing popup if any
                 if (currentPopup) currentPopup.remove();
 
-                currentPopup = new maplibregl.Popup({
-                    offset: [0, -45],
-                    closeButton: true,
-                    closeOnClick: false,
-                    className: "custom-popup",
-                })
-                    .setLngLat([outlet.longitude, outlet.latitude])
-                    .setHTML(createPopupContent(outlet, brandName, logoUrl))
-                    .addTo(map);
+                // Set selected outlet for sidebar
+                selectedOutlet.set(outlet);
 
-                // Attach navigation event after popup is added
-                setTimeout(() => {
-                    const navBtn = document.querySelector(".nav-btn-internal");
-                    if (navBtn) {
-                        navBtn.addEventListener("click", () =>
-                            navigateToOutlet(outlet),
-                        );
-                    }
-                }, 100);
+                // Open sidebar if hidden
+                const sidebar = document.getElementById("sidebar");
+                if (sidebar && sidebar.classList.contains("hidden")) {
+                    sidebar.classList.remove("hidden");
+                }
+
+                // Fly to location
+                map.flyTo({
+                    center: [outlet.longitude, outlet.latitude],
+                    zoom: 16,
+                    padding: { left: 400 }, // Offset for sidebar (desktop)
+                });
             });
 
             markers.push(marker);
@@ -618,7 +846,7 @@
                     class:active={$mapStyle === "default"}
                     onclick={() => setMapStyleType("default")}
                 >
-                    <div class="style-preview default-preview"></div>
+                    <div class="style-preview" style="background-image: url('https://basemaps.cartocdn.com/light_all/5/26/16.png'); background-size: cover; background-position: center;"></div>
                     <span>Default</span>
                 </button>
                 <button
@@ -626,7 +854,7 @@
                     class:active={$mapStyle === "satellite"}
                     onclick={() => setMapStyleType("satellite")}
                 >
-                    <div class="style-preview satellite-preview"></div>
+                    <div class="style-preview" style="background-image: url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/5/16/26'); background-size: cover; background-position: center;"></div>
                     <span>Satelit</span>
                 </button>
                 <button
@@ -634,7 +862,7 @@
                     class:active={$mapStyle === "terrain"}
                     onclick={() => setMapStyleType("terrain")}
                 >
-                    <div class="style-preview terrain-preview"></div>
+                    <div class="style-preview" style="background-image: url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/5/16/26'); background-size: cover; background-position: center;"></div>
                     <span>Terrain</span>
                 </button>
                 <button
@@ -642,7 +870,7 @@
                     class:active={$mapStyle === "3d"}
                     onclick={() => setMapStyleType("3d")}
                 >
-                    <div class="style-preview preview-3d"></div>
+                    <div class="style-preview" style="background-image: url('https://basemaps.cartocdn.com/rastertiles/voyager/5/26/16.png'); background-size: cover; background-position: center;"></div>
                     <span>3D</span>
                 </button>
             </div>
@@ -695,13 +923,16 @@
     .map-style-panel {
         position: absolute;
         top: 20px;
-        right: 70px; /* Positioned to the left of the controls */
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        right: 70px;
+        background: var(--bg-glass);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         padding: 16px;
         z-index: 100;
-        min-width: 200px;
+        min-width: 210px;
     }
 
     .map-style-header {
@@ -710,21 +941,34 @@
         align-items: center;
         margin-bottom: 12px;
         font-weight: 600;
-        color: #1e293b;
+        font-size: 0.9rem;
+        color: var(--text-primary);
     }
 
     .map-style-header .close-btn {
         background: none;
         border: none;
         cursor: pointer;
-        color: #94a3b8;
+        color: var(--text-muted);
         font-size: 14px;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+
+    .map-style-header .close-btn:hover {
+        background: var(--bg-card);
+        color: var(--text-primary);
     }
 
     .map-style-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+        gap: 10px;
     }
 
     .map-style-option {
@@ -734,64 +978,42 @@
         gap: 6px;
         padding: 8px;
         border: 2px solid transparent;
-        border-radius: 8px;
-        background: #f8fafc;
+        border-radius: 12px;
+        background: var(--bg-card);
         cursor: pointer;
         transition: all 0.2s;
     }
 
     .map-style-option:hover {
-        background: #e2e8f0;
+        border-color: var(--accent-primary);
+        transform: translateY(-2px);
     }
 
     .map-style-option.active {
-        border-color: #3b82f6;
-        background: #eff6ff;
+        border-color: var(--accent-primary);
+        background: rgba(139, 92, 246, 0.08);
+        box-shadow: 0 0 0 1px var(--accent-primary);
     }
 
     .map-style-option span {
-        font-size: 11px;
-        font-weight: 500;
-        color: #475569;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        letter-spacing: 0.3px;
+    }
+
+    .map-style-option.active span {
+        color: var(--accent-primary);
     }
 
     .style-preview {
-        width: 50px;
-        height: 50px;
-        border-radius: 6px;
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
         background-size: cover;
         background-position: center;
-    }
-
-    .default-preview {
-        background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
-    }
-
-    .satellite-preview {
-        background: linear-gradient(
-            135deg,
-            #065f46 0%,
-            #064e3b 50%,
-            #022c22 100%
-        );
-    }
-
-    .terrain-preview {
-        background: linear-gradient(
-            135deg,
-            #84cc16 0%,
-            #65a30d 50%,
-            #4d7c0f 100%
-        );
-    }
-
-    :global(.preview-3d) {
-        background: linear-gradient(
-            135deg,
-            #6366f1 0%,
-            #4f46e5 50%,
-            #4338ca 100%
-        );
+        border: 1px solid var(--border-color);
+        overflow: hidden;
     }
 
     .control-fab.loading {

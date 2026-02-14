@@ -1,0 +1,897 @@
+{
+  "title": "Laundrykeun Express",
+  "subTitle": "Laundry Express Bandung",
+  "price": null,
+  "categoryName": "Laundry service",
+  "address": "Jl. Pasundan No.58, Balonggede, Kec. Regol, Kota Bandung, Jawa Barat 40251, Indonesia",
+  "neighborhood": "Balonggede, Regol",
+  "street": "Jl. Pasundan No.58",
+  "city": "Bandung City",
+  "postalCode": "40251",
+  "state": "West Java",
+  "countryCode": "ID",
+  "phone": "+62 851-7248-8338",
+  "phoneUnformatted": "+6285172488338",
+  "claimThisBusiness": false,
+  "location": {
+    "lat": -6.9254394,
+    "lng": 107.6086869
+  },
+  "totalScore": 4.9,
+  "permanentlyClosed": false,
+  "temporarilyClosed": false,
+  "placeId": "ChIJ9150zBbnaC4R41yDXuUES60",
+  "categories": [
+    "Laundry service"
+  ],
+  "fid": "0x2e68e716cc745ef7:0xad4b04e55e835ce3",
+  "cid": "12487079774994521315",
+  "reviewsCount": 630,
+  "imagesCount": 74,
+  "imageCategories": [
+    "All",
+    "Latest",
+    "Videos",
+    "Exterior",
+    "Inside",
+    "Laundry",
+    "By owner",
+    "Street View & 360°"
+  ],
+  "scrapedAt": "2026-01-28T07:26:21.253Z",
+  "googleFoodUrl": null,
+  "hotelAds": [],
+  "openingHours": [
+    {
+      "day": "Monday",
+      "hours": "8 AM to 8 PM"
+    },
+    {
+      "day": "Tuesday",
+      "hours": "8 AM to 8 PM"
+    },
+    {
+      "day": "Wednesday",
+      "hours": "8 AM to 8 PM"
+    },
+    {
+      "day": "Thursday",
+      "hours": "8 AM to 8 PM"
+    },
+    {
+      "day": "Friday",
+      "hours": "8 AM to 8 PM"
+    },
+    {
+      "day": "Saturday",
+      "hours": "8 AM to 8 PM"
+    },
+    {
+      "day": "Sunday",
+      "hours": "8 AM to 8 PM"
+    }
+  ],
+  "peopleAlsoSearch": [
+    {
+      "category": "People also search for",
+      "title": "Laundry Express Bandung (LEB)",
+      "reviewsCount": 407,
+      "totalScore": 4.9
+    },
+    {
+      "category": "People also search for",
+      "title": "Laundry cuci express-kiloan PRIORITY LAUNDRY 24 jam (D’Laundry)Bandung",
+      "reviewsCount": 137,
+      "totalScore": 4.9
+    },
+    {
+      "category": "People also search for",
+      "title": "Laundry Lengkong Besar",
+      "reviewsCount": 88,
+      "totalScore": 4.5
+    },
+    {
+      "category": "People also search for",
+      "title": "Briwash Laundry Express - Asia Afrika",
+      "reviewsCount": 437,
+      "totalScore": 4.9
+    },
+    {
+      "category": "People also search for",
+      "title": "LaundryKlin Asia Afrika",
+      "reviewsCount": 407,
+      "totalScore": 5
+    }
+  ],
+  "placesTags": [],
+  "reviewsTags": [
+    {
+      "title": "smell",
+      "count": 63
+    },
+    {
+      "title": "pickup",
+      "count": 56
+    },
+    {
+      "title": "shirts",
+      "count": 52
+    },
+    {
+      "title": "process",
+      "count": 16
+    },
+    {
+      "title": "perfumes",
+      "count": 12
+    },
+    {
+      "title": "kids",
+      "count": 12
+    },
+    {
+      "title": "lama",
+      "count": 11
+    },
+    {
+      "title": "courier",
+      "count": 7
+    },
+    {
+      "title": "good job",
+      "count": 5
+    },
+    {
+      "title": "packaging",
+      "count": 5
+    }
+  ],
+  "additionalInfo": {
+    "Service options": [
+      {
+        "Online estimates": true
+      },
+      {
+        "Onsite services": true
+      }
+    ],
+    "Accessibility": [
+      {
+        "Wheelchair accessible entrance": true
+      },
+      {
+        "Wheelchair accessible restroom": true
+      },
+      {
+        "Wheelchair accessible seating": true
+      }
+    ]
+  },
+  "gasPrices": [],
+  "url": "https://www.google.com/maps/search/?api=1&query=Laundrykeun%20Express&query_place_id=ChIJ9150zBbnaC4R41yDXuUES60",
+  "searchPageUrl": "https://www.google.com/maps/search/Laundry%20Klin%20Indonesia/@-9.026700335729641,140.2106316755776,8z?hl=en",
+  "searchString": "Laundry Klin Indonesia",
+  "language": "en",
+  "rank": 20,
+  "isAdvertisement": false,
+  "imageUrl": "https://lh3.googleusercontent.com/p/AF1QipPN1c1ucb11P1qK0r4tFSblPgK_76cFq9zq-hU7=w408-h544-k-no",
+  "kgmid": "/g/11t3v17mwc",
+  "description": null,
+  "website": null,
+  "locatedIn": null,
+  "floor": null,
+  "plusCode": "3JF5+RF Balonggede, Bandung City, West Java, Indonesia",
+  "menu": null,
+  "reviewsDistribution": {
+    "oneStar": 12,
+    "twoStar": 2,
+    "threeStar": 3,
+    "fourStar": 10,
+    "fiveStar": 603
+  },
+  "reserveTableUrl": null,
+  "hotelStars": null,
+  "hotelDescription": null,
+  "checkInDate": null,
+  "checkOutDate": null,
+  "similarHotelsNearby": null,
+  "hotelReviewSummary": null,
+  "popularTimesLiveText": "A little busy",
+  "popularTimesLivePercent": 61,
+  "popularTimesHistogram": {
+    "Su": [
+      {
+        "hour": 6,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 7,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 8,
+        "occupancyPercent": 28
+      },
+      {
+        "hour": 9,
+        "occupancyPercent": 26
+      },
+      {
+        "hour": 10,
+        "occupancyPercent": 28
+      },
+      {
+        "hour": 11,
+        "occupancyPercent": 33
+      },
+      {
+        "hour": 12,
+        "occupancyPercent": 37
+      },
+      {
+        "hour": 13,
+        "occupancyPercent": 28
+      },
+      {
+        "hour": 14,
+        "occupancyPercent": 20
+      },
+      {
+        "hour": 15,
+        "occupancyPercent": 20
+      },
+      {
+        "hour": 16,
+        "occupancyPercent": 26
+      },
+      {
+        "hour": 17,
+        "occupancyPercent": 51
+      },
+      {
+        "hour": 18,
+        "occupancyPercent": 71
+      },
+      {
+        "hour": 19,
+        "occupancyPercent": 80
+      },
+      {
+        "hour": 20,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 21,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 22,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 23,
+        "occupancyPercent": 0
+      }
+    ],
+    "Mo": [
+      {
+        "hour": 6,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 7,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 8,
+        "occupancyPercent": 40
+      },
+      {
+        "hour": 9,
+        "occupancyPercent": 44
+      },
+      {
+        "hour": 10,
+        "occupancyPercent": 35
+      },
+      {
+        "hour": 11,
+        "occupancyPercent": 33
+      },
+      {
+        "hour": 12,
+        "occupancyPercent": 37
+      },
+      {
+        "hour": 13,
+        "occupancyPercent": 37
+      },
+      {
+        "hour": 14,
+        "occupancyPercent": 37
+      },
+      {
+        "hour": 15,
+        "occupancyPercent": 37
+      },
+      {
+        "hour": 16,
+        "occupancyPercent": 51
+      },
+      {
+        "hour": 17,
+        "occupancyPercent": 75
+      },
+      {
+        "hour": 18,
+        "occupancyPercent": 91
+      },
+      {
+        "hour": 19,
+        "occupancyPercent": 86
+      },
+      {
+        "hour": 20,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 21,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 22,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 23,
+        "occupancyPercent": 0
+      }
+    ],
+    "Tu": [
+      {
+        "hour": 6,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 7,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 8,
+        "occupancyPercent": 33
+      },
+      {
+        "hour": 9,
+        "occupancyPercent": 35
+      },
+      {
+        "hour": 10,
+        "occupancyPercent": 37
+      },
+      {
+        "hour": 11,
+        "occupancyPercent": 28
+      },
+      {
+        "hour": 12,
+        "occupancyPercent": 28
+      },
+      {
+        "hour": 13,
+        "occupancyPercent": 31
+      },
+      {
+        "hour": 14,
+        "occupancyPercent": 40
+      },
+      {
+        "hour": 15,
+        "occupancyPercent": 46
+      },
+      {
+        "hour": 16,
+        "occupancyPercent": 60
+      },
+      {
+        "hour": 17,
+        "occupancyPercent": 77
+      },
+      {
+        "hour": 18,
+        "occupancyPercent": 75
+      },
+      {
+        "hour": 19,
+        "occupancyPercent": 57
+      },
+      {
+        "hour": 20,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 21,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 22,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 23,
+        "occupancyPercent": 0
+      }
+    ],
+    "We": [
+      {
+        "hour": 6,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 7,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 8,
+        "occupancyPercent": 42
+      },
+      {
+        "hour": 9,
+        "occupancyPercent": 35
+      },
+      {
+        "hour": 10,
+        "occupancyPercent": 28
+      },
+      {
+        "hour": 11,
+        "occupancyPercent": 26
+      },
+      {
+        "hour": 12,
+        "occupancyPercent": 26
+      },
+      {
+        "hour": 13,
+        "occupancyPercent": 31
+      },
+      {
+        "hour": 14,
+        "occupancyPercent": 42
+      },
+      {
+        "hour": 15,
+        "occupancyPercent": 48
+      },
+      {
+        "hour": 16,
+        "occupancyPercent": 60
+      },
+      {
+        "hour": 17,
+        "occupancyPercent": 66
+      },
+      {
+        "hour": 18,
+        "occupancyPercent": 77
+      },
+      {
+        "hour": 19,
+        "occupancyPercent": 77
+      },
+      {
+        "hour": 20,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 21,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 22,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 23,
+        "occupancyPercent": 0
+      }
+    ],
+    "Th": [
+      {
+        "hour": 6,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 7,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 8,
+        "occupancyPercent": 33
+      },
+      {
+        "hour": 9,
+        "occupancyPercent": 40
+      },
+      {
+        "hour": 10,
+        "occupancyPercent": 46
+      },
+      {
+        "hour": 11,
+        "occupancyPercent": 60
+      },
+      {
+        "hour": 12,
+        "occupancyPercent": 51
+      },
+      {
+        "hour": 13,
+        "occupancyPercent": 42
+      },
+      {
+        "hour": 14,
+        "occupancyPercent": 40
+      },
+      {
+        "hour": 15,
+        "occupancyPercent": 55
+      },
+      {
+        "hour": 16,
+        "occupancyPercent": 57
+      },
+      {
+        "hour": 17,
+        "occupancyPercent": 71
+      },
+      {
+        "hour": 18,
+        "occupancyPercent": 71
+      },
+      {
+        "hour": 19,
+        "occupancyPercent": 73
+      },
+      {
+        "hour": 20,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 21,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 22,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 23,
+        "occupancyPercent": 0
+      }
+    ],
+    "Fr": [
+      {
+        "hour": 6,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 7,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 8,
+        "occupancyPercent": 46
+      },
+      {
+        "hour": 9,
+        "occupancyPercent": 57
+      },
+      {
+        "hour": 10,
+        "occupancyPercent": 55
+      },
+      {
+        "hour": 11,
+        "occupancyPercent": 51
+      },
+      {
+        "hour": 12,
+        "occupancyPercent": 51
+      },
+      {
+        "hour": 13,
+        "occupancyPercent": 66
+      },
+      {
+        "hour": 14,
+        "occupancyPercent": 60
+      },
+      {
+        "hour": 15,
+        "occupancyPercent": 80
+      },
+      {
+        "hour": 16,
+        "occupancyPercent": 84
+      },
+      {
+        "hour": 17,
+        "occupancyPercent": 100
+      },
+      {
+        "hour": 18,
+        "occupancyPercent": 82
+      },
+      {
+        "hour": 19,
+        "occupancyPercent": 75
+      },
+      {
+        "hour": 20,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 21,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 22,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 23,
+        "occupancyPercent": 0
+      }
+    ],
+    "Sa": [
+      {
+        "hour": 6,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 7,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 8,
+        "occupancyPercent": 20
+      },
+      {
+        "hour": 9,
+        "occupancyPercent": 28
+      },
+      {
+        "hour": 10,
+        "occupancyPercent": 33
+      },
+      {
+        "hour": 11,
+        "occupancyPercent": 26
+      },
+      {
+        "hour": 12,
+        "occupancyPercent": 22
+      },
+      {
+        "hour": 13,
+        "occupancyPercent": 33
+      },
+      {
+        "hour": 14,
+        "occupancyPercent": 40
+      },
+      {
+        "hour": 15,
+        "occupancyPercent": 46
+      },
+      {
+        "hour": 16,
+        "occupancyPercent": 55
+      },
+      {
+        "hour": 17,
+        "occupancyPercent": 71
+      },
+      {
+        "hour": 18,
+        "occupancyPercent": 73
+      },
+      {
+        "hour": 19,
+        "occupancyPercent": 75
+      },
+      {
+        "hour": 20,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 21,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 22,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 23,
+        "occupancyPercent": 0
+      }
+    ]
+  },
+  "additionalOpeningHours": null,
+  "openingHoursBusinessConfirmationText": null,
+  "questionsAndAnswers": [],
+  "updatesFromCustomers": {
+    "text": "Gini prosesnya",
+    "language": "id",
+    "postDate": "2 years ago",
+    "postedBy": {
+      "name": "Murti murti",
+      "url": "https://www.google.com/maps/contrib/108733346437329349350?hl=en-US",
+      "title": null,
+      "totalReviews": 0
+    },
+    "media": [
+      {
+        "link": "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvTWbSm8EN3Scao0o_xfuqVJ10Sy1_N0MadhFfLUZojyP2Eetrh7KvS-jm1d8DobT-zald9NPatAiCfjP6I7b1T0V_nJA4Fj1QFp6EJgvE7GhZ93kppV8ykbktk8OfDXCIbDfqh",
+        "postDate": "2 years ago"
+      }
+    ]
+  },
+  "inputPlaceId": null,
+  "userPlaceNote": null,
+  "webResults": [],
+  "tableReservationLinks": [],
+  "bookingLinks": [
+    {
+      "name": "wa.link",
+      "url": "https://wa.link/69mtcy"
+    }
+  ],
+  "orderOnline": {
+    "pickUps": [],
+    "deliveries": []
+  },
+  "orderBy": [],
+  "restaurantData": {
+    "tableReservationProvider": null
+  },
+  "ownerUpdates": [],
+  "imageUrls": [
+    "https://lh3.googleusercontent.com/p/AF1QipPN1c1ucb11P1qK0r4tFSblPgK_76cFq9zq-hU7=w1920-h1080-k-no"
+  ],
+  "images": null,
+  "reviews": [
+    {
+      "reviewerId": "101123683108961585368",
+      "reviewerUrl": "https://www.google.com/maps/contrib/101123683108961585368?hl=en",
+      "name": "Wulan Mukharohmah",
+      "reviewerNumberOfReviews": 2,
+      "isLocalGuide": false,
+      "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocIyCKSUsF0E-suPKpef5YeITMU0Bohg7jH28NVjJRS8JKnwlg=s1920-c-rp-mo-br100",
+      "text": "Udah beberapa kali laundry disini, puas banget sama pelayanan nya. Udh gt harganya terjangkau",
+      "textTranslated": "I've had my laundry done here several times and I'm very satisfied with the service. The prices are also affordable.",
+      "publishAt": "a week ago",
+      "publishedAtDate": "2026-01-19T14:08:53.446Z",
+      "likesCount": 0,
+      "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2xWNFNWTXliMVl4TkdadFJVVk9kMUp3WlU1VWFIYxAB",
+      "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xWNFNWTXliMVl4TkdadFJVVk9kMUp3WlU1VWFIYxAB!2m1!1s0x0:0xad4b04e55e835ce3!3m1!1s2@1:CAIQACodChtycF9oOlV4SVMyb1YxNGZtRUVOd1JwZU5UaHc%7C0dQYfpPb15p%7C?hl=en",
+      "reviewOrigin": "Google",
+      "stars": 5,
+      "rating": null,
+      "responseFromOwnerDate": "2026-01-24T16:14:33.000Z",
+      "responseFromOwnerText": "Alhamdulillah, makasi banget looo kak wulan reviewnya.. Semoga cocok ya kak nyuci di laundrykeun 😁🤟",
+      "reviewImageUrls": [],
+      "reviewContext": {},
+      "reviewDetailedRating": {},
+      "visitedIn": null,
+      "originalLanguage": "id",
+      "translatedLanguage": "en"
+    },
+    {
+      "reviewerId": "107835595447599509130",
+      "reviewerUrl": "https://www.google.com/maps/contrib/107835595447599509130?hl=en",
+      "name": "Nadya Syafarina",
+      "reviewerNumberOfReviews": 5,
+      "isLocalGuide": false,
+      "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjUFsB6RFh4NtfkiGh6Hk7jhZWvs4JK7XALsE5dlX_0MUok4V8i0=s1920-c-rp-mo-br100",
+      "text": "Udah sering laundry disini dan ga pernah mengecewakan",
+      "textTranslated": "I've had laundry done here many times and it's never disappointing.",
+      "publishAt": "a week ago",
+      "publishedAtDate": "2026-01-17T07:24:38.002Z",
+      "likesCount": 0,
+      "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2tjMmQyVkNOMjlUWDB4RVowNWxlWEp2YVVGaVRuYxAB",
+      "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tjMmQyVkNOMjlUWDB4RVowNWxlWEp2YVVGaVRuYxAB!2m1!1s0x0:0xad4b04e55e835ce3!3m1!1s2@1:CAIQACodChtycF9oOkc2d2VCN29TX0xEZ05leXJvaUFiTnc%7C0dPnZq-8B5-%7C?hl=en",
+      "reviewOrigin": "Google",
+      "stars": 5,
+      "rating": null,
+      "responseFromOwnerDate": "2026-01-18T09:27:50.000Z",
+      "responseFromOwnerText": "Tks kak nadya, semoga cocok ya dengan laundrykeun... Yuk ajkin temennya yang lain",
+      "reviewImageUrls": [],
+      "reviewContext": {},
+      "reviewDetailedRating": {},
+      "visitedIn": null,
+      "originalLanguage": "id",
+      "translatedLanguage": "en"
+    },
+    {
+      "reviewerId": "103804211000013193081",
+      "reviewerUrl": "https://www.google.com/maps/contrib/103804211000013193081?hl=en",
+      "name": "Ahmad Rubin",
+      "reviewerNumberOfReviews": 1,
+      "isLocalGuide": false,
+      "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocL6IT_oULHa61t2LRQOSgBN6KYisTsu3nv08tJtl0G0PQoXmw=s1920-c-rp-mo-br100",
+      "text": "Nyari2 laundry yang bersih dan wangi, ternyata cocoknya disini. Sangat memuaskan",
+      "textTranslated": "Looking for a clean and fragrant laundry, it turned out to be the right place. Very satisfying.",
+      "publishAt": "a week ago",
+      "publishedAtDate": "2026-01-16T09:05:01.574Z",
+      "likesCount": 0,
+      "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2xJdFdGSnhVREV4YVhoYU5sWjZRVEZ4UjA5eU4xRRAB",
+      "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xJdFdGSnhVREV4YVhoYU5sWjZRVEZ4UjA5eU4xRRAB!2m1!1s0x0:0xad4b04e55e835ce3!3m1!1s2@1:CAIQACodChtycF9oOlItWFJxUDExaXhaNlZ6QTFxR09yN1E%7C0dPUwxXE5I3%7C?hl=en",
+      "reviewOrigin": "Google",
+      "stars": 5,
+      "rating": null,
+      "responseFromOwnerDate": null,
+      "responseFromOwnerText": null,
+      "reviewImageUrls": [],
+      "reviewContext": {},
+      "reviewDetailedRating": {},
+      "visitedIn": null,
+      "originalLanguage": "id",
+      "translatedLanguage": "en"
+    },
+    {
+      "reviewerId": "110680511112872918604",
+      "reviewerUrl": "https://www.google.com/maps/contrib/110680511112872918604?hl=en",
+      "name": "clarine pracesthaa",
+      "reviewerNumberOfReviews": 2,
+      "isLocalGuide": false,
+      "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjW2BPHiexmQ8ExNg6YSaGDnv3xDjmUTaWX-VXhwEV5MGtWe3Vg=s1920-c-rp-mo-br100",
+      "text": "Laundry disini best banget , cuciannya wangi bersih nggak nyesel deh laundry disini",
+      "textTranslated": "The laundry here is the best, the laundry smells clean, you won't regret doing laundry here.",
+      "publishAt": "a week ago",
+      "publishedAtDate": "2026-01-15T13:17:53.352Z",
+      "likesCount": 0,
+      "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2pCV2IyTXdkVVZSTlVWNmNYcEdXRkozV0RsU1lWRRAB",
+      "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pCV2IyTXdkVVZSTlVWNmNYcEdXRkozV0RsU1lWRRAB!2m1!1s0x0:0xad4b04e55e835ce3!3m1!1s2@1:CAIQACodChtycF9oOjBWb2MwdUVRNUV6cXpGWFJ3WDlSYVE%7C0dPDZ0Jzsf3%7C?hl=en",
+      "reviewOrigin": "Google",
+      "stars": 5,
+      "rating": null,
+      "responseFromOwnerDate": null,
+      "responseFromOwnerText": null,
+      "reviewImageUrls": [],
+      "reviewContext": {},
+      "reviewDetailedRating": {},
+      "visitedIn": null,
+      "originalLanguage": "id",
+      "translatedLanguage": "en"
+    },
+    {
+      "reviewerId": "113547183455830673070",
+      "reviewerUrl": "https://www.google.com/maps/contrib/113547183455830673070?hl=en",
+      "name": "rafazarrumahjahit",
+      "reviewerNumberOfReviews": 1,
+      "isLocalGuide": false,
+      "reviewerPhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjUXhV5dMIJkvL_a_SjkbKa12g52xFkMxctBEZIj3OasrP6ykytS=s1920-c-rp-mo-br100",
+      "text": "Udah langganan banget laundry disini, bersih, wangi, pelayanan ke customer juga enak banget. best banget",
+      "textTranslated": "I've been a regular laundry customer here. It's clean, fragrant, and the customer service is also really good. It's the best.",
+      "publishAt": "a week ago",
+      "publishedAtDate": "2026-01-15T07:19:35.044Z",
+      "likesCount": 0,
+      "reviewId": "Ci9DQUlRQUNvZENodHljRjlvT2pkR1dVTTFTM05WYVdSRGJHOXBUblJ1UnpVeU1GRRAB",
+      "reviewUrl": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pkR1dVTTFTM05WYVdSRGJHOXBUblJ1UnpVeU1GRRAB!2m1!1s0x0:0xad4b04e55e835ce3!3m1!1s2@1:CAIQACodChtycF9oOjdGWUM1S3NVaWRDbG9pTnRuRzUyMFE%7C0dP8J61ddYu%7C?hl=en",
+      "reviewOrigin": "Google",
+      "stars": 5,
+      "rating": null,
+      "responseFromOwnerDate": null,
+      "responseFromOwnerText": null,
+      "reviewImageUrls": [],
+      "reviewContext": {},
+      "reviewDetailedRating": {},
+      "visitedIn": null,
+      "originalLanguage": "id",
+      "translatedLanguage": "en"
+    }
+  ],
+  "leadsEnrichment": []
+}

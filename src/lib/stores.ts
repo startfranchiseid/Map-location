@@ -21,6 +21,7 @@ export const userLocation = writable<{ lat: number; lng: number } | null>(null);
 export const isNavigating = writable<boolean>(false);
 export const navigationTarget = writable<Outlet | null>(null);
 export const routeCoordinates = writable<[number, number][]>([]);
+export const selectedOutlet = writable<Outlet | null>(null);
 
 // Derived store for filtered outlets
 export const filteredOutlets = derived(
