@@ -3,6 +3,7 @@
     import Header from "$lib/components/Header.svelte";
     import Sidebar from "$lib/components/Sidebar.svelte";
     import MapComponent from "$lib/components/Map.svelte";
+    import OutletDetail from "$lib/components/OutletDetail.svelte";
     import { brands, outlets, selectedBrands, isLoading } from "$lib/stores";
     import { getBrands, getAllOutletsWithBrands } from "$lib/pocketbase";
 
@@ -13,43 +14,50 @@
         try {
             const startTime = performance.now();
             console.log("Starting data load...");
-            
+
             loadingText = "Mengambil data brand...";
             loadingProgress = 20;
-            
-            // Fetch brands and outlets in parallel for faster loading
-            const [brandsData, outletsData] = await Promise.all([
-                getBrands(),
-                getAllOutletsWithBrands()
-            ]);
-            
-            loadingProgress = 70;
-            loadingText = "Memproses data...";
-            
+
+            // Phase 1: Fetch brands first to unblock UI
+            const brandsData = await getBrands();
+
+            loadingProgress = 50;
+            loadingText = "Memproses data brand...";
+
             console.log("Brands loaded:", brandsData.length);
-            console.log("Outlets loaded:", outletsData.length);
-            
             brands.set(brandsData);
 
-            // Select all brands by default
+            // Select all brands so toggles are active and outlets show on initial load
             selectedBrands.set(new Set(brandsData.map((b) => b.id)));
 
+            // Unblock UI immediately
+            isLoading.set(false);
+
+            // Phase 2: Fetch outlets in background
+            loadingText = "Memuat data outlet...";
+            // Although isLoading is false, we can still update loadingText if we want to show a toast or small indicator,
+            // but here the main overlay is gone. We fetch data now.
+
+            const outletsData = await getAllOutletsWithBrands();
+            console.log("Outlets loaded (background):", outletsData.length);
+
             if (outletsData.length === 0) {
-                console.warn("No outlets returned from API. Checking fallback...");
+                console.warn("No outlets returned from API or cache.");
             }
 
             outlets.set(outletsData);
-            
-            loadingProgress = 100;
-            
-            const loadTime = ((performance.now() - startTime) / 1000).toFixed(2);
-            console.log(`Data loaded in ${loadTime}s`);
 
-            isLoading.set(false);
+            const loadTime = ((performance.now() - startTime) / 1000).toFixed(
+                2,
+            );
+            console.log(`Total data loaded in ${loadTime}s`);
         } catch (error) {
             console.error("Error loading data:", error);
-            loadingText = "Gagal memuat data. Menggunakan data lokal...";
-            await loadLocalData();
+            // If brands failed, we might want to try local data
+            if ($brands.length === 0) {
+                loadingText = "Gagal memuat data. Menggunakan data lokal...";
+                await loadLocalData();
+            }
         }
     });
 
@@ -69,7 +77,9 @@
             const processedOutlets: any[] = [];
 
             for (const brand of data.brands) {
-                const brandId = brand.brandName.toLowerCase().replace(/\s+/g, "-");
+                const brandId = brand.brandName
+                    .toLowerCase()
+                    .replace(/\s+/g, "-");
                 brandsMap.set(brandId, {
                     id: brandId,
                     name: brand.brandName,
@@ -83,7 +93,10 @@
                 const processOutlets = (outlets: any[], region?: string) => {
                     if (!outlets) return;
                     for (const outlet of outlets) {
-                        if (outlet.coordinates?.lat && outlet.coordinates?.lng) {
+                        if (
+                            outlet.coordinates?.lat &&
+                            outlet.coordinates?.lng
+                        ) {
                             processedOutlets.push({
                                 id: `${brandId}-${processedOutlets.length}`,
                                 brand: brandId,
@@ -129,7 +142,10 @@
                 <div class="loading-spinner"></div>
                 <div class="loading-text">{loadingText}</div>
                 <div class="loading-progress-bar">
-                    <div class="loading-progress-fill" style="width: {loadingProgress}%"></div>
+                    <div
+                        class="loading-progress-fill"
+                        style="width: {loadingProgress}%"
+                    ></div>
                 </div>
             </div>
         </div>
@@ -140,5 +156,6 @@
     <main class="main-content">
         <Sidebar />
         <MapComponent />
+        <OutletDetail />
     </main>
 </div>

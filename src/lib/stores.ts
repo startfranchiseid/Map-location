@@ -29,26 +29,32 @@ export const filteredOutlets = derived(
     ([$outlets, $brands, $selectedBrands, $selectedCategory, $searchQuery]) => {
         let result = $outlets;
 
-        // Filter by Category
-        if ($selectedCategory !== 'All') {
-            // Find brands that belong to the selected category
-            const brandsInCategory = new Set($brands.filter(b => b.category === $selectedCategory).map(b => b.id));
-            // Filter outlets that belong to those brands
-            result = result.filter(outlet => brandsInCategory.has(outlet.brand));
-        }
-
-        // Filter by selected brands
-        result = result.filter(outlet => $selectedBrands.has(outlet.brand));
-
-        // Filter by search query
+        // 1. Apply Search or Category Filter
         if ($searchQuery.trim()) {
+            // Search overrides Category filter
             const query = $searchQuery.toLowerCase();
             result = result.filter(outlet =>
                 outlet.name.toLowerCase().includes(query) ||
                 outlet.address.toLowerCase().includes(query) ||
                 outlet.city.toLowerCase().includes(query) ||
-                outlet.region?.toLowerCase().includes(query)
+                outlet.region?.toLowerCase().includes(query) ||
+                // Also search by brand name
+                ($brands.find(b => b.id === outlet.brand)?.name.toLowerCase().includes(query))
             );
+        } else if ($selectedCategory !== 'All') {
+            // Filter by Category (only if no search)
+            const brandsInCategory = new Set($brands.filter(b => b.category === $selectedCategory).map(b => b.id));
+            result = result.filter(outlet => brandsInCategory.has(outlet.brand));
+        }
+
+        // 2. Filter by Selected Brands (ALWAYS applies)
+        // If selectedBrands is empty, we show nothing (as per typical behavior where unchecking all hides all)
+        // However, we handle the "select all by default" in +page.svelte
+        if ($selectedBrands.size > 0) {
+            result = result.filter(outlet => $selectedBrands.has(outlet.brand));
+        } else {
+            // If nothing selected, return empty
+            result = [];
         }
 
         return result;

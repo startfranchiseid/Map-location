@@ -231,7 +231,7 @@
         markers.forEach((m) => m.remove());
         markers = [];
         // Clear unclustered markers from cluster mode
-        unclusteredMarkers.forEach(m => m.remove());
+        unclusteredMarkers.forEach((m) => m.remove());
         unclusteredMarkers = [];
 
         // For large datasets, use clustering via GeoJSON source
@@ -250,12 +250,12 @@
     function updateMarkersWithClustering(outlets: Outlet[]) {
         // Create GeoJSON FeatureCollection
         const geojson: GeoJSON.FeatureCollection = {
-            type: 'FeatureCollection',
-            features: outlets.map(outlet => ({
-                type: 'Feature',
+            type: "FeatureCollection",
+            features: outlets.map((outlet) => ({
+                type: "Feature",
                 geometry: {
-                    type: 'Point',
-                    coordinates: [outlet.longitude, outlet.latitude]
+                    type: "Point",
+                    coordinates: [outlet.longitude, outlet.latitude],
                 },
                 properties: {
                     id: outlet.id,
@@ -263,85 +263,103 @@
                     brand: outlet.brand,
                     address: outlet.address,
                     city: outlet.city,
-                    region: outlet.region
-                }
-            }))
+                    region: outlet.region,
+                },
+            })),
         };
 
         // Add or update source
-        if (map.getSource('outlets')) {
-            (map.getSource('outlets') as maplibregl.GeoJSONSource).setData(geojson);
+        if (map.getSource("outlets")) {
+            (map.getSource("outlets") as maplibregl.GeoJSONSource).setData(
+                geojson,
+            );
         } else {
             // Add clustering source
-            map.addSource('outlets', {
-                type: 'geojson',
+            map.addSource("outlets", {
+                type: "geojson",
                 data: geojson,
                 cluster: true,
                 clusterMaxZoom: 14,
-                clusterRadius: 50
+                clusterRadius: 50,
             });
 
             // Cluster circles
             map.addLayer({
-                id: 'clusters',
-                type: 'circle',
-                source: 'outlets',
-                filter: ['has', 'point_count'],
+                id: "clusters",
+                type: "circle",
+                source: "outlets",
+                filter: ["has", "point_count"],
                 paint: {
-                    'circle-color': [
-                        'step',
-                        ['get', 'point_count'],
-                        '#51bbd6',
-                        10, '#f1f075',
-                        50, '#f28cb1'
+                    "circle-color": [
+                        "step",
+                        ["get", "point_count"],
+                        "#8b5cf6",
+                        10,
+                        "#06b6d4",
+                        50,
+                        "#f59e0b",
+                        100,
+                        "#ef4444",
                     ],
-                    'circle-radius': [
-                        'step',
-                        ['get', 'point_count'],
-                        20, 10,
-                        30, 50,
-                        40
+                    "circle-radius": [
+                        "step",
+                        ["get", "point_count"],
+                        18,
+                        10,
+                        24,
+                        50,
+                        32,
+                        100,
+                        40,
                     ],
-                    'circle-stroke-width': 2,
-                    'circle-stroke-color': '#fff'
-                }
+                    "circle-stroke-width": 3,
+                    "circle-stroke-color": "rgba(255,255,255,0.6)",
+                    "circle-opacity": 0.85,
+                },
             });
 
             // Cluster count labels
             map.addLayer({
-                id: 'cluster-count',
-                type: 'symbol',
-                source: 'outlets',
-                filter: ['has', 'point_count'],
+                id: "cluster-count",
+                type: "symbol",
+                source: "outlets",
+                filter: ["has", "point_count"],
                 layout: {
-                    'text-field': '{point_count_abbreviated}',
-                    'text-font': ['Open Sans Bold'],
-                    'text-size': 12
+                    "text-field": "{point_count_abbreviated}",
+                    "text-font": ["Open Sans Bold"],
+                    "text-size": 12,
                 },
                 paint: {
-                    'text-color': '#000'
-                }
+                    "text-color": "#fff",
+                    "text-halo-color": "rgba(0,0,0,0.3)",
+                    "text-halo-width": 1,
+                },
             });
 
             // Click handlers for clusters
-            map.on('click', 'clusters', async (e) => {
-                const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+            map.on("click", "clusters", async (e) => {
+                const features = map.queryRenderedFeatures(e.point, {
+                    layers: ["clusters"],
+                });
                 const clusterId = features[0].properties.cluster_id;
-                const source = map.getSource('outlets') as maplibregl.GeoJSONSource;
-                
+                const source = map.getSource(
+                    "outlets",
+                ) as maplibregl.GeoJSONSource;
+
                 const zoom = await source.getClusterExpansionZoom(clusterId);
                 map.easeTo({
-                    center: (features[0].geometry as GeoJSON.Point).coordinates as [number, number],
-                    zoom: zoom
+                    center: (features[0].geometry as GeoJSON.Point)
+                        .coordinates as [number, number],
+                    zoom: zoom,
                 });
             });
 
             // Cursor styling for clusters
-            map.on('mouseenter', 'clusters', () => {
-                map.getCanvas().style.cursor = 'pointer';
+            map.on("mouseenter", "clusters", () => {
+                map.getCanvas().style.cursor = "pointer";
             });
-            map.on('mouseleave', 'clusters', () => {
-                map.getCanvas().style.cursor = '';
+            map.on("mouseleave", "clusters", () => {
+                map.getCanvas().style.cursor = "";
             });
 
             clusterSourceAdded = true;
@@ -349,15 +367,15 @@
 
         // Use 'render' event to show brand logo markers for unclustered points
         const renderUnclusteredMarkers = () => {
-            if (!map.getSource('outlets')) return;
+            if (!map.getSource("outlets")) return;
 
             // Remove old unclustered markers
-            unclusteredMarkers.forEach(m => m.remove());
+            unclusteredMarkers.forEach((m) => m.remove());
             unclusteredMarkers = [];
 
             // Query unclustered point features currently visible
-            const features = map.querySourceFeatures('outlets', {
-                filter: ['!', ['has', 'point_count']]
+            const features = map.querySourceFeatures("outlets", {
+                filter: ["!", ["has", "point_count"]],
             });
 
             // Deduplicate by id (querySourceFeatures can return duplicates)
@@ -367,19 +385,20 @@
                 if (!props || seen.has(props.id)) continue;
                 seen.add(props.id);
 
-                const coords = (feature.geometry as GeoJSON.Point).coordinates as [number, number];
-                const brand = $brands.find(b => b.id === props.brand);
-                const brandName = brand?.name || 'Unknown';
+                const coords = (feature.geometry as GeoJSON.Point)
+                    .coordinates as [number, number];
+                const brand = $brands.find((b) => b.id === props.brand);
+                const brandName = brand?.name || "Unknown";
 
                 let logoUrl = brandLogoCache.get(props.brand);
                 if (logoUrl === undefined && brand) {
-                    logoUrl = getLogoUrl('brands', brand.id, brand.logo);
+                    logoUrl = getLogoUrl("brands", brand.id, brand.logo);
                     brandLogoCache.set(props.brand, logoUrl);
                 }
 
-                const el = document.createElement('div');
-                el.className = 'custom-marker-wrapper';
-                el.style.cursor = 'pointer';
+                const el = document.createElement("div");
+                el.className = "custom-marker-wrapper";
+                el.style.cursor = "pointer";
 
                 if (logoUrl) {
                     el.innerHTML = `
@@ -391,28 +410,28 @@
                     el.innerHTML = `<div class="custom-marker" style="background:#8b5cf6;"><i class="fas fa-store"></i></div>`;
                 }
 
-                el.addEventListener('mouseenter', () => {
+                el.addEventListener("mouseenter", () => {
                     const inner = el.firstElementChild as HTMLElement;
-                    if (inner) inner.style.transform = 'scale(1.25)';
+                    if (inner) inner.style.transform = "scale(1.25)";
                 });
-                el.addEventListener('mouseleave', () => {
+                el.addEventListener("mouseleave", () => {
                     const inner = el.firstElementChild as HTMLElement;
-                    if (inner) inner.style.transform = 'scale(1)';
+                    if (inner) inner.style.transform = "scale(1)";
                 });
 
-                el.addEventListener('click', (evt) => {
+                el.addEventListener("click", (evt) => {
                     evt.stopPropagation();
-                    const outlet = outlets.find(o => o.id === props.id);
+                    const outlet = outlets.find((o) => o.id === props.id);
                     if (outlet) {
                         selectedOutlet.set(outlet);
-                        const sidebar = document.getElementById('sidebar');
-                        if (sidebar && sidebar.classList.contains('hidden')) {
-                            sidebar.classList.remove('hidden');
+                        const sidebar = document.getElementById("sidebar");
+                        if (sidebar && sidebar.classList.contains("hidden")) {
+                            sidebar.classList.remove("hidden");
                         }
                         map.flyTo({
                             center: coords,
                             zoom: 16,
-                            padding: { left: 400 }
+                            padding: { left: 400 },
                         });
                     }
                 });
@@ -426,15 +445,15 @@
         };
 
         // Remove previous listener if any
-        map.off('render', renderUnclusteredMarkers);
+        map.off("render", renderUnclusteredMarkers);
         // Debounced render to avoid too many updates
         let renderTimer: ReturnType<typeof setTimeout> | null = null;
         const debouncedRender = () => {
             if (renderTimer) clearTimeout(renderTimer);
             renderTimer = setTimeout(renderUnclusteredMarkers, 100);
         };
-        map.on('moveend', debouncedRender);
-        map.on('zoomend', debouncedRender);
+        map.on("moveend", debouncedRender);
+        map.on("zoomend", debouncedRender);
         // Also run once immediately
         renderUnclusteredMarkers();
     }
@@ -442,20 +461,20 @@
     function updateMarkersIndividual(outlets: Outlet[]) {
         // Remove clustering layers if they exist
         if (clusterSourceAdded) {
-            ['clusters', 'cluster-count'].forEach(layer => {
+            ["clusters", "cluster-count"].forEach((layer) => {
                 if (map.getLayer(layer)) map.removeLayer(layer);
             });
-            if (map.getSource('outlets')) map.removeSource('outlets');
+            if (map.getSource("outlets")) map.removeSource("outlets");
             clusterSourceAdded = false;
         }
         // Clear unclustered markers
-        unclusteredMarkers.forEach(m => m.remove());
+        unclusteredMarkers.forEach((m) => m.remove());
         unclusteredMarkers = [];
 
         outlets.forEach((outlet) => {
             const brand = $brands.find((b) => b.id === outlet.brand);
             const brandName = brand?.name || "Unknown";
-            
+
             // Use cached logo URL
             let logoUrl = brandLogoCache.get(outlet.brand);
             if (logoUrl === undefined && brand) {
@@ -846,7 +865,10 @@
                     class:active={$mapStyle === "default"}
                     onclick={() => setMapStyleType("default")}
                 >
-                    <div class="style-preview" style="background-image: url('https://basemaps.cartocdn.com/light_all/5/26/16.png'); background-size: cover; background-position: center;"></div>
+                    <div
+                        class="style-preview"
+                        style="background-image: url('https://basemaps.cartocdn.com/light_all/5/26/16.png'); background-size: cover; background-position: center;"
+                    ></div>
                     <span>Default</span>
                 </button>
                 <button
@@ -854,7 +876,10 @@
                     class:active={$mapStyle === "satellite"}
                     onclick={() => setMapStyleType("satellite")}
                 >
-                    <div class="style-preview" style="background-image: url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/5/16/26'); background-size: cover; background-position: center;"></div>
+                    <div
+                        class="style-preview"
+                        style="background-image: url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/5/16/26'); background-size: cover; background-position: center;"
+                    ></div>
                     <span>Satelit</span>
                 </button>
                 <button
@@ -862,7 +887,10 @@
                     class:active={$mapStyle === "terrain"}
                     onclick={() => setMapStyleType("terrain")}
                 >
-                    <div class="style-preview" style="background-image: url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/5/16/26'); background-size: cover; background-position: center;"></div>
+                    <div
+                        class="style-preview"
+                        style="background-image: url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/5/16/26'); background-size: cover; background-position: center;"
+                    ></div>
                     <span>Terrain</span>
                 </button>
                 <button
@@ -870,7 +898,10 @@
                     class:active={$mapStyle === "3d"}
                     onclick={() => setMapStyleType("3d")}
                 >
-                    <div class="style-preview" style="background-image: url('https://basemaps.cartocdn.com/rastertiles/voyager/5/26/16.png'); background-size: cover; background-position: center;"></div>
+                    <div
+                        class="style-preview"
+                        style="background-image: url('https://basemaps.cartocdn.com/rastertiles/voyager/5/26/16.png'); background-size: cover; background-position: center;"
+                    ></div>
                     <span>3D</span>
                 </button>
             </div>

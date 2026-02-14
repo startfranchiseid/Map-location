@@ -92,7 +92,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 32px);
-    max-width: 1400px;
+    max-width: none;
     height: 64px;
     background: var(--bg-glass);
     backdrop-filter: blur(20px);

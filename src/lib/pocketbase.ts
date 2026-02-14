@@ -122,22 +122,22 @@ export async function getAllOutletsWithBrands(): Promise<Outlet[]> {
     try {
         console.log('Fetching outlets from API...');
         const startTime = performance.now();
-        
+
         // Fetch with only essential fields for map
         const records = await pb.collection('outlets').getFullList<any>({
             fields: 'id,brand,name,address,city,region,latitude,longitude,phone,totalScore,reviewsCount',
             batch: 500, // Larger batch for fewer requests
         });
-        
+
         const outlets = records.map(r => ({
             ...r,
             brand: r.brand_id || r.brand
         }));
-        
+
         // Update cache
         outletsCache = outlets;
         outletsCacheTime = now;
-        
+
         console.log(`Fetched ${outlets.length} outlets in ${(performance.now() - startTime).toFixed(0)}ms`);
         return outlets;
     } catch (error) {
@@ -152,8 +152,25 @@ export async function getAllOutletsWithBrands(): Promise<Outlet[]> {
 export async function getOutletDetails(outletId: string): Promise<Outlet | null> {
     try {
         const record = await pb.collection('outlets').getOne(outletId);
+
+        // Helper to ensure full URL for images
+        const getFullUrl = (filename: string) => {
+            if (!filename) return '';
+            if (filename.startsWith('http')) return filename;
+            return `${pb.baseUrl}/api/files/outlets/${record.id}/${filename}`;
+        };
+
+        const imageUrl = record.imageUrl ? getFullUrl(record.imageUrl) : '';
+        const imageUrls = Array.isArray(record.imageUrls)
+            ? record.imageUrls
+                .filter((url: string) => url && url.trim() !== '')
+                .map((url: string) => getFullUrl(url))
+            : [];
+
         return {
             ...record,
+            imageUrl,
+            imageUrls,
             brand: record.brand_id || record.brand,
             googleMapsUrl: record.placeId || record.place_id
                 ? `https://www.google.com/maps/place/?q=place_id:${record.placeId || record.place_id}`

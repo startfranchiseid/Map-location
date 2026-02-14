@@ -13,12 +13,15 @@
 <header class="floating-header">
     <div class="header-left">
         <div class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-map-location-dot"></i>
-            </div>
-            <div class="logo-text">
-                <span class="logo-title">BrandMap</span>
-                <span class="logo-subtitle">Indonesia</span>
+            <div
+                class="logo-icon"
+                style="width: auto; height: 42px; border-radius: 0; background: transparent; box-shadow: none; margin-left: 10px;"
+            >
+                <img
+                    src="https://images.squarespace-cdn.com/content/v1/682ec1d094b8a51d6d2c11f2/86851417-4055-4325-a7a3-3600441e6fcd/2025-05-22+13.33.35.jpg?format=1500w"
+                    alt="Start Franchise"
+                    style="height: 100%; width: auto; object-fit: contain;"
+                />
             </div>
         </div>
     </div>
