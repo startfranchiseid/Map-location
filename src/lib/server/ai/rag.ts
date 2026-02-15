@@ -97,6 +97,15 @@ function extractIntent(message: string): {
     return { brandQuery, cityQuery, categoryQuery, wantsStats, wantsNearest };
 }
 
+function detectBrandQuery(message: string, brands: BrandRecord[]): string | null {
+    const lower = message.toLowerCase();
+    const sorted = [...brands].sort(
+        (a, b) => (b.name?.length || 0) - (a.name?.length || 0),
+    );
+    const match = sorted.find((b) => lower.includes(b.name.toLowerCase()));
+    return match ? match.name : null;
+}
+
 function toTitleCase(value: string): string {
     return value
         .split(' ')
@@ -249,9 +258,14 @@ export async function getSuggestedActions(
         }
     }
 
-    if (intent.brandQuery && brands.length > 0) {
+    let brandQuery = intent.brandQuery;
+    if (!brandQuery && brands.length > 0) {
+        brandQuery = detectBrandQuery(message, brands);
+    }
+
+    if (brandQuery && brands.length > 0) {
         const matchedBrand = brands.find(b =>
-            b.name.toLowerCase().includes(intent.brandQuery!.toLowerCase())
+            b.name.toLowerCase().includes(brandQuery!.toLowerCase())
         );
         if (matchedBrand) {
             actions.push({
@@ -295,9 +309,12 @@ export async function getSuggestedActions(
 
     if (intent.wantsNearest && userLocation) {
         try {
+            const intentWithBrand = brandQuery
+                ? { ...intent, brandQuery }
+                : intent;
             const nearest = await getNearestOutlets(
                 pb,
-                intent,
+                intentWithBrand,
                 brands,
                 userLocation,
             );
@@ -359,10 +376,15 @@ export async function getRelevantContext(
             fields: 'id,name,category,website,total_outlets',
         });
 
+        let brandQuery = intent.brandQuery;
+        if (!brandQuery) {
+            brandQuery = detectBrandQuery(message, brands);
+        }
+
         // 2. If specific brand is mentioned, find it
-        if (intent.brandQuery) {
+        if (brandQuery) {
             const matchedBrand = brands.find(b =>
-                b.name.toLowerCase().includes(intent.brandQuery!.toLowerCase())
+                b.name.toLowerCase().includes(brandQuery!.toLowerCase())
             );
 
             if (matchedBrand) {
@@ -428,9 +450,12 @@ export async function getRelevantContext(
 
         if (intent.wantsNearest && userLocation) {
             try {
+                const intentWithBrand = brandQuery
+                    ? { ...intent, brandQuery }
+                    : intent;
                 const nearest = await getNearestOutlets(
                     pb,
-                    intent,
+                    intentWithBrand,
                     brands,
                     userLocation,
                 );
@@ -461,7 +486,7 @@ export async function getRelevantContext(
                 fields: 'id',
             });
 
-            chunks.push(`\n**Statistik Brand Map Indonesia:**`);
+            chunks.push(`\n**Statistik Map Start Franchise Indonesia:**`);
             chunks.push(`- Total brand: ${brands.length}`);
             chunks.push(`- Total outlet di database: ${totalOutlets.totalItems}`);
 

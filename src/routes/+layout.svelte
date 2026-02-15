@@ -21,7 +21,7 @@
 </script>
 
 <svelte:head>
-	<title>Brand Map Indonesia</title>
+	<title>Map Start Franchise Indonesia</title>
 	<meta
 		name="description"
 		content="Interactive map of brand locations across Indonesia"

@@ -7,11 +7,13 @@ import { generateText, streamText, type ModelMessage } from 'ai';
 import OpenAI from 'openai';
 import { env } from '$env/dynamic/private';
 
-export type ProviderName = 'google' | 'openrouter' | 'groq';
+export type ProviderName = 'google' | 'openrouter' | 'groq' | 'local';
 
 interface ProviderConfig {
     name: ProviderName;
     available: boolean;
+    apiKey?: string;
+    baseURL?: string;
     models: {
         flash: string;
         pro: string;
@@ -20,6 +22,13 @@ interface ProviderConfig {
 
 type ProviderTier = 'flash' | 'pro';
 type NormalizedMessage = { role: 'system' | 'user' | 'assistant'; content: string };
+type ProviderOverride = { name: ProviderName; apiKey?: string };
+
+const providerNames: ProviderName[] = ['google', 'openrouter', 'groq', 'local'];
+
+function isProviderName(name: string): name is ProviderName {
+    return providerNames.includes(name as ProviderName);
+}
 
 type ErrorCategory =
     | 'rate_limit'
@@ -89,14 +98,22 @@ function buildChatMessages(systemPrompt: string, messages: ModelMessage[]) {
 function createOpenAIClient(provider: ProviderConfig) {
     if (provider.name === 'openrouter') {
         return new OpenAI({
-            apiKey: env.OPENROUTER_API_KEY,
-            baseURL: 'https://openrouter.ai/api/v1',
+            apiKey: provider.apiKey || env.OPENROUTER_API_KEY,
+            baseURL: provider.baseURL || 'https://openrouter.ai/api/v1',
         });
     }
     if (provider.name === 'groq') {
         return new OpenAI({
-            apiKey: env.GROQ_API_KEY,
-            baseURL: 'https://api.groq.com/openai/v1',
+            apiKey: provider.apiKey || env.GROQ_API_KEY,
+            baseURL: provider.baseURL || 'https://api.groq.com/openai/v1',
+        });
+    }
+    if (provider.name === 'local') {
+        const baseURL = provider.baseURL || env.LOCAL_AI_BASE_URL;
+        if (!baseURL) return null;
+        return new OpenAI({
+            apiKey: provider.apiKey || env.LOCAL_AI_API_KEY || 'local',
+            baseURL,
         });
     }
     return null;
@@ -228,14 +245,20 @@ async function tryGenerate(
 /**
  * Get available providers based on configured API keys.
  */
-function getProviders(): ProviderConfig[] {
+function getProviders(override?: ProviderOverride): ProviderConfig[] {
     const providers: ProviderConfig[] = [];
+    const overrideName = override?.name;
+    const overrideKey = override?.apiKey;
 
-    // Google AI (primary — free tier)
-    if (env.GOOGLE_AI_API_KEY) {
+    const googleKey =
+        overrideName === 'google' && overrideKey
+            ? overrideKey
+            : env.GOOGLE_AI_API_KEY;
+    if (googleKey) {
         providers.push({
             name: 'google',
             available: true,
+            apiKey: googleKey,
             models: {
                 flash: 'gemini-2.0-flash',
                 pro: 'gemini-2.5-pro-preview-05-06',
@@ -243,11 +266,16 @@ function getProviders(): ProviderConfig[] {
         });
     }
 
-    // OpenRouter (secondary — aggregator)
-    if (env.OPENROUTER_API_KEY) {
+    const openrouterKey =
+        overrideName === 'openrouter' && overrideKey
+            ? overrideKey
+            : env.OPENROUTER_API_KEY;
+    if (openrouterKey) {
         providers.push({
             name: 'openrouter',
             available: true,
+            apiKey: openrouterKey,
+            baseURL: 'https://openrouter.ai/api/v1',
             models: {
                 flash: env.OPENROUTER_MODEL_FLASH || 'google/gemini-2.0-flash-exp:free',
                 pro: env.OPENROUTER_MODEL_PRO || 'google/gemini-2.5-pro-exp-03-25:free',
@@ -255,16 +283,49 @@ function getProviders(): ProviderConfig[] {
         });
     }
 
-    // Groq (tertiary — ultra-fast)
-    if (env.GROQ_API_KEY) {
+    const groqKey =
+        overrideName === 'groq' && overrideKey
+            ? overrideKey
+            : env.GROQ_API_KEY;
+    if (groqKey) {
         providers.push({
             name: 'groq',
             available: true,
+            apiKey: groqKey,
+            baseURL: 'https://api.groq.com/openai/v1',
             models: {
                 flash: 'llama-3.3-70b-versatile',
                 pro: 'llama-3.3-70b-versatile',
             },
         });
+    }
+
+    const localBaseURL = env.LOCAL_AI_BASE_URL;
+    const localFlash =
+        env.LOCAL_AI_MODEL_FLASH || env.LOCAL_AI_MODEL || env.LOCAL_AI_MODEL_PRO;
+    const localPro =
+        env.LOCAL_AI_MODEL_PRO || env.LOCAL_AI_MODEL || env.LOCAL_AI_MODEL_FLASH;
+    if (localBaseURL && localFlash && localPro) {
+        providers.push({
+            name: 'local',
+            available: true,
+            apiKey:
+                overrideName === 'local' && overrideKey
+                    ? overrideKey
+                    : env.LOCAL_AI_API_KEY,
+            baseURL: localBaseURL,
+            models: {
+                flash: localFlash,
+                pro: localPro,
+            },
+        });
+    }
+
+    if (overrideName) {
+        const idx = providers.findIndex((p) => p.name === overrideName);
+        if (idx > 0) {
+            providers.unshift(providers.splice(idx, 1)[0]);
+        }
     }
 
     return providers;
@@ -279,23 +340,34 @@ function createModel(provider: ProviderConfig, tier: 'flash' | 'pro') {
     switch (provider.name) {
         case 'google': {
             const google = createGoogleGenerativeAI({
-                apiKey: env.GOOGLE_AI_API_KEY,
+                apiKey: provider.apiKey || env.GOOGLE_AI_API_KEY,
             });
             return google(modelId);
         }
         case 'openrouter': {
             const openrouter = createOpenAI({
-                apiKey: env.OPENROUTER_API_KEY,
-                baseURL: 'https://openrouter.ai/api/v1',
+                apiKey: provider.apiKey || env.OPENROUTER_API_KEY,
+                baseURL: provider.baseURL || 'https://openrouter.ai/api/v1',
             });
             return openrouter(modelId);
         }
         case 'groq': {
             const groq = createOpenAI({
-                apiKey: env.GROQ_API_KEY,
-                baseURL: 'https://api.groq.com/openai/v1',
+                apiKey: provider.apiKey || env.GROQ_API_KEY,
+                baseURL: provider.baseURL || 'https://api.groq.com/openai/v1',
             });
             return groq(modelId);
+        }
+        case 'local': {
+            const baseURL = provider.baseURL || env.LOCAL_AI_BASE_URL;
+            if (!baseURL) {
+                throw new Error('Local provider baseURL is not configured');
+            }
+            const local = createOpenAI({
+                apiKey: provider.apiKey || env.LOCAL_AI_API_KEY || 'local',
+                baseURL,
+            });
+            return local(modelId);
         }
         default:
             throw new Error(`Unknown provider: ${provider.name}`);
@@ -308,9 +380,12 @@ function createModel(provider: ProviderConfig, tier: 'flash' | 'pro') {
 export async function generateWithFallback(
     systemPrompt: string,
     messages: ModelMessage[],
-    tier: 'flash' | 'pro' = 'flash'
+    tier: 'flash' | 'pro' = 'flash',
+    override?: ProviderOverride
 ): Promise<{ text: string; provider: ProviderName; model: string }> {
-    const providers = rotateProviders(getProviders());
+    const safeOverride =
+        override && isProviderName(override.name) ? override : undefined;
+    const providers = rotateProviders(getProviders(safeOverride));
 
     if (providers.length === 0) {
         throw new Error('No AI providers configured. Please set at least one API key in .env (GOOGLE_AI_API_KEY, OPENROUTER_API_KEY, or GROQ_API_KEY)');
@@ -376,9 +451,12 @@ export async function generateWithFallback(
 export async function streamWithFallback(
     systemPrompt: string,
     messages: ModelMessage[],
-    tier: 'flash' | 'pro' = 'flash'
+    tier: 'flash' | 'pro' = 'flash',
+    override?: ProviderOverride
 ) {
-    const providers = rotateProviders(getProviders());
+    const safeOverride =
+        override && isProviderName(override.name) ? override : undefined;
+    const providers = rotateProviders(getProviders(safeOverride));
 
     if (providers.length === 0) {
         throw new Error('No AI providers configured. Please set at least one API key in .env');

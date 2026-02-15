@@ -323,7 +323,7 @@
                             </span>
                             Mengetik...
                         {:else}
-                            Asisten Franchise Pribadi
+                            Asisten Pribadi Start Franchise
                         {/if}
                     </div>
                 </div>
@@ -387,11 +387,6 @@
                             {/if}
                             <div class="msg-meta">
                                 <span>{formatTime(msg.timestamp)}</span>
-                                {#if msg.cached}
-                                    <span class="cache-badge" title="Dari cache"
-                                        ><i class="fas fa-bolt"></i> Cache</span
-                                    >
-                                {/if}
                             </div>
                         </div>
                     </div>
