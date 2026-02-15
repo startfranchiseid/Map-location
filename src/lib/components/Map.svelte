@@ -35,17 +35,23 @@
     // Brand logo cache for performance
     const brandLogoCache = new Map<string, string>();
 
+    const mapTilerKey = publicEnv.PUBLIC_MAPTILER_KEY;
+
     // Map styles configuration
     const mapStyles = {
         default: {
             dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
             light: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
         },
-        satellite:
-            "https://api.maptiler.com/maps/hybrid/style.json?key=get_your_own_key",
-        terrain:
-            "https://api.maptiler.com/maps/outdoor/style.json?key=get_your_own_key",
-        "3d": "https://demotiles.maplibre.org/style.json",
+        satellite: mapTilerKey
+            ? `https://api.maptiler.com/maps/hybrid/style.json?key=${mapTilerKey}`
+            : "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+        terrain: mapTilerKey
+            ? `https://api.maptiler.com/maps/outdoor/style.json?key=${mapTilerKey}`
+            : "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+        "3d": mapTilerKey
+            ? `https://api.maptiler.com/maps/streets-v2/style.json?key=${mapTilerKey}`
+            : "https://demotiles.maplibre.org/style.json",
     };
 
     // Free satellite tiles from Esri
@@ -236,16 +242,18 @@
                 break;
             case "3d":
                 newStyle = mapStyles["3d"];
-                // Enable 3D pitch
-                map.easeTo({ pitch: 60, bearing: -20, duration: 1000 });
                 break;
             default:
                 newStyle = mapStyles.default[$theme];
-                map.easeTo({ pitch: 0, bearing: 0, duration: 1000 });
         }
 
         map.setStyle(newStyle);
-        map.once("styledata", () => {
+        map.once("style.load", () => {
+            if (style === "3d") {
+                map.easeTo({ pitch: 60, bearing: -20, duration: 1000 });
+            } else {
+                map.easeTo({ pitch: 0, bearing: 0, duration: 1000 });
+            }
             updateMarkers($filteredOutlets);
             if ($routeCoordinates.length > 0) drawRoute($routeCoordinates);
 
