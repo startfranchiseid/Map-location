@@ -109,10 +109,11 @@
             center: [118.0, -2.5],
             zoom: 5,
             minZoom: 4,
-            maxZoom: 18,
+            maxZoom: 20,
             attributionControl: false,
             pitch: 0,
             bearing: 0,
+            maxPitch: 85,
         });
 
         const geolocate = new maplibregl.GeolocateControl({
@@ -250,8 +251,12 @@
         map.setStyle(newStyle);
         map.once("style.load", () => {
             if (style === "3d") {
-                map.easeTo({ pitch: 60, bearing: -20, duration: 1000 });
+                map.setMaxPitch(85);
+                map.setMaxZoom(20);
+                map.easeTo({ pitch: 75, bearing: -20, duration: 1000 });
             } else {
+                map.setMaxPitch(60);
+                map.setMaxZoom(18);
                 map.easeTo({ pitch: 0, bearing: 0, duration: 1000 });
             }
             updateMarkers($filteredOutlets);
