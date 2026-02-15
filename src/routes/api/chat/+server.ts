@@ -3,14 +3,21 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { routeMessage } from '$lib/server/ai/router';
 import { getCacheKey, getCachedResponse, setCachedResponse, getCacheStats } from '$lib/server/ai/cache';
-import { getRelevantContext } from '$lib/server/ai/rag';
+import { getRelevantContext, getSuggestedActions, type AiAction } from '$lib/server/ai/rag';
 import { generateWithFallback, getConfiguredProviders } from '$lib/server/ai/providers';
 import { SYSTEM_PROMPT, SIMPLE_SYSTEM_PROMPT, buildContextPrompt } from '$lib/server/ai/prompts';
 import type { ModelMessage } from 'ai';
 
 export const POST: RequestHandler = async ({ request }) => {
     try {
-        const { messages } = await request.json();
+        const { messages, userLocation } = await request.json();
+
+        const normalizedLocation =
+            userLocation &&
+            typeof userLocation.lat === 'number' &&
+            typeof userLocation.lng === 'number'
+                ? { lat: userLocation.lat, lng: userLocation.lng }
+                : null;
 
         if (!messages || !Array.isArray(messages) || messages.length === 0) {
             return json({ error: 'Messages array is required' }, { status: 400 });
@@ -26,12 +33,22 @@ export const POST: RequestHandler = async ({ request }) => {
         }
 
         // 1. Cache check
-        const cacheKey = getCacheKey(messages);
+        const cacheKey = getCacheKey(messages, normalizedLocation);
         const cached = getCachedResponse(cacheKey);
         if (cached) {
+            let actions: AiAction[] = [];
+            try {
+                actions = await getSuggestedActions(
+                    messages[messages.length - 1].content,
+                    normalizedLocation,
+                );
+            } catch {
+                actions = [];
+            }
             return json({
                 reply: cached,
                 cached: true,
+                actions,
                 stats: getCacheStats(),
             });
         }
@@ -45,7 +62,10 @@ export const POST: RequestHandler = async ({ request }) => {
 
         if (route.needsRag) {
             try {
-                const context = await getRelevantContext(lastMessage.content);
+                const context = await getRelevantContext(
+                    lastMessage.content,
+                    normalizedLocation,
+                );
                 if (context.text) {
                     systemPrompt += buildContextPrompt(context.text);
                 }
@@ -57,11 +77,20 @@ export const POST: RequestHandler = async ({ request }) => {
         // 4. Build ModelMessage array (without system — that's passed separately)
         const aiMessages: ModelMessage[] = messages.map((m: { role: string; content: string }) => ({
             role: m.role as 'user' | 'assistant',
-            content: [{ type: 'text' as const, text: m.content }],
+            content: m.content,
         }));
 
         // 5. Call AI with fallback
         const result = await generateWithFallback(systemPrompt, aiMessages, route.modelTier);
+        let actions: AiAction[] = [];
+        try {
+            actions = await getSuggestedActions(
+                lastMessage.content,
+                normalizedLocation,
+            );
+        } catch {
+            actions = [];
+        }
 
         // 6. Cache the response
         setCachedResponse(cacheKey, result.text);
@@ -72,6 +101,7 @@ export const POST: RequestHandler = async ({ request }) => {
             provider: result.provider,
             model: result.model,
             complexity: route.complexity,
+            actions,
             stats: getCacheStats(),
         });
 

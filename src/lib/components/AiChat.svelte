@@ -5,6 +5,12 @@
         isNavigating,
         navigationTarget,
         theme,
+        brands,
+        selectedBrands,
+        selectedCategory,
+        searchQuery,
+        mapAction,
+        userLocation,
     } from "$lib/stores";
     import melissaImg from "$lib/assets/melissa_ai.jpg";
 
@@ -15,6 +21,26 @@
         timestamp: number;
         cached?: boolean;
         provider?: string;
+        actions?: AiAction[];
+    }
+
+    interface AiAction {
+        type:
+            | "set_search"
+            | "set_category"
+            | "set_brand"
+            | "clear_filters"
+            | "focus_outlet"
+            | "open_outlet_detail"
+            | "navigate_to_outlet"
+            | "highlight_city"
+            | "fit_bounds"
+            | "reset_view";
+        label: string;
+        value?: string;
+        brandId?: string;
+        outletId?: string;
+        city?: string;
     }
 
     let isOpen = false;
@@ -35,6 +61,35 @@
         "Berapa total outlet di Jakarta?",
     ];
 
+    const nearestPattern = /(terdekat|dekat|sekitar|nearest|closest|nearby)/i;
+
+    async function resolveUserLocation(message: string) {
+        const currentLoc = $userLocation;
+        if (!nearestPattern.test(message)) return currentLoc;
+        if (currentLoc) return currentLoc;
+        if (!navigator?.geolocation) return null;
+        return await new Promise<{ lat: number; lng: number } | null>(
+            (resolve) => {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        const loc = {
+                            lat: pos.coords.latitude,
+                            lng: pos.coords.longitude,
+                        };
+                        userLocation.set(loc);
+                        resolve(loc);
+                    },
+                    () => resolve(null),
+                    {
+                        enableHighAccuracy: true,
+                        maximumAge: 60000,
+                        timeout: 8000,
+                    },
+                );
+            },
+        );
+    }
+
     function toggleChat() {
         isOpen = !isOpen;
         if (isOpen) {
@@ -48,6 +103,81 @@
                 chatBody.scrollTop = chatBody.scrollHeight;
             }
         }, 50);
+    }
+
+    function selectAllBrands() {
+        if ($brands.length > 0) {
+            selectedBrands.set(new Set($brands.map((b) => b.id)));
+        }
+    }
+
+    function applyAction(action: AiAction) {
+        if (action.type === "set_search") {
+            searchQuery.set(action.value || "");
+            selectedCategory.set("All");
+            selectAllBrands();
+            return;
+        }
+        if (action.type === "set_category") {
+            selectedCategory.set(action.value || "All");
+            searchQuery.set("");
+            selectAllBrands();
+            return;
+        }
+        if (action.type === "set_brand") {
+            if (action.brandId) {
+                selectedBrands.set(new Set([action.brandId]));
+                selectedCategory.set("All");
+                searchQuery.set("");
+            }
+            return;
+        }
+        if (action.type === "focus_outlet") {
+            if (action.outletId) {
+                mapAction.set({ type: "focus_outlet", outletId: action.outletId });
+            }
+            return;
+        }
+        if (action.type === "open_outlet_detail") {
+            if (action.outletId) {
+                mapAction.set({
+                    type: "open_outlet_detail",
+                    outletId: action.outletId,
+                });
+            }
+            return;
+        }
+        if (action.type === "navigate_to_outlet") {
+            if (action.outletId) {
+                mapAction.set({
+                    type: "navigate_to_outlet",
+                    outletId: action.outletId,
+                });
+            }
+            return;
+        }
+        if (action.type === "highlight_city") {
+            if (action.city) {
+                searchQuery.set(action.city);
+                selectedCategory.set("All");
+                selectAllBrands();
+                mapAction.set({ type: "highlight_city", city: action.city });
+            }
+            return;
+        }
+        if (action.type === "fit_bounds") {
+            mapAction.set({ type: "fit_bounds" });
+            return;
+        }
+        if (action.type === "reset_view") {
+            mapAction.set({ type: "reset_view" });
+            return;
+        }
+        if (action.type === "clear_filters") {
+            searchQuery.set("");
+            selectedCategory.set("All");
+            selectAllBrands();
+        }
     }
 
     async function sendMessage(text?: string) {
@@ -64,6 +194,7 @@
         scrollToBottom();
 
         try {
+            const location = await resolveUserLocation(msg);
             // Build messages payload (last 10 for context window)
             const payload = messages.slice(-10).map((m) => ({
                 role: m.role,
@@ -73,12 +204,18 @@
             const res = await fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ messages: payload }),
+                body: JSON.stringify({
+                    messages: payload,
+                    userLocation: location,
+                }),
             });
 
             const data = await res.json();
 
             if (data.reply) {
+                if (Array.isArray(data.actions)) {
+                    data.actions.forEach((action: AiAction) => applyAction(action));
+                }
                 messages = [
                     ...messages,
                     {
@@ -87,6 +224,7 @@
                         timestamp: Date.now(),
                         cached: data.cached,
                         provider: data.provider,
+                        actions: data.actions,
                     },
                 ];
             } else if (data.error) {
@@ -234,6 +372,19 @@
                         <div class="msg-bubble">
                             <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                             {@html formatContent(msg.content)}
+                            {#if msg.actions && msg.actions.length > 0}
+                                <div class="msg-actions">
+                                    {#each msg.actions as action}
+                                        <button
+                                            class="action-chip"
+                                            onclick={() => applyAction(action)}
+                                            disabled={isLoading}
+                                        >
+                                            {action.label}
+                                        </button>
+                                    {/each}
+                                </div>
+                            {/if}
                             <div class="msg-meta">
                                 <span>{formatTime(msg.timestamp)}</span>
                                 {#if msg.cached}
@@ -617,6 +768,38 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+
+    .msg-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .action-chip {
+        padding: 6px 10px;
+        border-radius: 12px;
+        background: rgba(139, 92, 246, 0.12);
+        border: 1px solid rgba(139, 92, 246, 0.25);
+        color: #c4b5fd;
+        font-size: 0.68rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    .action-chip:hover:not(:disabled) {
+        background: rgba(139, 92, 246, 0.2);
+        border-color: rgba(139, 92, 246, 0.4);
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    .action-chip:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
     }
 
     .msg-bubble {

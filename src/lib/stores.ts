@@ -22,6 +22,14 @@ export const isNavigating = writable<boolean>(false);
 export const navigationTarget = writable<Outlet | null>(null);
 export const routeCoordinates = writable<[number, number][]>([]);
 export const selectedOutlet = writable<Outlet | null>(null);
+export type MapAction =
+    | { type: 'fit_bounds'; outletIds?: string[] }
+    | { type: 'focus_outlet'; outletId: string }
+    | { type: 'open_outlet_detail'; outletId: string }
+    | { type: 'navigate_to_outlet'; outletId: string }
+    | { type: 'highlight_city'; city: string }
+    | { type: 'reset_view' };
+export const mapAction = writable<MapAction | null>(null);
 
 // Derived store for filtered outlets
 export const filteredOutlets = derived(

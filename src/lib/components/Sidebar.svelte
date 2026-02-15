@@ -23,7 +23,6 @@
 
     function toggleAll() {
         const visibleBrandIds = visibleBrands.map((b) => b.id);
-
         const allSelected =
             visibleBrandIds.length > 0 &&
             visibleBrandIds.every((id) => $selectedBrands.has(id));
@@ -105,8 +104,8 @@
         <div class="filter-header">
             <h3><i class="fas fa-layer-group"></i> Filter</h3>
             <button class="btn-toggle-all" onclick={toggleAll}>
-                <i class="fas fa-eye"></i>
-                <span>Toggle</span>
+                <i class="fas fa-check"></i>
+                <span>Select All</span>
             </button>
         </div>
 

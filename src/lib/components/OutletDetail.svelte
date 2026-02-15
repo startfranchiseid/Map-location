@@ -4,6 +4,7 @@
         selectedOutlet,
         isNavigating,
         navigationTarget,
+        userLocation,
     } from "$lib/stores";
     import { getLogoUrl, getOutletDetails, type Outlet } from "$lib/pocketbase";
 
@@ -91,6 +92,23 @@
     function startNavigation(outlet: Outlet) {
         isNavigating.set(true);
         navigationTarget.set(outlet);
+    }
+
+    function buildMapsLink(outlet: Outlet): string {
+        const loc = $userLocation;
+        if (outlet.googleMapsUrl) return outlet.googleMapsUrl;
+        const pid = (outlet.placeId || (outlet as any).place_id) as string | undefined;
+        if (pid) {
+            if (loc) {
+                return `https://www.google.com/maps/dir/?api=1&origin=${loc.lat},${loc.lng}&destination=place_id:${pid}&travelmode=driving`;
+            }
+            return `https://www.google.com/maps/place/?q=place_id:${pid}`;
+        }
+        const dest = `${outlet.latitude},${outlet.longitude}`;
+        if (loc) {
+            return `https://www.google.com/maps/dir/?api=1&origin=${loc.lat},${loc.lng}&destination=${dest}&travelmode=driving`;
+        }
+        return `https://www.google.com/maps/search/?api=1&query=${dest}`;
     }
 
     function getWhatsappLink(outlet: Outlet): string | null {
@@ -246,14 +264,7 @@
                             <span>Chat</span>
                         </a>
                     {/if}
-                    <a
-                        href={outlet.googleMapsUrl ||
-                            (outlet.placeId || outlet.place_id
-                                ? `https://www.google.com/maps/place/?q=place_id:${outlet.placeId || outlet.place_id}`
-                                : `https://www.google.com/maps/search/?api=1&query=${outlet.latitude},${outlet.longitude}`)}
-                        target="_blank"
-                        class="action-btn outline"
-                    >
+                    <a href={buildMapsLink(outlet)} target="_blank" class="action-btn outline">
                         <i class="fab fa-google"></i>
                         <span>Maps</span>
                     </a>

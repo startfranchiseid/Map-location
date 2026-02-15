@@ -4,6 +4,7 @@
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createOpenAI } from '@ai-sdk/openai';
 import { generateText, streamText, type ModelMessage } from 'ai';
+import OpenAI from 'openai';
 import { env } from '$env/dynamic/private';
 
 export type ProviderName = 'google' | 'openrouter' | 'groq';
@@ -14,6 +15,213 @@ interface ProviderConfig {
     models: {
         flash: string;
         pro: string;
+    };
+}
+
+type ProviderTier = 'flash' | 'pro';
+type NormalizedMessage = { role: 'system' | 'user' | 'assistant'; content: string };
+
+type ErrorCategory =
+    | 'rate_limit'
+    | 'auth'
+    | 'model'
+    | 'network'
+    | 'timeout'
+    | 'server'
+    | 'unknown';
+
+interface ErrorInfo {
+    provider: ProviderName;
+    tier: ProviderTier;
+    message: string;
+    status?: number;
+    code?: string;
+    category: ErrorCategory;
+    retryable: boolean;
+}
+
+let providerCursor = 0;
+
+function rotateProviders(providers: ProviderConfig[]): ProviderConfig[] {
+    if (providers.length <= 1) return providers;
+    const start = providerCursor % providers.length;
+    providerCursor += 1;
+    return [...providers.slice(start), ...providers.slice(0, start)];
+}
+
+function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function normalizeContent(content: ModelMessage['content']): string {
+    if (typeof content === 'string') return content;
+    if (!content) return '';
+    if (Array.isArray(content)) {
+        return content
+            .map((part: any) => (part?.type === 'text' ? part.text : ''))
+            .filter(Boolean)
+            .join('\n');
+    }
+    return String(content);
+}
+
+function normalizeMessages(messages: ModelMessage[]): NormalizedMessage[] {
+    return messages
+        .filter((m) => m.role !== 'tool')
+        .map((m) => ({
+            role: (m.role === 'system' ? 'system' : m.role === 'assistant' ? 'assistant' : 'user'),
+            content: normalizeContent(m.content),
+        }));
+}
+
+function buildChatMessages(systemPrompt: string, messages: ModelMessage[]) {
+    const normalized = normalizeMessages(messages);
+    const chatMessages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }> = [
+        { role: 'system', content: systemPrompt },
+        ...normalized.map((m) => ({
+            role: m.role as 'system' | 'user' | 'assistant',
+            content: normalizeContent(m.content),
+        })),
+    ];
+    return chatMessages;
+}
+
+function createOpenAIClient(provider: ProviderConfig) {
+    if (provider.name === 'openrouter') {
+        return new OpenAI({
+            apiKey: env.OPENROUTER_API_KEY,
+            baseURL: 'https://openrouter.ai/api/v1',
+        });
+    }
+    if (provider.name === 'groq') {
+        return new OpenAI({
+            apiKey: env.GROQ_API_KEY,
+            baseURL: 'https://api.groq.com/openai/v1',
+        });
+    }
+    return null;
+}
+
+function extractStatus(error: any): number | undefined {
+    return (
+        error?.status ??
+        error?.statusCode ??
+        error?.response?.status ??
+        error?.cause?.status ??
+        error?.cause?.response?.status
+    );
+}
+
+function classifyError(
+    provider: ProviderName,
+    tier: ProviderTier,
+    error: any,
+): ErrorInfo {
+    const status = extractStatus(error);
+    const code = error?.code ?? error?.cause?.code;
+    const message = String(error?.message || error || 'Unknown error');
+    const lower = message.toLowerCase();
+
+    const isAuth =
+        status === 401 ||
+        status === 403 ||
+        lower.includes('unauthorized') ||
+        lower.includes('invalid api key') ||
+        lower.includes('api key') && lower.includes('invalid');
+    const isRateLimit =
+        status === 429 ||
+        lower.includes('rate limit') ||
+        lower.includes('quota') ||
+        lower.includes('exceeded') && lower.includes('limit');
+    const isModel =
+        status === 404 ||
+        lower.includes('model') && lower.includes('not found') ||
+        lower.includes('unknown model') ||
+        lower.includes('not supported');
+    const isTimeout =
+        lower.includes('timeout') ||
+        code === 'ETIMEDOUT' ||
+        code === 'ESOCKETTIMEDOUT';
+    const isNetwork =
+        code === 'ECONNRESET' ||
+        code === 'ENOTFOUND' ||
+        code === 'ECONNREFUSED' ||
+        lower.includes('network');
+    const isServer = status !== undefined && status >= 500;
+
+    let category: ErrorCategory = 'unknown';
+    if (isAuth) category = 'auth';
+    else if (isRateLimit) category = 'rate_limit';
+    else if (isModel) category = 'model';
+    else if (isTimeout) category = 'timeout';
+    else if (isNetwork) category = 'network';
+    else if (isServer) category = 'server';
+
+    const retryable =
+        category === 'server' ||
+        category === 'network' ||
+        category === 'timeout';
+
+    return {
+        provider,
+        tier,
+        message,
+        status,
+        code,
+        category,
+        retryable,
+    };
+}
+
+async function tryGenerate(
+    provider: ProviderConfig,
+    tier: ProviderTier,
+    systemPrompt: string,
+    messages: ModelMessage[],
+): Promise<{ text: string; provider: ProviderName; model: string }> {
+    if (provider.name === 'google') {
+        const model = createModel(provider, tier);
+        const result = await generateText({
+            model,
+            system: systemPrompt,
+            messages: normalizeMessages(messages) as ModelMessage[],
+            maxOutputTokens: 1024,
+            temperature: 0.7,
+        });
+
+        if (!result.text || !result.text.trim()) {
+            throw new Error('Empty response');
+        }
+
+        return {
+            text: result.text,
+            provider: provider.name,
+            model: provider.models[tier],
+        };
+    }
+
+    const client = createOpenAIClient(provider);
+    if (!client) {
+        throw new Error(`Unsupported provider: ${provider.name}`);
+    }
+
+    const chatMessages = buildChatMessages(systemPrompt, messages);
+    const completion = await client.chat.completions.create({
+        model: provider.models[tier],
+        messages: chatMessages,
+        max_tokens: 1024,
+        temperature: 0.7,
+    });
+
+    const text = completion.choices?.[0]?.message?.content ?? '';
+    if (!text || !text.trim()) {
+        throw new Error('Empty response');
+    }
+
+    return {
+        text,
+        provider: provider.name,
+        model: provider.models[tier],
     };
 }
 
@@ -41,8 +249,8 @@ function getProviders(): ProviderConfig[] {
             name: 'openrouter',
             available: true,
             models: {
-                flash: 'google/gemini-2.0-flash-exp:free',
-                pro: 'google/gemini-2.5-pro-exp-03-25:free',
+                flash: env.OPENROUTER_MODEL_FLASH || 'google/gemini-2.0-flash-exp:free',
+                pro: env.OPENROUTER_MODEL_PRO || 'google/gemini-2.5-pro-exp-03-25:free',
             },
         });
     }
@@ -102,39 +310,64 @@ export async function generateWithFallback(
     messages: ModelMessage[],
     tier: 'flash' | 'pro' = 'flash'
 ): Promise<{ text: string; provider: ProviderName; model: string }> {
-    const providers = getProviders();
+    const providers = rotateProviders(getProviders());
 
     if (providers.length === 0) {
         throw new Error('No AI providers configured. Please set at least one API key in .env (GOOGLE_AI_API_KEY, OPENROUTER_API_KEY, or GROQ_API_KEY)');
     }
 
+    const errors: ErrorInfo[] = [];
+    const retryDelays = [300, 800];
+
     for (const provider of providers) {
-        try {
-            console.log(`[AI Provider] Trying ${provider.name} (${provider.models[tier]})...`);
+        const tiersToTry: ProviderTier[] =
+            tier === 'pro' ? ['pro', 'flash'] : ['flash'];
 
-            const model = createModel(provider, tier);
-            const result = await generateText({
-                model,
-                system: systemPrompt,
-                messages,
-                maxOutputTokens: 1024,
-                temperature: 0.7,
-            });
-
-            console.log(`[AI Provider] ✓ ${provider.name} responded (${result.text.length} chars)`);
-
-            return {
-                text: result.text,
-                provider: provider.name,
-                model: provider.models[tier],
-            };
-        } catch (error: any) {
-            console.warn(`[AI Provider] ✗ ${provider.name} failed:`, error.message || error);
-            // Continue to next provider
+        for (const tierToTry of tiersToTry) {
+            console.log(`[AI Provider] Trying ${provider.name} (${provider.models[tierToTry]})...`);
+            let attempt = 0;
+            while (attempt <= retryDelays.length) {
+                try {
+                    const result = await tryGenerate(
+                        provider,
+                        tierToTry,
+                        systemPrompt,
+                        messages,
+                    );
+                    console.log(
+                        `[AI Provider] ✓ ${provider.name} responded (${result.text.length} chars)`,
+                    );
+                    return result;
+                } catch (error: any) {
+                    const info = classifyError(provider.name, tierToTry, error);
+                    errors.push(info);
+                    console.warn(
+                        `[AI Provider] ✗ ${provider.name} failed (${info.category}${info.status ? ` ${info.status}` : ''}):`,
+                        info.message,
+                    );
+                    if (info.category === 'model' && tierToTry === 'pro') {
+                        break;
+                    }
+                    if (!info.retryable || attempt === retryDelays.length) {
+                        break;
+                    }
+                    const delay = retryDelays[attempt];
+                    attempt += 1;
+                    await sleep(delay);
+                }
+            }
         }
     }
 
-    throw new Error('All AI providers failed. Please check your API keys and quotas.');
+    const summary = errors
+        .map(
+            (e) =>
+                `${e.provider}:${e.tier}:${e.category}${e.status ? `:${e.status}` : ''}`,
+        )
+        .join(', ');
+    throw new Error(
+        `All AI providers failed. Please check your API keys and quotas. ${summary}`,
+    );
 }
 
 /**
@@ -145,28 +378,53 @@ export async function streamWithFallback(
     messages: ModelMessage[],
     tier: 'flash' | 'pro' = 'flash'
 ) {
-    const providers = getProviders();
+    const providers = rotateProviders(getProviders());
 
     if (providers.length === 0) {
         throw new Error('No AI providers configured. Please set at least one API key in .env');
     }
 
+    const retryDelays = [300, 800];
+
     for (const provider of providers) {
-        try {
-            console.log(`[AI Provider] Streaming via ${provider.name} (${provider.models[tier]})...`);
+        const tiersToTry: ProviderTier[] =
+            tier === 'pro' ? ['pro', 'flash'] : ['flash'];
 
-            const model = createModel(provider, tier);
-            const result = streamText({
-                model,
-                system: systemPrompt,
-                messages,
-                maxOutputTokens: 1024,
-                temperature: 0.7,
-            });
-
-            return { stream: result, provider: provider.name, model: provider.models[tier] };
-        } catch (error: any) {
-            console.warn(`[AI Provider] ✗ ${provider.name} streaming failed:`, error.message || error);
+        for (const tierToTry of tiersToTry) {
+            console.log(`[AI Provider] Streaming via ${provider.name} (${provider.models[tierToTry]})...`);
+            let attempt = 0;
+            while (attempt <= retryDelays.length) {
+                try {
+                    const model = createModel(provider, tierToTry);
+                    const result = streamText({
+                        model,
+                        system: systemPrompt,
+                        messages,
+                        maxOutputTokens: 1024,
+                        temperature: 0.7,
+                    });
+                    return {
+                        stream: result,
+                        provider: provider.name,
+                        model: provider.models[tierToTry],
+                    };
+                } catch (error: any) {
+                    const info = classifyError(provider.name, tierToTry, error);
+                    console.warn(
+                        `[AI Provider] ✗ ${provider.name} streaming failed (${info.category}${info.status ? ` ${info.status}` : ''}):`,
+                        info.message,
+                    );
+                    if (info.category === 'model' && tierToTry === 'pro') {
+                        break;
+                    }
+                    if (!info.retryable || attempt === retryDelays.length) {
+                        break;
+                    }
+                    const delay = retryDelays[attempt];
+                    attempt += 1;
+                    await sleep(delay);
+                }
+            }
         }
     }
 

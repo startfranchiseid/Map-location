@@ -20,10 +20,16 @@ let totalMisses = 0;
  * Generate a cache key from the last N messages.
  * We hash the last 2 messages (user + assistant context) to create a fingerprint.
  */
-export function getCacheKey(messages: Array<{ role: string; content: string }>): string {
+export function getCacheKey(
+    messages: Array<{ role: string; content: string }>,
+    userLocation?: { lat: number; lng: number } | null,
+): string {
     // Use last 2 messages for context-aware caching
     const relevant = messages.slice(-2).map(m => `${m.role}:${m.content.trim().toLowerCase()}`).join('|');
-    return createHash('md5').update(relevant).digest('hex');
+    const locationKey = userLocation
+        ? `|loc:${userLocation.lat.toFixed(4)},${userLocation.lng.toFixed(4)}`
+        : '';
+    return createHash('md5').update(`${relevant}${locationKey}`).digest('hex');
 }
 
 /**

@@ -4,6 +4,7 @@
     import {
         theme,
         filteredOutlets,
+        outlets,
         brands,
         selectedBrands,
         mapStyle,
@@ -12,10 +13,12 @@
         navigationTarget,
         routeCoordinates,
         selectedOutlet,
+        mapAction,
         type MapStyleType,
     } from "$lib/stores";
     import { getLogoUrl } from "$lib/pocketbase";
     import type { Outlet } from "$lib/pocketbase";
+    import { env as publicEnv } from "$env/dynamic/public";
 
     let mapContainer: HTMLDivElement;
     let map: maplibregl.Map;
@@ -27,6 +30,7 @@
     let isLocating = false;
     let routeLayer: string | null = null;
     let clusterSourceAdded = false;
+    let clusterHandlersAdded = false;
 
     // Brand logo cache for performance
     const brandLogoCache = new Map<string, string>();
@@ -41,7 +45,7 @@
             "https://api.maptiler.com/maps/hybrid/style.json?key=get_your_own_key",
         terrain:
             "https://api.maptiler.com/maps/outdoor/style.json?key=get_your_own_key",
-        "3d": "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+        "3d": "https://demotiles.maplibre.org/style.json",
     };
 
     // Free satellite tiles from Esri
@@ -141,10 +145,10 @@
 
     // Reactive statement for marker updates
     $: if (map && $filteredOutlets) {
-        if (map.loaded()) {
+        if (map.isStyleLoaded()) {
             updateMarkers($filteredOutlets);
         } else {
-            map.once("load", () => updateMarkers($filteredOutlets));
+            map.once("styledata", () => updateMarkers($filteredOutlets));
         }
     }
 
@@ -163,12 +167,59 @@
         changeMapStyle($mapStyle);
     }
 
-    // Route drawing handler
     $: if (map && $routeCoordinates.length > 0) {
-        if (map.loaded()) {
+        if (map.isStyleLoaded()) {
             drawRoute($routeCoordinates);
         } else {
-            map.once("load", () => drawRoute($routeCoordinates));
+            map.once("styledata", () => drawRoute($routeCoordinates));
+        }
+    }
+
+    let lastNavTargetId: string | null = null;
+    $: if (map && $isNavigating && $navigationTarget) {
+        if (!$userLocation) {
+            // Try to ask for location if not available yet
+            // The built-in GeolocateControl will prompt; we can also call locateUser
+            locateUser();
+        }
+        if (lastNavTargetId !== $navigationTarget.id) {
+            navigateToOutlet($navigationTarget);
+            lastNavTargetId = $navigationTarget.id;
+        }
+    }
+
+    $: if (map && $mapAction) {
+        const action = $mapAction;
+        if (action.type === "reset_view") {
+            resetView();
+            mapAction.set(null);
+        } else if (action.type === "fit_bounds") {
+            fitToOutlets($filteredOutlets);
+            mapAction.set(null);
+        } else if (action.type === "highlight_city") {
+            const city = action.city.toLowerCase();
+            const matches = $outlets.filter(
+                (o) => o.city && o.city.toLowerCase().includes(city),
+            );
+            fitToOutlets(matches);
+            mapAction.set(null);
+        } else if (
+            action.type === "focus_outlet" ||
+            action.type === "open_outlet_detail"
+        ) {
+            const outlet = $outlets.find((o) => o.id === action.outletId);
+            if (outlet) {
+                focusOutlet(outlet);
+                selectedOutlet.set(outlet);
+            }
+            mapAction.set(null);
+        } else if (action.type === "navigate_to_outlet") {
+            const outlet = $outlets.find((o) => o.id === action.outletId);
+            if (outlet) {
+                selectedOutlet.set(outlet);
+                navigateToOutlet(outlet);
+            }
+            mapAction.set(null);
         }
     }
 
@@ -200,9 +251,23 @@
 
             // Add 3D buildings for 3D style
             if (style === "3d") {
+                ensureOpenMapTilesSource();
                 add3DBuildings();
+                addRoadLayers();
             }
         });
+    }
+
+    function ensureOpenMapTilesSource() {
+        if (map.getSource("openmaptiles")) return;
+        const key = publicEnv.PUBLIC_MAPTILER_KEY;
+        const url = key
+            ? `https://api.maptiler.com/tiles/v3/tiles.json?key=${key}`
+            : "https://demotiles.maplibre.org/tiles/tiles.json";
+        map.addSource("openmaptiles", {
+            type: "vector",
+            url,
+        } as any);
     }
 
     function add3DBuildings() {
@@ -210,6 +275,19 @@
 
         // Add 3D building layer
         if (!map.getLayer("3d-buildings")) {
+            const heightExpr: any = [
+                "coalesce",
+                ["get", "height"],
+                ["get", "render_height"],
+                ["*", ["coalesce", ["get", "levels"], ["get", "building:levels"], 0], 3.5],
+                10,
+            ];
+            const baseExpr: any = [
+                "coalesce",
+                ["get", "min_height"],
+                ["get", "render_min_height"],
+                0,
+            ];
             map.addLayer({
                 id: "3d-buildings",
                 source: "openmaptiles",
@@ -217,13 +295,164 @@
                 type: "fill-extrusion",
                 minzoom: 14,
                 paint: {
-                    "fill-extrusion-color": "#aaa",
-                    "fill-extrusion-height": ["get", "height"],
-                    "fill-extrusion-base": 0,
+                    "fill-extrusion-color": [
+                        "interpolate",
+                        ["linear"],
+                        ["zoom"],
+                        14,
+                        "#b0b7c3",
+                        17,
+                        "#9aa6b2",
+                    ],
+                    "fill-extrusion-height": heightExpr,
+                    "fill-extrusion-base": baseExpr,
                     "fill-extrusion-opacity": 0.6,
                 },
             });
         }
+    }
+
+    function addRoadLayers() {
+        if (!map.getSource("openmaptiles")) return;
+        if (map.getLayer("road-fill")) return;
+
+        const baseWidth: any = [
+            "match",
+            ["get", "class"],
+            "motorway",
+            4,
+            "trunk",
+            3.5,
+            "primary",
+            3,
+            "secondary",
+            2.5,
+            "tertiary",
+            2,
+            "street",
+            1.8,
+            "residential",
+            1.6,
+            1.2,
+        ];
+
+        const roadFilter: any = [
+            "all",
+            ["==", ["geometry-type"], "LineString"],
+            [
+                "match",
+                ["get", "class"],
+                [
+                    "motorway",
+                    "trunk",
+                    "primary",
+                    "secondary",
+                    "tertiary",
+                    "street",
+                    "residential",
+                ],
+                true,
+                false,
+            ],
+        ];
+
+        map.addLayer({
+            id: "road-casing",
+            type: "line",
+            source: "openmaptiles",
+            "source-layer": "transportation",
+            filter: roadFilter,
+            paint: {
+                "line-color": "#1f2937",
+                "line-opacity": 0.35,
+                "line-width": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    12,
+                    ["*", baseWidth, 0.6],
+                    16,
+                    ["*", baseWidth, 1.2],
+                    18,
+                    ["*", baseWidth, 1.8],
+                ],
+                "line-blur": 0.2,
+            },
+        } as any);
+
+        const roadColor: any = [
+            "match",
+            ["get", "class"],
+            "motorway",
+            "#ff7f50",
+            "trunk",
+            "#f4a261",
+            "primary",
+            "#ffd166",
+            "secondary",
+            "#06b6d4",
+            "tertiary",
+            "#00c2a8",
+            "street",
+            "#b0bec5",
+            "residential",
+            "#b0bec5",
+            "#b0b7c3",
+        ];
+
+        map.addLayer({
+            id: "road-fill",
+            type: "line",
+            source: "openmaptiles",
+            "source-layer": "transportation",
+            filter: roadFilter,
+            paint: {
+                "line-color": roadColor,
+                "line-opacity": 0.92,
+                "line-width": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    12,
+                    ["*", baseWidth, 0.5],
+                    16,
+                    ["*", baseWidth, 1.0],
+                    18,
+                    ["*", baseWidth, 1.6],
+                ],
+            },
+        } as any);
+
+        // Road names
+        map.addLayer({
+            id: "road-labels",
+            type: "symbol",
+            source: "openmaptiles",
+            "source-layer": "transportation_name",
+            layout: {
+                "symbol-placement": "line",
+                "text-field": ["coalesce", ["get", "name"], ["get", "name_en"]],
+                "text-font": ["Open Sans Regular"],
+                "text-size": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    12,
+                    10,
+                    16,
+                    12,
+                    18,
+                    14,
+                ],
+                "text-offset": [0, 0.1],
+            },
+            paint: {
+                "text-color": "#334155",
+                "text-halo-color": "#ffffff",
+                "text-halo-width": 1.2,
+                "text-halo-blur": 0.4,
+            },
+        } as any);
     }
 
     function updateMarkers(outlets: Outlet[]) {
@@ -242,6 +471,29 @@
 
         // For smaller datasets, use individual markers
         updateMarkersIndividual(outlets);
+    }
+
+    function focusOutlet(outlet: Outlet) {
+        const sidebar = document.getElementById("sidebar");
+        if (sidebar && sidebar.classList.contains("hidden")) {
+            sidebar.classList.remove("hidden");
+        }
+        map.flyTo({
+            center: [outlet.longitude, outlet.latitude],
+            zoom: 16,
+            padding: { left: 400 },
+        });
+    }
+
+    function fitToOutlets(outlets: Outlet[]) {
+        if (!outlets || outlets.length === 0) return;
+        if (outlets.length === 1) {
+            focusOutlet(outlets[0]);
+            return;
+        }
+        const bounds = new maplibregl.LngLatBounds();
+        outlets.forEach((o) => bounds.extend([o.longitude, o.latitude]));
+        map.fitBounds(bounds, { padding: 80, maxZoom: 15 });
     }
 
     // Track unclustered markers created in cluster mode
@@ -283,7 +535,10 @@
                 clusterRadius: 50,
             });
 
-            // Cluster circles
+            clusterSourceAdded = true;
+        }
+
+        if (!map.getLayer("clusters")) {
             map.addLayer({
                 id: "clusters",
                 type: "circle",
@@ -318,7 +573,9 @@
                 },
             });
 
-            // Cluster count labels
+        }
+
+        if (!map.getLayer("cluster-count")) {
             map.addLayer({
                 id: "cluster-count",
                 type: "symbol",
@@ -336,7 +593,9 @@
                 },
             });
 
-            // Click handlers for clusters
+        }
+
+        if (!clusterHandlersAdded) {
             map.on("click", "clusters", async (e) => {
                 const features = map.queryRenderedFeatures(e.point, {
                     layers: ["clusters"],
@@ -354,15 +613,13 @@
                 });
             });
 
-            // Cursor styling for clusters
             map.on("mouseenter", "clusters", () => {
                 map.getCanvas().style.cursor = "pointer";
             });
             map.on("mouseleave", "clusters", () => {
                 map.getCanvas().style.cursor = "";
             });
-
-            clusterSourceAdded = true;
+            clusterHandlersAdded = true;
         }
 
         // Use 'render' event to show brand logo markers for unclustered points
@@ -902,7 +1159,7 @@
                         class="style-preview"
                         style="background-image: url('https://basemaps.cartocdn.com/rastertiles/voyager/5/26/16.png'); background-size: cover; background-position: center;"
                     ></div>
-                    <span>3D</span>
+                    <span>3D Gedung</span>
                 </button>
             </div>
         </div>
@@ -1051,4 +1308,5 @@
         opacity: 0.7;
         pointer-events: none;
     }
+
 </style>

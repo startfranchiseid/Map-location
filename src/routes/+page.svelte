@@ -28,9 +28,6 @@
             console.log("Brands loaded:", brandsData.length);
             brands.set(brandsData);
 
-            // Select all brands so toggles are active and outlets show on initial load
-            selectedBrands.set(new Set(brandsData.map((b) => b.id)));
-
             // Unblock UI immediately
             isLoading.set(false);
 
