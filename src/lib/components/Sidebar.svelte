@@ -6,6 +6,7 @@
         searchQuery,
         selectedCategory,
         categories,
+        categoriesData,
     } from "$lib/stores";
     import { getLogoUrl } from "$lib/pocketbase";
 
@@ -47,13 +48,33 @@
     }
 
     // Filter brands based on search query and category
+    $: categoryById = new Map($categoriesData.map((c) => [c.id, c.name]));
+
+    function getBrandCategoryId(brand: any): string {
+        return (
+            brand?.expand?.category?.id ||
+            (categoryById.has(brand.category) ? brand.category : "") ||
+            Array.from(categoryById.entries()).find(
+                ([, name]) => name === brand.category,
+            )?.[0] ||
+            ""
+        );
+    }
+
+    function getBrandCategoryName(brand: any): string {
+        return (
+            brand?.expand?.category?.name ||
+            categoryById.get(brand.category) ||
+            brand.category ||
+            "Uncategorized"
+        );
+    }
+
     $: visibleBrands = $brands.filter((brand) => {
         // 1. Category Filter
-        if (
-            $selectedCategory !== "All" &&
-            brand.category !== $selectedCategory
-        ) {
-            return false;
+        if ($selectedCategory !== "All") {
+            const categoryId = getBrandCategoryId(brand);
+            if (categoryId !== $selectedCategory) return false;
         }
 
         // 2. Search Filter
@@ -119,7 +140,7 @@
                 style="width: 100%; padding: 10px; border-radius: 10px; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); cursor: pointer;"
             >
                 {#each $categories as category}
-                    <option value={category}>{category}</option>
+                    <option value={category.id}>{category.name}</option>
                 {/each}
             </select>
         </div>
@@ -167,7 +188,7 @@
                             class="brand-meta"
                             style="font-size: 0.7rem; color: var(--text-muted);"
                         >
-                            {brand.category || "Uncategorized"} • {brand.total_outlets ??
+                            {getBrandCategoryName(brand)} • {brand.total_outlets ??
                                 count}
                             outlet
                         </div>
@@ -176,16 +197,5 @@
             {/each}
         </div>
 
-        <!-- Info Card -->
-        <div class="info-card">
-            <div class="info-card-header">
-                <i class="fas fa-info-circle"></i>
-                <span>Tips</span>
-            </div>
-            <p>
-                Klik marker untuk melihat detail lokasi. Gunakan scroll untuk
-                zoom peta.
-            </p>
-        </div>
     </div>
 </aside>

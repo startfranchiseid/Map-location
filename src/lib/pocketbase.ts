@@ -22,6 +22,19 @@ export interface Brand {
     total_outlets?: number;
     created: string;
     updated: string;
+    expand?: {
+        category?: Category;
+    };
+}
+
+export interface Category {
+    id: string;
+    name: string;
+    description?: string;
+    icon?: string;
+    color?: string;
+    created: string;
+    updated: string;
 }
 
 export function getLogoUrl(collectionId: string, recordId: string, fileName: string): string {
@@ -82,12 +95,48 @@ export async function getBrands(): Promise<Brand[]> {
     try {
         const records = await pb.collection('brands').getFullList<Brand>({
             sort: 'name',
-            fields: 'id,name,category,website,logo,color,icon,total_outlets,created,updated'
+            fields: 'id,name,category,website,logo,color,icon,total_outlets,created,updated',
+            expand: 'category',
         });
         return records;
     } catch (error) {
         console.error('Error fetching brands:', error);
         return [];
+    }
+}
+
+// Fetch categories from collection
+export async function getCategories(): Promise<Category[]> {
+    try {
+        const records = await pb.collection('categories').getFullList<Category>({
+            sort: 'name',
+        });
+        return records;
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        return [];
+    }
+}
+
+// Create a new category
+export async function createCategory(data: { name: string; description?: string; icon?: string; color?: string }): Promise<Category | null> {
+    try {
+        const record = await pb.collection('categories').create(data);
+        return record as unknown as Category;
+    } catch (error) {
+        console.error('Error creating category:', error);
+        return null;
+    }
+}
+
+// Delete a category
+export async function deleteCategory(id: string): Promise<boolean> {
+    try {
+        await pb.collection('categories').delete(id);
+        return true;
+    } catch (error) {
+        console.error('Error deleting category:', error);
+        return false;
     }
 }
 

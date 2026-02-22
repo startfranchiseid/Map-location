@@ -96,7 +96,26 @@ async function getExistingBrands() {
     return brandMap;
 }
 
-async function getOrCreateBrand(brandName, config, existingBrands) {
+async function loadCategories() {
+    const categories = await pb.collection('categories').getFullList({
+        fields: 'id,name',
+    }).catch(() => []);
+    return new Map(categories.map((c) => [c.name, c.id]));
+}
+
+async function getCategoryId(categoryName, categoryMap) {
+    if (!categoryName) return '';
+    if (categoryMap.has(categoryName)) return categoryMap.get(categoryName);
+    const created = await pb.collection('categories').create({
+        name: categoryName,
+        icon: 'fa-tag',
+        color: '#8b5cf6',
+    });
+    categoryMap.set(created.name, created.id);
+    return created.id;
+}
+
+async function getOrCreateBrand(brandName, config, existingBrands, categoryMap) {
     // Check existing
     if (existingBrands.has(brandName)) {
         return existingBrands.get(brandName);
@@ -107,9 +126,10 @@ async function getOrCreateBrand(brandName, config, existingBrands) {
     
     // Create new
     try {
+        const categoryId = await getCategoryId(config.category, categoryMap);
         const record = await pb.collection('brands').create({
             name: brandName,
-            category: config.category,
+            category: categoryId,
             color: BRAND_COLORS[brandName] || '#667eea',
             icon: BRAND_ICONS[brandName] || 'fa-store',
             total_outlets: 0
@@ -264,6 +284,7 @@ async function main() {
     console.log('\n📋 Loading existing brands...');
     const existingBrands = await getExistingBrands();
     console.log(`   Found ${existingBrands.size / 2} brands`);
+    const categoryMap = await loadCategories();
     
     // Read JSON files
     console.log('\n📂 Reading JSON files...');
@@ -308,7 +329,7 @@ async function main() {
         }
         
         // Get or create brand
-        const brandId = await getOrCreateBrand(config.name, config, existingBrands);
+        const brandId = await getOrCreateBrand(config.name, config, existingBrands, categoryMap);
         if (!brandId) continue;
         
         // Import outlets

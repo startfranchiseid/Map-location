@@ -8,9 +8,16 @@ const ADMIN_PASSWORD = 'Admin.startfranchise@123';
 const pb = new PocketBase(PB_URL);
 
 // Defined Schemas
-const brandSchema = [
+const categorySchema = [
     { name: 'name', type: 'text', required: true },
-    { name: 'category', type: 'text' },
+    { name: 'description', type: 'text' },
+    { name: 'icon', type: 'text' },
+    { name: 'color', type: 'text' }
+];
+
+const brandSchema = (categoriesId) => [
+    { name: 'name', type: 'text', required: true },
+    { name: 'category', type: 'relation', options: { collectionId: categoriesId, cascadeDelete: false, maxSelect: 1 } },
     { name: 'website', type: 'url' },
     { name: 'color', type: 'text' },
     { name: 'icon', type: 'text' },
@@ -43,13 +50,37 @@ async function main() {
         process.exit(1);
     }
 
-    // 1. Migrate Brands
+    // 1. Migrate Categories
+    let categoriesCol;
+    try {
+        categoriesCol = await pb.collections.getOne('categories');
+        console.log(`📦 Updating existing "categories" collection (${categoriesCol.id})...`);
+        await pb.collections.update(categoriesCol.id, {
+            schema: categorySchema
+        });
+        console.log('✅ Categories schema updated.');
+    } catch (e) {
+        if (e.status === 404) {
+            console.log('📦 Creating "categories" collection...');
+            categoriesCol = await pb.collections.create({
+                name: 'categories',
+                type: 'base',
+                schema: categorySchema
+            });
+            console.log('✅ Categories collection created.');
+        } else {
+            console.error('❌ Error dealing with categories:', e);
+            throw e;
+        }
+    }
+
+    // 2. Migrate Brands
     let brandCol;
     try {
         brandCol = await pb.collections.getOne('brands');
         console.log(`📦 Updating existing "brands" collection (${brandCol.id})...`);
         await pb.collections.update(brandCol.id, {
-            schema: brandSchema
+            schema: brandSchema(categoriesCol.id)
         });
         console.log('✅ Brands schema updated.');
     } catch (e) {
@@ -58,7 +89,7 @@ async function main() {
             brandCol = await pb.collections.create({
                 name: 'brands',
                 type: 'base',
-                schema: brandSchema
+                schema: brandSchema(categoriesCol.id)
             });
             console.log('✅ Brands collection created.');
         } else {
@@ -67,7 +98,7 @@ async function main() {
         }
     }
 
-    // 2. Migrate Outlets
+    // 3. Migrate Outlets
     try {
         const outletCol = await pb.collections.getOne('outlets');
         console.log(`📦 Updating existing "outlets" collection (${outletCol.id})...`);

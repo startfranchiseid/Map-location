@@ -22,22 +22,40 @@ async function main() {
         await pb.admins.authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
         console.log('✅ Authenticated');
 
-        const brands = await pb.collection('brands').getFullList();
+        const categories = await pb.collection('categories').getFullList({
+            fields: 'id,name',
+        }).catch(() => []);
+        const categoryMap = new Map(categories.map((c) => [c.name, c.id]));
+        const categoryIds = new Set(categories.map((c) => c.id));
+        const brands = await pb.collection('brands').getFullList({
+            fields: 'id,name,category',
+        });
         console.log(`📋 Found ${brands.length} brands`);
 
         for (const brand of brands) {
-            const newCategory = categoryMapping[brand.name];
-            if (newCategory) {
-                if (brand.category !== newCategory) {
-                    await pb.collection('brands').update(brand.id, {
-                        category: newCategory
-                    });
-                    console.log(`✅ Updated ${brand.name}: ${brand.category} -> ${newCategory}`);
-                } else {
-                    console.log(`info: ${brand.name} already has correct category (${newCategory})`);
-                }
-            } else {
-                console.warn(`⚠️ No category mapping found for: ${brand.name}`);
+            const mappedName = categoryMapping[brand.name];
+            const current = brand.category;
+            const categoryName =
+                mappedName ||
+                (typeof current === 'string' && !categoryIds.has(current)
+                    ? current.trim()
+                    : '');
+            if (!categoryName) continue;
+            if (!categoryMap.has(categoryName)) {
+                const created = await pb.collection('categories').create({
+                    name: categoryName,
+                    icon: 'fa-tag',
+                    color: '#8b5cf6',
+                });
+                categoryMap.set(categoryName, created.id);
+                categoryIds.add(created.id);
+            }
+            const categoryId = categoryMap.get(categoryName);
+            if (categoryId && brand.category !== categoryId) {
+                await pb.collection('brands').update(brand.id, {
+                    category: categoryId,
+                });
+                console.log(`✅ Updated ${brand.name}: ${brand.category} -> ${categoryName}`);
             }
         }
 

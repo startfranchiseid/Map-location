@@ -1,0 +1,602 @@
+<style>
+    .product-catalog-section * {
+        box-sizing: border-box;
+    }
+
+    .product-catalog-section {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        padding: 40px 0;
+        width: 100%;
+    }
+
+    .catalog-container {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 24px;
+        width: 100%;
+    }
+
+    .product-catalog-section .filter-bar {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 30px;
+        padding: 0;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+
+    .product-catalog-section .filter-dropdown {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .product-catalog-section .filter-btn {
+        background: none;
+        border: none;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #333;
+        padding: 5px 0;
+    }
+
+    .product-catalog-section .filter-btn::after {
+        content: '▼';
+        font-size: 8px;
+        margin-left: 4px;
+    }
+
+    .product-catalog-section .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        min-width: 220px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 9999;
+        border-radius: 4px;
+        padding: 10px 0;
+    }
+
+    .product-catalog-section .dropdown-content.show {
+        display: block;
+    }
+
+    .product-catalog-section .dropdown-content label,
+    .product-catalog-section .dropdown-content .color-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 15px;
+        cursor: pointer;
+        font-size: 13px;
+        color: #555;
+        white-space: nowrap;
+        transition: background 0.2s;
+    }
+
+    .product-catalog-section .dropdown-content label:hover,
+    .product-catalog-section .dropdown-content .color-item:hover {
+        background: #f5f5f5;
+    }
+
+    .product-catalog-section .dropdown-content input[type="checkbox"],
+    .product-catalog-section .dropdown-content input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    .product-catalog-section .color-item .color-swatch {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        margin-right: 10px;
+        border: 1px solid #ddd;
+        flex-shrink: 0;
+    }
+
+    .product-catalog-section .color-item.selected {
+        background: #eee;
+        font-weight: 600;
+        color: #000;
+    }
+
+    .product-catalog-section .product-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 24px;
+        padding: 0;
+    }
+
+    .product-catalog-section .product-card {
+        background: transparent;
+        border-radius: 0;
+        overflow: visible;
+        transition: all 0.3s;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-catalog-section .product-card.hidden {
+        display: none;
+    }
+
+    .product-catalog-section .product-image {
+        width: 100%;
+        aspect-ratio: 3/4;
+        object-fit: cover;
+        display: block;
+        margin-bottom: 12px;
+        background-color: #e0e0e0;
+    }
+
+    .product-catalog-section .product-info {
+        padding: 0;
+        background: transparent;
+    }
+
+    .product-catalog-section .product-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+    }
+
+    .product-catalog-section .product-code {
+        font-size: 12px;
+        color: #666;
+        letter-spacing: 0.5px;
+    }
+
+    .product-catalog-section .color-dots {
+        display: flex;
+        gap: 4px;
+    }
+
+    .product-catalog-section .color-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .product-catalog-section .product-price {
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .product-catalog-section .clear-filter {
+        background: #333;
+        color: white;
+        border: none;
+        padding: 6px 14px;
+        font-size: 12px;
+        cursor: pointer;
+        border-radius: 3px;
+        display: none;
+        margin-left: auto;
+    }
+
+    .product-catalog-section .clear-filter.show {
+        display: inline-block;
+    }
+
+    .product-catalog-section .loading-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #888;
+        font-size: 14px;
+    }
+
+    .product-catalog-section .loading-spinner {
+        width: 36px;
+        height: 36px;
+        border: 3px solid #e0e0e0;
+        border-top-color: #333;
+        border-radius: 50%;
+        animation: catalog-spin 0.8s linear infinite;
+        margin: 0 auto 15px;
+    }
+
+    @keyframes catalog-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .product-catalog-section .error-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #c0392b;
+        font-size: 14px;
+    }
+
+    .product-catalog-section .error-state button {
+        margin-top: 12px;
+        background: #333;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        font-size: 13px;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    @media (max-width: 1024px) {
+        .product-catalog-section .product-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 850px) {
+        .product-catalog-section .product-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .catalog-container {
+            padding: 0 20px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .product-catalog-section .product-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .product-catalog-section .filter-bar {
+            gap: 15px;
+            justify-content: space-between;
+        }
+
+        .product-catalog-section .filter-btn {
+            font-size: 13px;
+        }
+
+        .product-catalog-section .clear-filter {
+            margin-left: 0;
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="product-catalog-section">
+    <div class="catalog-container">
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-dropdown">
+                <button class="filter-btn" onclick="toggleDropdown('price-dropdown')">PRICE</button>
+                <div id="price-dropdown" class="dropdown-content">
+                    <label><input type="radio" name="price" value="all" checked onchange="filterProducts()"> Semua
+                        Harga</label>
+                    <label><input type="radio" name="price" value="0-200000" onchange="filterProducts()"> Di bawah
+                        Rp200.000</label>
+                    <label><input type="radio" name="price" value="200000-300000" onchange="filterProducts()"> Rp200.000
+                        - Rp300.000</label>
+                    <label><input type="radio" name="price" value="300000-400000" onchange="filterProducts()"> Rp300.000
+                        - Rp400.000</label>
+                    <label><input type="radio" name="price" value="400000-999999" onchange="filterProducts()"> Di atas
+                        Rp400.000</label>
+                </div>
+            </div>
+
+            <div class="filter-dropdown">
+                <button class="filter-btn" onclick="toggleDropdown('color-dropdown')">COLOR</button>
+                <div id="color-dropdown" class="dropdown-content">
+                    <div class="color-item selected" data-color="all" onclick="selectColor(this)">
+                        <span class="color-swatch"
+                            style="background: linear-gradient(135deg, #e8d4c4 25%, #7ba3c9 25%, #7ba3c9 50%, #d4a5a5 50%, #d4a5a5 75%, #c9b896 75%);"></span>
+                        Semua Warna
+                    </div>
+                    <div class="color-item" data-color="cream" onclick="selectColor(this)">
+                        <span class="color-swatch" style="background: #d4c4b8;"></span> Cream/Beige
+                    </div>
+                    <div class="color-item" data-color="blue" onclick="selectColor(this)">
+                        <span class="color-swatch" style="background: #7ba3c9;"></span> Blue
+                    </div>
+                    <div class="color-item" data-color="black" onclick="selectColor(this)">
+                        <span class="color-swatch" style="background: #333;"></span> Black
+                    </div>
+                    <div class="color-item" data-color="pink" onclick="selectColor(this)">
+                        <span class="color-swatch" style="background: #d4a5a5;"></span> Pink
+                    </div>
+                    <div class="color-item" data-color="brown" onclick="selectColor(this)">
+                        <span class="color-swatch" style="background: #b8a090;"></span> Brown
+                    </div>
+                    <div class="color-item" data-color="grey" onclick="selectColor(this)">
+                        <span class="color-swatch" style="background: #c5b8a8;"></span> Grey
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-dropdown">
+                <button class="filter-btn" onclick="toggleDropdown('sort-dropdown')">SORT</button>
+                <div id="sort-dropdown" class="dropdown-content">
+                    <label><input type="radio" name="sort" value="default" checked onchange="sortProducts()">
+                        Default</label>
+                    <label><input type="radio" name="sort" value="price-low" onchange="sortProducts()"> Harga: Rendah ke
+                        Tinggi</label>
+                    <label><input type="radio" name="sort" value="price-high" onchange="sortProducts()"> Harga: Tinggi
+                        ke Rendah</label>
+                    <label><input type="radio" name="sort" value="name-asc" onchange="sortProducts()"> Nama: A-Z</label>
+                    <label><input type="radio" name="sort" value="name-desc" onchange="sortProducts()"> Nama:
+                        Z-A</label>
+                </div>
+            </div>
+
+            <button class="clear-filter" id="clearFilter" onclick="clearFilters()">Clear Filters</button>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid" id="productGrid">
+            <div class="loading-state" id="loadingState" style="grid-column: 1 / -1;">
+                <div class="loading-spinner"></div>
+                <div>Memuat produk...</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    (function () {
+        // ============================================================
+        // KONFIGURASI — ganti dengan Spreadsheet ID Anda
+        // ============================================================
+        const SPREADSHEET_ID = '14gtWNl6nYc0uLyUu2PvXR6NJ9DyXbN-HUo0v72D3I9s';
+        // ============================================================
+
+        let selectedColor = 'all';
+        let originalOrder = [];
+
+        // ============================================================
+        // GOOGLE DRIVE URL RESOLVER
+        // Mendukung semua format link Google Drive:
+        //   - https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+        //   - https://drive.google.com/open?id=FILE_ID
+        //   - https://drive.google.com/uc?id=FILE_ID
+        // URL lain (CDN, Squarespace, dll) dikembalikan apa adanya.
+        // ============================================================
+        function resolveImageUrl(url) {
+            if (!url) return '';
+            var fileId = null;
+
+            var m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (m) fileId = m[1];
+
+            if (!fileId) {
+                m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+                if (m) fileId = m[1];
+            }
+
+            if (fileId) {
+                return 'https://drive.google.com/thumbnail?id=' + fileId + '&sz=w600';
+            }
+
+            return url;
+        }
+
+        function formatPrice(price) {
+            return 'Rp' + parseInt(price).toLocaleString('id-ID').replace(/,/g, '.');
+        }
+
+        function parseCSV(text) {
+            const rows = [];
+            let row = [], cell = '', inQuote = false;
+            for (let i = 0; i < text.length; i++) {
+                const c = text[i], n = text[i + 1];
+                if (inQuote) {
+                    if (c === '"' && n === '"') { cell += '"'; i++; }
+                    else if (c === '"') inQuote = false;
+                    else cell += c;
+                } else {
+                    if (c === '"') inQuote = true;
+                    else if (c === ',') { row.push(cell); cell = ''; }
+                    else if (c === '\n' || (c === '\r' && n === '\n')) {
+                        row.push(cell); cell = ''; rows.push(row); row = [];
+                        if (c === '\r') i++;
+                    } else cell += c;
+                }
+            }
+            if (cell || row.length) { row.push(cell); rows.push(row); }
+            return rows;
+        }
+
+        function createProductCard(code, price, imageUrl, colors, colorDots) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.dataset.price = price;
+            card.dataset.code = code;
+            card.dataset.colors = colors;
+
+            const dotsArray = colorDots.split(',').map(c => c.trim());
+            let dotsHTML = dotsArray.map(hex =>
+                '<span class="color-dot" style="background: ' + hex + ';"></span>'
+            ).join('');
+
+            card.innerHTML =
+                '<img src="' + imageUrl + '" alt="' + code + '" class="product-image" loading="lazy" onerror="this.style.opacity=\'0\'">' +
+                '<div class="product-info">' +
+                '<div class="product-header">' +
+                '<span class="product-code">' + code + '</span>' +
+                '<div class="color-dots">' + dotsHTML + '</div>' +
+                '</div>' +
+                '<div class="product-price">' + formatPrice(price) + '</div>' +
+                '</div>';
+
+            return card;
+        }
+
+        function loadProducts() {
+            const url = 'https://docs.google.com/spreadsheets/d/' + SPREADSHEET_ID + '/export?format=csv';
+
+            fetch(url)
+                .then(function (response) {
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    return response.text();
+                })
+                .then(function (csvText) {
+                    const grid = document.getElementById('productGrid');
+                    const loading = document.getElementById('loadingState');
+                    if (loading) loading.remove();
+
+                    const rows = parseCSV(csvText);
+
+                    if (rows.length < 2) {
+                        grid.innerHTML = '<div class="error-state" style="grid-column: 1 / -1;">Tidak ada data produk ditemukan di spreadsheet.</div>';
+                        return;
+                    }
+
+                    const dataRows = rows.slice(1).filter(function (row) {
+                        return row.length >= 5 && row[0].trim();
+                    });
+
+                    dataRows.sort(function (a, b) {
+                        return a[0].localeCompare(b[0]);
+                    });
+
+                    dataRows.forEach(function (row) {
+                        var code = row[0].trim();
+                        var price = row[1].trim();
+                        // ↓ resolveImageUrl otomatis konversi link Google Drive
+                        var imageUrl = resolveImageUrl(row[2].trim());
+                        var colors = row[3].trim();
+                        var colorDots = row[4].trim();
+
+                        var card = createProductCard(code, price, imageUrl, colors, colorDots);
+                        grid.appendChild(card);
+                    });
+
+                    originalOrder = Array.from(grid.children);
+                })
+                .catch(function (error) {
+                    console.error('Error loading from Google Sheets:', error);
+                    var grid = document.getElementById('productGrid');
+                    grid.innerHTML =
+                        '<div class="error-state" style="grid-column: 1 / -1;">' +
+                        '<div>Gagal memuat data produk.</div>' +
+                        '<div style="font-size:12px;color:#999;margin-top:5px;">' + error.message + '</div>' +
+                        '<div style="font-size:11px;color:#999;margin-top:8px;">Pastikan spreadsheet sudah di-share ke "Anyone with the link"</div>' +
+                        '<button onclick="location.reload()">Coba Lagi</button>' +
+                        '</div>';
+                });
+        }
+
+        window.toggleDropdown = function (id) {
+            document.querySelectorAll('.product-catalog-section .dropdown-content').forEach(function (d) {
+                if (d.id !== id) d.classList.remove('show');
+            });
+            document.getElementById(id).classList.toggle('show');
+        };
+
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.filter-dropdown')) {
+                document.querySelectorAll('.product-catalog-section .dropdown-content').forEach(function (d) {
+                    d.classList.remove('show');
+                });
+            }
+        });
+
+        window.selectColor = function (element) {
+            document.querySelectorAll('.product-catalog-section .color-item').forEach(function (c) {
+                c.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedColor = element.dataset.color;
+            filterProducts();
+            updateClearButton();
+            document.getElementById('color-dropdown').classList.remove('show');
+        };
+
+        window.filterProducts = function () {
+            var priceRadio = document.querySelector('.product-catalog-section input[name="price"]:checked');
+            var priceFilter = priceRadio ? priceRadio.value : 'all';
+            var cards = document.querySelectorAll('.product-catalog-section .product-card');
+
+            cards.forEach(function (card) {
+                var showByPrice = true;
+                var showByColor = true;
+
+                if (priceFilter !== 'all') {
+                    var price = parseInt(card.dataset.price);
+                    var parts = priceFilter.split('-');
+                    showByPrice = price >= parseInt(parts[0]) && price <= parseInt(parts[1]);
+                }
+
+                if (selectedColor !== 'all') {
+                    var colors = card.dataset.colors.split(',').map(function (c) { return c.trim(); });
+                    showByColor = colors.includes(selectedColor);
+                }
+
+                card.classList.toggle('hidden', !(showByPrice && showByColor));
+            });
+
+            updateClearButton();
+        };
+
+        window.sortProducts = function () {
+            var sortRadio = document.querySelector('.product-catalog-section input[name="sort"]:checked');
+            var sortValue = sortRadio ? sortRadio.value : 'default';
+            var grid = document.getElementById('productGrid');
+            var cards = Array.from(grid.querySelectorAll('.product-card'));
+
+            if (sortValue === 'default') {
+                originalOrder.forEach(function (card) { grid.appendChild(card); });
+            } else {
+                cards.sort(function (a, b) {
+                    if (sortValue === 'price-low') return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+                    if (sortValue === 'price-high') return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+                    if (sortValue === 'name-asc') return a.dataset.code.localeCompare(b.dataset.code);
+                    if (sortValue === 'name-desc') return b.dataset.code.localeCompare(a.dataset.code);
+                    return 0;
+                }).forEach(function (card) { grid.appendChild(card); });
+            }
+        };
+
+        function updateClearButton() {
+            var priceRadio = document.querySelector('.product-catalog-section input[name="price"]:checked');
+            var priceFilter = priceRadio ? priceRadio.value : 'all';
+            var clearBtn = document.getElementById('clearFilter');
+            clearBtn.classList.toggle('show', priceFilter !== 'all' || selectedColor !== 'all');
+        }
+
+        window.clearFilters = function () {
+            var allPriceRadio = document.querySelector('.product-catalog-section input[name="price"][value="all"]');
+            if (allPriceRadio) allPriceRadio.checked = true;
+
+            document.querySelectorAll('.product-catalog-section .color-item').forEach(function (c) {
+                c.classList.remove('selected');
+            });
+            var allColorItem = document.querySelector('.product-catalog-section .color-item[data-color="all"]');
+            if (allColorItem) allColorItem.classList.add('selected');
+            selectedColor = 'all';
+
+            var defaultSortRadio = document.querySelector('.product-catalog-section input[name="sort"][value="default"]');
+            if (defaultSortRadio) defaultSortRadio.checked = true;
+
+            var grid = document.getElementById('productGrid');
+            originalOrder.forEach(function (card) {
+                card.classList.remove('hidden');
+                grid.appendChild(card);
+            });
+
+            updateClearButton();
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadProducts);
+        } else {
+            loadProducts();
+        }
+
+    })();
+</script>

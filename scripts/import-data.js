@@ -24,6 +24,25 @@ const brandMeta = {
     'Laundry Klin': { color: '#60a5fa', icon: 'fa-shirt' }
 };
 
+async function loadCategories() {
+    const categories = await pb.collection('categories').getFullList({
+        fields: 'id,name',
+    }).catch(() => []);
+    return new Map(categories.map((c) => [c.name, c.id]));
+}
+
+async function getCategoryId(categoryName, categoryMap) {
+    if (!categoryName) return '';
+    if (categoryMap.has(categoryName)) return categoryMap.get(categoryName);
+    const created = await pb.collection('categories').create({
+        name: categoryName,
+        icon: 'fa-tag',
+        color: '#8b5cf6',
+    });
+    categoryMap.set(created.name, created.id);
+    return created.id;
+}
+
 async function main() {
     console.log('📊 PocketBase Data Import');
     console.log('='.repeat(50));
@@ -40,6 +59,7 @@ async function main() {
     const authData = await authRes.json();
     pb.authStore.save(authData.token, authData.admin);
     console.log('   ✅ Authenticated (Fetch Bypass)');
+    const categoryMap = await loadCategories();
 
     /* SDK Auth - Disabled
     try {
@@ -85,9 +105,10 @@ async function main() {
         const meta = brandMeta[brand.brandName] || { color: '#667eea', icon: 'fa-store' };
 
         try {
+            const categoryId = await getCategoryId(brand.category || 'Umum', categoryMap);
             const record = await pb.collection('brands').create({
                 name: brand.brandName,
-                category: brand.category || '',
+                category: categoryId,
                 website: brand.website || '',
                 color: meta.color,
                 icon: meta.icon,

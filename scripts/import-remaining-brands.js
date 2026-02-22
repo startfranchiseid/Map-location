@@ -62,7 +62,26 @@ async function authenticate() {
     return false;
 }
 
-async function getOrCreateBrand(config) {
+async function loadCategories() {
+    const categories = await pb.collection('categories').getFullList({
+        fields: 'id,name',
+    }).catch(() => []);
+    return new Map(categories.map((c) => [c.name, c.id]));
+}
+
+async function getCategoryId(categoryName, categoryMap) {
+    if (!categoryName) return '';
+    if (categoryMap.has(categoryName)) return categoryMap.get(categoryName);
+    const created = await pb.collection('categories').create({
+        name: categoryName,
+        icon: 'fa-tag',
+        color: '#8b5cf6',
+    });
+    categoryMap.set(created.name, created.id);
+    return created.id;
+}
+
+async function getOrCreateBrand(config, categoryMap) {
     // Try to find existing
     try {
         const existing = await pb.collection('brands').getFirstListItem(`name="${config.name}"`);
@@ -71,9 +90,10 @@ async function getOrCreateBrand(config) {
     } catch (e) {
         // Create new
         try {
+            const categoryId = await getCategoryId(config.category, categoryMap);
             const record = await pb.collection('brands').create({
                 name: config.name,
-                category: config.category,
+                category: categoryId,
                 color: config.color,
                 icon: config.icon,
                 total_outlets: 0
@@ -244,6 +264,7 @@ async function main() {
     console.log('═'.repeat(60));
     
     if (!await authenticate()) return;
+    const categoryMap = await loadCategories();
     
     const rootDir = path.join(__dirname, '..');
     
@@ -272,7 +293,7 @@ async function main() {
         }
         
         // Get or create brand
-        const brandId = await getOrCreateBrand(config);
+        const brandId = await getOrCreateBrand(config, categoryMap);
         if (!brandId) continue;
         
         // Import outlets

@@ -41,6 +41,23 @@ async function main() {
     console.log('='.repeat(50));
 
     const pb = new PocketBase(PB_URL);
+    const loadCategories = async () => {
+        const categories = await pb.collection('categories').getFullList({
+            fields: 'id,name',
+        }).catch(() => []);
+        return new Map(categories.map((c) => [c.name, c.id]));
+    };
+    const getCategoryId = async (categoryName, categoryMap) => {
+        if (!categoryName) return '';
+        if (categoryMap.has(categoryName)) return categoryMap.get(categoryName);
+        const created = await pb.collection('categories').create({
+            name: categoryName,
+            icon: 'fa-tag',
+            color: '#8b5cf6',
+        });
+        categoryMap.set(created.name, created.id);
+        return created.id;
+    };
 
     // 1. Authenticate
     console.log('\n🔐 Authenticating...');
@@ -86,7 +103,37 @@ async function main() {
         console.error('   ⚠️  Cleanup warning:', e.message);
     }
 
-    // 3. Create Brands Collection
+    // 3. Create Categories Collection
+    console.log('\n📦 Creating "categories" collection...');
+    let categoriesId;
+    try {
+        const existing = await pb.collections.getOne('categories');
+        categoriesId = existing.id;
+        console.log(`   ✅ Exists (ID: ${categoriesId})`);
+    } catch {
+        try {
+            const created = await pb.collections.create({
+                name: 'categories',
+                type: 'base',
+                fields: [
+                    { name: 'name', type: 'text', required: true },
+                    { name: 'description', type: 'text', required: false },
+                    { name: 'icon', type: 'text', required: false },
+                    { name: 'color', type: 'text', required: false }
+                ],
+                listRule: '',
+                viewRule: ''
+            });
+            categoriesId = created.id;
+            console.log(`   ✅ Created (ID: ${categoriesId})`);
+        } catch (e) {
+            console.error('   ❌ Failed to create categories:', e.message);
+            console.log(JSON.stringify(e.data, null, 2));
+            process.exit(1);
+        }
+    }
+
+    // 4. Create Brands Collection
     console.log('\n📦 Creating "brands" collection...');
     let brandsId;
     try {
@@ -95,7 +142,16 @@ async function main() {
             type: 'base',
             fields: [
                 { name: 'name', type: 'text', required: true },
-                { name: 'category', type: 'text', required: false },
+                {
+                    name: 'category',
+                    type: 'relation',
+                    required: false,
+                    options: {
+                        collectionId: categoriesId,
+                        cascadeDelete: false,
+                        maxSelect: 1
+                    }
+                },
                 { name: 'website', type: 'url', required: false },
                 {
                     name: 'logo',
@@ -122,7 +178,7 @@ async function main() {
         process.exit(1);
     }
 
-    // 4. Create Outlets Collection
+    // 5. Create Outlets Collection
     console.log('\n📦 Creating "outlets" collection...');
     try {
         const col = await pb.collections.create({
@@ -159,7 +215,7 @@ async function main() {
         process.exit(1);
     }
 
-    // 5. Import Data
+    // 6. Import Data
     console.log('\n📥 Importing Data...');
 
     // Load JSON
@@ -189,15 +245,17 @@ async function main() {
     };
 
     const brandMap = new Map();
+    const categoryMap = await loadCategories();
 
     // Import Brands
     for (const brand of jsonData.brands) {
         const meta = brandMeta[brand.brandName] || { color: '#667eea', icon: 'fa-store' };
 
         try {
+            const categoryId = await getCategoryId(brand.category || 'Umum', categoryMap);
             const record = await pb.collection('brands').create({
                 name: brand.brandName,
-                category: brand.category || '',
+                category: categoryId,
                 website: brand.website || '',
                 color: meta.color,
                 icon: meta.icon,

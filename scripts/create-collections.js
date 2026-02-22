@@ -39,15 +39,61 @@ async function main() {
     }
 
     // 2. Create Collections
-    await createBrandsCollection();
-    await createOutletsCollection();
+    const categoriesId = await createCategoriesCollection();
+    const brandsId = await createBrandsCollection(categoriesId);
+    await createOutletsCollection(brandsId);
 
     console.log('\n' + '='.repeat(50));
     console.log('✅ Collection Setup Complete!');
     console.log('   You can now import data or upload logos via the Admin UI.');
 }
 
-async function createBrandsCollection() {
+async function createCategoriesCollection() {
+    console.log('\n📦 Setting up "categories" collection...');
+
+    try {
+        const existing = await pb.collections.getOne('categories');
+        console.log(`  ⚠️  Collection "categories" already exists (ID: ${existing.id})`);
+        console.log('      Updating schema...');
+
+        await pb.collections.update(existing.id, {
+            schema: [
+                { name: 'name', type: 'text', required: true },
+                { name: 'description', type: 'text', required: false },
+                { name: 'icon', type: 'text', required: false },
+                { name: 'color', type: 'text', required: false }
+            ],
+            listRule: '', // Public read
+            viewRule: '',
+            createRule: null, // Admin only
+            updateRule: null,
+            deleteRule: null
+        });
+        console.log('  ✅ Updated "categories" schema');
+        return existing.id;
+    } catch {
+        console.log('  🆕 Creating "categories" collection...');
+        const created = await pb.collections.create({
+            name: 'categories',
+            type: 'base',
+            schema: [
+                { name: 'name', type: 'text', required: true },
+                { name: 'description', type: 'text', required: false },
+                { name: 'icon', type: 'text', required: false },
+                { name: 'color', type: 'text', required: false }
+            ],
+            listRule: '', // Public read
+            viewRule: '',
+            createRule: null, // Admin only
+            updateRule: null,
+            deleteRule: null
+        });
+        console.log(`  ✅ Created "categories" (ID: ${created.id})`);
+        return created.id;
+    }
+}
+
+async function createBrandsCollection(categoriesId) {
     console.log('\n📦 Setting up "brands" collection...');
 
     // Check if collection exists
@@ -60,7 +106,16 @@ async function createBrandsCollection() {
         await pb.collections.update(existing.id, {
             schema: [
                 { name: 'name', type: 'text', required: true },
-                { name: 'category', type: 'text', required: false },
+                {
+                    name: 'category',
+                    type: 'relation',
+                    required: false,
+                    options: {
+                        collectionId: categoriesId,
+                        cascadeDelete: false,
+                        maxSelect: 1
+                    }
+                },
                 { name: 'website', type: 'url', required: false },
                 {
                     name: 'logo',
@@ -92,7 +147,16 @@ async function createBrandsCollection() {
             type: 'base',
             schema: [
                 { name: 'name', type: 'text', required: true },
-                { name: 'category', type: 'text', required: false },
+                {
+                    name: 'category',
+                    type: 'relation',
+                    required: false,
+                    options: {
+                        collectionId: categoriesId,
+                        cascadeDelete: false,
+                        maxSelect: 1
+                    }
+                },
                 { name: 'website', type: 'url', required: false },
                 {
                     name: 'logo',
@@ -119,19 +183,11 @@ async function createBrandsCollection() {
     }
 }
 
-async function createOutletsCollection() {
+async function createOutletsCollection(brandsCollectionId) {
     console.log('\n📦 Setting up "outlets" collection...');
 
     // Get brands collection ID for the relation
-    let brandsCollectionId;
-    try {
-        const brandsCol = await pb.collections.getOne('brands');
-        brandsCollectionId = brandsCol.id;
-        console.log(`  ℹ️  Brands collection ID: ${brandsCollectionId}`);
-    } catch (e) {
-        console.error('  ❌ Could not find brands collection. Please create it first.');
-        return;
-    }
+    console.log(`  ℹ️  Brands collection ID: ${brandsCollectionId}`);
 
     // Check if collection exists
     try {

@@ -1,8 +1,8 @@
 import { writable, derived } from 'svelte/store';
-import type { Brand, Outlet } from './pocketbase';
+import type { Brand, Outlet, Category } from './pocketbase';
 
 // Theme store
-export const theme = writable<'dark' | 'light'>('dark');
+export const theme = writable<'dark' | 'light'>('light');
 
 // Data stores
 export const brands = writable<Brand[]>([]);
@@ -31,11 +31,34 @@ export type MapAction =
     | { type: 'reset_view' };
 export const mapAction = writable<MapAction | null>(null);
 
+// Categories from PocketBase collection (writable, populated on mount)
+export const categoriesData = writable<Category[]>([]);
+
+// Derived list of category names for dropdowns (includes 'All')
+export const categories = derived(categoriesData, ($cats) => {
+    const sorted = [...$cats].sort((a, b) => a.name.localeCompare(b.name));
+    return [{ id: 'All', name: 'All' }, ...sorted.map((c) => ({
+        id: c.id,
+        name: c.name,
+    }))];
+});
+
 // Derived store for filtered outlets
 export const filteredOutlets = derived(
-    [outlets, brands, selectedBrands, selectedCategory, searchQuery],
-    ([$outlets, $brands, $selectedBrands, $selectedCategory, $searchQuery]) => {
+    [outlets, brands, categoriesData, selectedBrands, selectedCategory, searchQuery],
+    ([
+        $outlets,
+        $brands,
+        $categoriesData,
+        $selectedBrands,
+        $selectedCategory,
+        $searchQuery,
+    ]) => {
         let result = $outlets;
+        const categoryById = new Map($categoriesData.map((c) => [c.id, c.name]));
+        const categoryIdByName = new Map(
+            $categoriesData.map((c) => [c.name, c.id]),
+        );
 
         // 1. Apply Search or Category Filter
         if ($searchQuery.trim()) {
@@ -51,7 +74,19 @@ export const filteredOutlets = derived(
             );
         } else if ($selectedCategory !== 'All') {
             // Filter by Category (only if no search)
-            const brandsInCategory = new Set($brands.filter(b => b.category === $selectedCategory).map(b => b.id));
+            const brandsInCategory = new Set(
+                $brands
+                    .filter((b) => {
+                        const categoryId =
+                            (b.expand as any)?.category?.id ||
+                            (categoryById.has(b.category)
+                                ? b.category
+                                : categoryIdByName.get(b.category)) ||
+                            '';
+                        return categoryId === $selectedCategory;
+                    })
+                    .map((b) => b.id),
+            );
             result = result.filter(outlet => brandsInCategory.has(outlet.brand));
         }
 
@@ -81,15 +116,6 @@ export const stats = derived(
         };
     }
 );
-
-// Brand configuration
-export const categories = derived(brands, ($brands) => {
-    const cats = new Set<string>();
-    $brands.forEach(b => {
-        if (b.category) cats.add(b.category);
-    });
-    return ['All', ...Array.from(cats).sort()];
-});
 
 export const brandColors: Record<string, { dark: string; light: string }> = {
     'Luuca': { dark: '#f87171', light: '#ef4444' },

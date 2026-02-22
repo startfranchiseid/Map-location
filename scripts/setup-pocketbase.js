@@ -52,18 +52,42 @@ async function main() {
 async function createCollections() {
     console.log('\n📦 Creating collections...');
 
+    // Check if categories collection exists
+    try {
+        await pb.collections.getOne('categories');
+        console.log('  ⚠️  categories collection already exists');
+    } catch {
+        await pb.collections.create({
+            name: 'categories',
+            type: 'base',
+            schema: [
+                { name: 'name', type: 'text', required: true },
+                { name: 'description', type: 'text' },
+                { name: 'icon', type: 'text' },
+                { name: 'color', type: 'text' }
+            ],
+            listRule: '',
+            viewRule: '',
+            createRule: null,
+            updateRule: null,
+            deleteRule: null
+        });
+        console.log('  ✅ Created categories collection');
+    }
+
     // Check if brands collection exists
     try {
         await pb.collections.getOne('brands');
         console.log('  ⚠️  brands collection already exists');
     } catch {
+        const categoriesCollection = await pb.collections.getOne('categories');
         // Create brands collection
         await pb.collections.create({
             name: 'brands',
             type: 'base',
             schema: [
                 { name: 'name', type: 'text', required: true },
-                { name: 'category', type: 'text' },
+                { name: 'category', type: 'relation', options: { collectionId: categoriesCollection.id, cascadeDelete: false, maxSelect: 1 } },
                 { name: 'website', type: 'url' },
                 { name: 'logo', type: 'file', options: { maxSelect: 1, maxSize: 5242880, mimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp', 'image/svg+xml'] } },
                 { name: 'color', type: 'text' },
@@ -156,15 +180,32 @@ async function migrateData() {
         return;
     }
 
+    // Insert categories
+    const existingCategories = await pb.collection('categories').getFullList().catch(() => []);
+    const categoryMap = new Map(existingCategories.map((c) => [c.name, c.id]));
+
+    for (const brand of jsonData.brands) {
+        const categoryName = (brand.category || 'Umum').trim();
+        if (categoryMap.has(categoryName)) continue;
+        const created = await pb.collection('categories').create({
+            name: categoryName,
+            icon: 'fa-tag',
+            color: '#8b5cf6'
+        });
+        categoryMap.set(categoryName, created.id);
+    }
+
     // Insert brands
     const brandIdMap = new Map();
     let brandCount = 0;
 
     for (const brand of jsonData.brands) {
         try {
+            const categoryName = (brand.category || 'Umum').trim();
+            const categoryId = categoryMap.get(categoryName) || '';
             const record = await pb.collection('brands').create({
                 name: brand.brandName,
-                category: brand.category || '',
+                category: categoryId,
                 website: brand.website || '',
                 color: brandColors[brand.brandName] || '#667eea',
                 icon: brandIcons[brand.brandName] || 'fa-store'

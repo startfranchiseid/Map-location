@@ -5,8 +5,35 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
-/* CSS Variables - Dark Theme (Default) */
+/* CSS Variables - Light Theme (Default) */
 :root,
+[data-theme="light"] {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --bg-glass: rgba(255, 255, 255, 0.9);
+    --bg-glass-hover: rgba(248, 250, 252, 0.98);
+
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+
+    --accent-primary: #7c3aed;
+    --accent-secondary: #0891b2;
+    --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+
+    --border-color: rgba(15, 23, 42, 0.08);
+    --shadow-soft: 0 4px 20px rgba(15, 23, 42, 0.08);
+    --shadow-glow: 0 0 30px rgba(124, 58, 237, 0.15);
+
+    /* Brand Colors - Slightly darker for light mode */
+    --brand-luuca: #ef4444;
+    --brand-barber: #10b981;
+    --brand-ucmas: #f59e0b;
+    --brand-laundry: #3b82f6;
+}
+
+/* Dark Theme */
 [data-theme="dark"] {
     --bg-primary: #0a0e17;
     --bg-secondary: #111827;
@@ -31,33 +58,6 @@
     --brand-barber: #34d399;
     --brand-ucmas: #fbbf24;
     --brand-laundry: #60a5fa;
-}
-
-/* Light Theme */
-[data-theme="light"] {
-    --bg-primary: #f8fafc;
-    --bg-secondary: #ffffff;
-    --bg-card: #ffffff;
-    --bg-glass: rgba(255, 255, 255, 0.9);
-    --bg-glass-hover: rgba(248, 250, 252, 0.98);
-
-    --text-primary: #1e293b;
-    --text-secondary: #475569;
-    --text-muted: #94a3b8;
-
-    --accent-primary: #7c3aed;
-    --accent-secondary: #0891b2;
-    --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
-
-    --border-color: rgba(0, 0, 0, 0.08);
-    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
-    --shadow-glow: 0 0 30px rgba(124, 58, 237, 0.12);
-
-    /* Brand Colors - Slightly darker for light mode */
-    --brand-luuca: #ef4444;
-    --brand-barber: #10b981;
-    --brand-ucmas: #f59e0b;
-    --brand-laundry: #3b82f6;
 }
 
 /* ========================================
@@ -246,12 +246,13 @@ body {
    ======================================== */
 .main-content {
     display: flex;
-    height: 100vh;
+    height: calc(100vh - 96px);
     padding-top: 96px;
-    padding-bottom: 16px;
+    padding-bottom: 0;
     padding-left: 16px;
     padding-right: 16px;
     gap: 16px;
+    min-height: 0;
 }
 
 /* ========================================
@@ -271,6 +272,7 @@ body {
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: var(--shadow-soft);
+    min-height: 0;
 }
 
 .sidebar.hidden {

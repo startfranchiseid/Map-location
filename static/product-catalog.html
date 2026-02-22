@@ -1,0 +1,609 @@
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .pcat-wrap {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #fff;
+        width: 100%;
+    }
+
+    /* ── SECTION ── */
+    .pcat-section {
+        padding: 40px 0 60px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .pcat-section:last-child {
+        border-bottom: none;
+    }
+
+    .pcat-inner {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 32px;
+    }
+
+    /* ── HEADING ── */
+    .pcat-heading {
+        font-size: 36px;
+        font-weight: 400;
+        color: #111;
+        margin: 0 0 20px;
+        letter-spacing: -0.5px;
+    }
+
+    /* ── FILTER BAR ── */
+    .pcat-filter-bar {
+        display: flex;
+        align-items: center;
+        margin-bottom: 28px;
+        border-top: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
+        padding: 10px 0;
+    }
+
+    .pcat-filter-left {
+        display: flex;
+        gap: 0;
+    }
+
+    .pcat-filter-right {
+        margin-left: auto;
+    }
+
+    .pcat-dropdown {
+        position: relative;
+    }
+
+    .pcat-filter-btn {
+        background: none;
+        border: none;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #111;
+        padding: 6px 20px 6px 0;
+    }
+
+    .pcat-filter-btn svg {
+        width: 10px;
+        height: 10px;
+        transition: transform 0.2s;
+    }
+
+    .pcat-filter-btn.open svg {
+        transform: rotate(180deg);
+    }
+
+    .pcat-dropdown-menu {
+        display: none;
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        background: #fff;
+        min-width: 230px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        z-index: 9999;
+        border-radius: 3px;
+        padding: 8px 0;
+    }
+
+    .pcat-dropdown-menu.show {
+        display: block;
+    }
+
+    .pcat-dropdown-menu label {
+        display: flex;
+        align-items: center;
+        padding: 9px 18px;
+        cursor: pointer;
+        font-size: 13px;
+        color: #444;
+        transition: background 0.15s;
+        gap: 10px;
+    }
+
+    .pcat-dropdown-menu label:hover {
+        background: #f7f7f7;
+    }
+
+    .pcat-dropdown-menu input[type="radio"] {
+        accent-color: #111;
+    }
+
+    /* ── GRID ── */
+    .pcat-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+    }
+
+    /* ── CARD ── */
+    .pcat-card {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+    }
+
+    .pcat-card.hidden {
+        display: none;
+    }
+
+    .pcat-img-wrap {
+        width: 100%;
+        aspect-ratio: 3/4;
+        background: #f0eeec;
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
+
+    .pcat-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.4s ease;
+    }
+
+    .pcat-card:hover .pcat-img-wrap img {
+        transform: scale(1.03);
+    }
+
+    .pcat-info {
+        padding: 0;
+    }
+
+    .pcat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    .pcat-code {
+        font-size: 12px;
+        color: #666;
+        letter-spacing: 0.3px;
+    }
+
+    .pcat-dots {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+    }
+
+    .pcat-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        flex-shrink: 0;
+    }
+
+    .pcat-price {
+        font-size: 14px;
+        font-weight: 600;
+        color: #111;
+    }
+
+    /* ── STATES ── */
+    .pcat-loading,
+    .pcat-error,
+    .pcat-empty {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 50px 20px;
+        color: #888;
+        font-size: 13px;
+    }
+
+    .pcat-spinner {
+        width: 32px;
+        height: 32px;
+        border: 2.5px solid #e0e0e0;
+        border-top-color: #555;
+        border-radius: 50%;
+        animation: pcat-spin 0.8s linear infinite;
+        margin: 0 auto 14px;
+    }
+
+    @keyframes pcat-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .pcat-error {
+        color: #c0392b;
+    }
+
+    .pcat-error button {
+        margin-top: 10px;
+        background: #333;
+        color: #fff;
+        border: none;
+        padding: 7px 18px;
+        font-size: 12px;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+        .pcat-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    @media (max-width: 820px) {
+        .pcat-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .pcat-inner {
+            padding: 0 20px;
+        }
+
+        .pcat-heading {
+            font-size: 28px;
+        }
+    }
+
+    @media (max-width: 560px) {
+        .pcat-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .pcat-heading {
+            font-size: 24px;
+        }
+    }
+</style>
+
+<div class="pcat-wrap" id="pcatRoot">
+    <!-- Sections will be injected here by JS -->
+    <div class="pcat-loading" id="pcatGlobalLoading" style="padding:80px 20px;">
+        <div class="pcat-spinner"></div>
+        <div>Memuat produk...</div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        /* ============================================================
+           KONFIGURASI
+        ============================================================ */
+        const SPREADSHEET_ID = '16HzxXkUnKmS3j6fw8ocGJgk6dSFDawCMYsE6Onz2sfA';
+
+        /* Urutan tampilan kategori. Kategori di luar daftar ini tetap
+           ditampilkan, diurutkan alfabetis setelahnya.                */
+        const CATEGORY_ORDER = ['Dress', 'Top', 'Bottom', 'Hijab'];
+
+        /* ============================================================
+           HELPERS
+        ============================================================ */
+        function formatPrice(p) {
+            return 'Rp' + parseInt(p).toLocaleString('id-ID').replace(/,/g, '.');
+        }
+
+        function parseCSV(text) {
+            const rows = []; let row = [], cell = '', inQ = false;
+            for (let i = 0; i < text.length; i++) {
+                const c = text[i], n = text[i + 1];
+                if (inQ) {
+                    if (c === '"' && n === '"') { cell += '"'; i++; }
+                    else if (c === '"') inQ = false;
+                    else cell += c;
+                } else {
+                    if (c === '"') inQ = true;
+                    else if (c === ',') { row.push(cell); cell = ''; }
+                    else if (c === '\n' || (c === '\r' && n === '\n')) {
+                        row.push(cell); cell = ''; rows.push(row); row = [];
+                        if (c === '\r') i++;
+                    } else cell += c;
+                }
+            }
+            if (cell || row.length) { row.push(cell); rows.push(row); }
+            return rows;
+        }
+
+        /* ============================================================
+           RENDER ONE CATEGORY SECTION
+        ============================================================ */
+        function renderSection(category, products) {
+            const slug = category.toLowerCase().replace(/\s+/g, '-');
+            const sid = 'pcat-' + slug;
+
+            /* Sort products by code initially */
+            const sorted = products.slice().sort((a, b) => a.code.localeCompare(b.code));
+
+            /* ---- build DOM ---- */
+            const section = document.createElement('section');
+            section.className = 'pcat-section';
+            section.id = sid;
+
+            section.innerHTML = `
+        <div class="pcat-inner">
+            <h2 class="pcat-heading">${category}</h2>
+
+            <!-- Filter bar -->
+            <div class="pcat-filter-bar">
+                <div class="pcat-filter-left">
+                    <!-- PRICE -->
+                    <div class="pcat-dropdown" id="${sid}-price-dd">
+                        <button class="pcat-filter-btn" onclick="pcatToggle('${sid}-price-menu', this)">
+                            PRICE
+                            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M1 1l4 4 4-4"/>
+                            </svg>
+                        </button>
+                        <div class="pcat-dropdown-menu" id="${sid}-price-menu">
+                            <label><input type="radio" name="${sid}-price" value="all" checked onchange="pcatFilter('${sid}')"> Semua Harga</label>
+                            <label><input type="radio" name="${sid}-price" value="0-200000" onchange="pcatFilter('${sid}')"> Di bawah Rp200.000</label>
+                            <label><input type="radio" name="${sid}-price" value="200000-300000" onchange="pcatFilter('${sid}')"> Rp200.000 – Rp300.000</label>
+                            <label><input type="radio" name="${sid}-price" value="300000-400000" onchange="pcatFilter('${sid}')"> Rp300.000 – Rp400.000</label>
+                            <label><input type="radio" name="${sid}-price" value="400000-9999999" onchange="pcatFilter('${sid}')"> Di atas Rp400.000</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pcat-filter-right">
+                    <!-- SORT -->
+                    <div class="pcat-dropdown">
+                        <button class="pcat-filter-btn" onclick="pcatToggle('${sid}-sort-menu', this)">
+                            SORT
+                            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M1 1l4 4 4-4"/>
+                            </svg>
+                        </button>
+                        <div class="pcat-dropdown-menu" id="${sid}-sort-menu" style="left:auto;right:0;">
+                            <label><input type="radio" name="${sid}-sort" value="default" checked onchange="pcatSort('${sid}')"> Default</label>
+                            <label><input type="radio" name="${sid}-sort" value="price-low" onchange="pcatSort('${sid}')"> Harga: Rendah ke Tinggi</label>
+                            <label><input type="radio" name="${sid}-sort" value="price-high" onchange="pcatSort('${sid}')"> Harga: Tinggi ke Rendah</label>
+                            <label><input type="radio" name="${sid}-sort" value="name-asc" onchange="pcatSort('${sid}')"> Nama: A – Z</label>
+                            <label><input type="radio" name="${sid}-sort" value="name-desc" onchange="pcatSort('${sid}')"> Nama: Z – A</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product grid -->
+            <div class="pcat-grid" id="${sid}-grid"></div>
+        </div>`;
+
+            /* ---- populate grid ---- */
+            const grid = section.querySelector(`#${sid}-grid`);
+            sorted.forEach(p => grid.appendChild(buildCard(p)));
+
+            /* store original order on grid */
+            grid._originalOrder = Array.from(grid.children);
+
+            return section;
+        }
+
+        /* ============================================================
+           GOOGLE DRIVE URL RESOLVER
+           Supports formats:
+             - https://drive.google.com/file/d/FILE_ID/view?...
+             - https://drive.google.com/open?id=FILE_ID
+             - https://drive.google.com/uc?id=FILE_ID (already direct)
+             - https://lh3.googleusercontent.com/d/FILE_ID
+             - Any other URL is returned as-is (e.g. Squarespace, CDN, etc.)
+        ============================================================ */
+        function resolveImageUrl(url) {
+            if (!url) return '';
+
+            var fileId = null;
+
+            // Format: /file/d/FILE_ID/view?...
+            var m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (m) fileId = m[1];
+
+            // Format: open?id=FILE_ID  or  uc?id=FILE_ID&...  or  thumbnail?id=FILE_ID
+            if (!fileId) {
+                m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+                if (m) fileId = m[1];
+            }
+
+            // Convert to Drive thumbnail URL (reliable, CORS-safe, no auth needed)
+            if (fileId) {
+                return 'https://drive.google.com/thumbnail?id=' + fileId + '&sz=w600';
+            }
+
+            // Already a direct/other URL → return as-is
+            return url;
+        }
+
+        /* ============================================================
+           BUILD PRODUCT CARD
+        ============================================================ */
+        function buildCard(p) {
+            const card = document.createElement('div');
+            card.className = 'pcat-card';
+            card.dataset.price = p.price;
+            card.dataset.code = p.code;
+
+            const dots = p.color_dots.split(',').map(h =>
+                `<span class="pcat-dot" style="background:${h.trim()}"></span>`
+            ).join('');
+
+            const imgSrc = resolveImageUrl(p.image_url);
+
+            card.innerHTML = `
+            <div class="pcat-img-wrap">
+                <img src="${imgSrc}" alt="${p.code}" loading="lazy"
+                     onerror="this.style.display='none'">
+            </div>
+            <div class="pcat-info">
+                <div class="pcat-row">
+                    <span class="pcat-code">${p.code}</span>
+                    <div class="pcat-dots">${dots}</div>
+                </div>
+                <div class="pcat-price">${formatPrice(p.price)}</div>
+            </div>`;
+
+            return card;
+        }
+
+        /* ============================================================
+           FILTER / SORT (global window functions)
+        ============================================================ */
+        window.pcatToggle = function (menuId, btn) {
+            /* close all other menus */
+            document.querySelectorAll('.pcat-dropdown-menu.show').forEach(m => {
+                if (m.id !== menuId) {
+                    m.classList.remove('show');
+                    const b = m.previousElementSibling;
+                    if (b) b.classList.remove('open');
+                }
+            });
+            const menu = document.getElementById(menuId);
+            if (!menu) return;
+            menu.classList.toggle('show');
+            btn.classList.toggle('open', menu.classList.contains('show'));
+        };
+
+        window.pcatFilter = function (sid) {
+            const radio = document.querySelector(`input[name="${sid}-price"]:checked`);
+            const val = radio ? radio.value : 'all';
+            const grid = document.getElementById(sid + '-grid');
+            if (!grid) return;
+
+            grid.querySelectorAll('.pcat-card').forEach(card => {
+                let show = true;
+                if (val !== 'all') {
+                    const price = parseInt(card.dataset.price);
+                    const [mn, mx] = val.split('-').map(Number);
+                    show = price >= mn && price <= mx;
+                }
+                card.classList.toggle('hidden', !show);
+            });
+
+            document.querySelectorAll('.pcat-dropdown-menu.show').forEach(m => m.classList.remove('show'));
+        };
+
+        window.pcatSort = function (sid) {
+            const radio = document.querySelector(`input[name="${sid}-sort"]:checked`);
+            const val = radio ? radio.value : 'default';
+            const grid = document.getElementById(sid + '-grid');
+            if (!grid) return;
+
+            const cards = Array.from(grid.querySelectorAll('.pcat-card'));
+
+            if (val === 'default') {
+                (grid._originalOrder || cards).forEach(c => grid.appendChild(c));
+            } else {
+                cards.sort((a, b) => {
+                    if (val === 'price-low') return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+                    if (val === 'price-high') return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+                    if (val === 'name-asc') return a.dataset.code.localeCompare(b.dataset.code);
+                    if (val === 'name-desc') return b.dataset.code.localeCompare(a.dataset.code);
+                    return 0;
+                });
+                cards.forEach(c => grid.appendChild(c));
+            }
+
+            document.querySelectorAll('.pcat-dropdown-menu.show').forEach(m => m.classList.remove('show'));
+        };
+
+        /* close dropdowns on outside click */
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.pcat-dropdown')) {
+                document.querySelectorAll('.pcat-dropdown-menu.show').forEach(m => {
+                    m.classList.remove('show');
+                    const b = m.previousElementSibling;
+                    if (b) b.classList.remove('open');
+                });
+            }
+        });
+
+        /* ============================================================
+           FETCH & BOOTSTRAP
+        ============================================================ */
+        function loadProducts() {
+            const url = 'https://docs.google.com/spreadsheets/d/' + SPREADSHEET_ID + '/export?format=csv';
+
+            fetch(url)
+                .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+                .then(csv => {
+                    const root = document.getElementById('pcatRoot');
+                    const loading = document.getElementById('pcatGlobalLoading');
+                    if (loading) loading.remove();
+
+                    const rows = parseCSV(csv);
+                    if (rows.length < 2) {
+                        root.innerHTML = '<div class="pcat-error">Tidak ada data produk ditemukan.</div>';
+                        return;
+                    }
+
+                    /* Map header indices — header row is row[0]
+                       Expected: code | price | image_url | colors | color_dots | category */
+                    const header = rows[0].map(h => h.trim().toLowerCase());
+                    const idx = {
+                        code: header.indexOf('code'),
+                        price: header.indexOf('price'),
+                        image_url: header.indexOf('image_url'),
+                        colors: header.indexOf('colors'),
+                        color_dots: header.indexOf('color_dots'),
+                        category: header.indexOf('category'),
+                    };
+
+                    /* Build products array */
+                    const products = rows.slice(1)
+                        .filter(r => r.length > 1 && r[idx.code] && r[idx.code].trim())
+                        .map(r => ({
+                            code: (r[idx.code] || '').trim(),
+                            price: (r[idx.price] || '0').trim(),
+                            image_url: (r[idx.image_url] || '').trim(),
+                            colors: (r[idx.colors] || '').trim(),
+                            color_dots: (r[idx.color_dots] || '').trim(),
+                            category: (r[idx.category] || 'Lainnya').trim(),
+                        }));
+
+                    /* Group by category */
+                    const map = {};
+                    products.forEach(p => {
+                        if (!map[p.category]) map[p.category] = [];
+                        map[p.category].push(p);
+                    });
+
+                    /* Determine rendering order */
+                    const knownOrder = CATEGORY_ORDER.filter(c => map[c]);
+                    const otherCats = Object.keys(map)
+                        .filter(c => !CATEGORY_ORDER.includes(c))
+                        .sort();
+                    const finalOrder = [...knownOrder, ...otherCats];
+
+                    /* Render sections */
+                    finalOrder.forEach(cat => {
+                        root.appendChild(renderSection(cat, map[cat]));
+                    });
+                })
+                .catch(err => {
+                    const root = document.getElementById('pcatRoot');
+                    root.innerHTML = `
+                    <div class="pcat-error" style="padding:80px 20px;">
+                        <div>Gagal memuat data produk.</div>
+                        <div style="font-size:11px;color:#aaa;margin-top:6px;">${err.message}</div>
+                        <div style="font-size:11px;color:#aaa;margin-top:4px;">Pastikan spreadsheet sudah di-share ke "Anyone with the link"</div>
+                        <button onclick="location.reload()">Coba Lagi</button>
+                    </div>`;
+                });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadProducts);
+        } else {
+            loadProducts();
+        }
+    })();
+</script>

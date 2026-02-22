@@ -12,9 +12,25 @@ const ADMIN_PASSWORD = 'Admin.startfranchise@123';
 const pb = new PocketBase(PB_URL);
 
 // Field definitions for PocketBase v0.23+ format
-const brandFields = [
+const categoryFields = [
     { name: 'name', type: 'text', required: true },
-    { name: 'category', type: 'text', required: false },
+    { name: 'description', type: 'text', required: false },
+    { name: 'icon', type: 'text', required: false },
+    { name: 'color', type: 'text', required: false }
+];
+
+const brandFields = (categoriesId) => [
+    { name: 'name', type: 'text', required: true },
+    {
+        name: 'category',
+        type: 'relation',
+        required: false,
+        options: {
+            collectionId: categoriesId,
+            cascadeDelete: false,
+            maxSelect: 1
+        }
+    },
     { name: 'website', type: 'url', required: false },
     {
         name: 'logo',
@@ -49,6 +65,7 @@ async function main() {
     console.log('\n�️ Deleting existing empty collections...');
 
     const allCollections = await pb.collections.getFullList();
+    const categoriesCol = allCollections.find(c => c.name === 'categories');
     const brandsCol = allCollections.find(c => c.name === 'brands');
     const outletsCol = allCollections.find(c => c.name === 'outlets');
 
@@ -75,6 +92,53 @@ async function main() {
     // Wait a moment
     await new Promise(r => setTimeout(r, 1000));
 
+    // Delete categories
+    if (categoriesCol) {
+        try {
+            await pb.collections.delete(categoriesCol.id);
+            console.log('   Deleted categories');
+        } catch (e) {
+            console.log('   Could not delete categories:', e.message);
+        }
+    }
+
+    // Create categories collection
+    console.log('\n📦 Creating "categories" collection...');
+    let categoriesId;
+    try {
+        const result = await pb.collections.create({
+            name: 'categories',
+            type: 'base',
+            fields: categoryFields,
+            listRule: '',
+            viewRule: ''
+        });
+        categoriesId = result.id;
+        console.log(`   ✅ Created with ID: ${result.id}`);
+    } catch (e) {
+        console.error('   ❌ Failed with fields:', e.message);
+        console.log('   Trying with schema property...');
+        try {
+            const result = await pb.collections.create({
+                name: 'categories',
+                type: 'base',
+                schema: categoryFields,
+                listRule: '',
+                viewRule: ''
+            });
+            categoriesId = result.id;
+            console.log(`   ✅ Created with ID: ${result.id}`);
+        } catch (e2) {
+            console.error('   ❌ Also failed with schema:', e2.message);
+            console.error('   Data:', JSON.stringify(e2.data || {}, null, 2));
+        }
+    }
+
+    if (!categoriesId) {
+        console.log('\n❌ Could not create categories collection. Aborting.');
+        return;
+    }
+
     // Create brands collection with 'fields' property (v0.23+ API)
     console.log('\n📦 Creating "brands" collection...');
     let brandsId;
@@ -83,7 +147,7 @@ async function main() {
         const result = await pb.collections.create({
             name: 'brands',
             type: 'base',
-            fields: brandFields,
+            fields: brandFields(categoriesId),
             listRule: '',
             viewRule: ''
         });
@@ -100,7 +164,7 @@ async function main() {
             const result = await pb.collections.create({
                 name: 'brands',
                 type: 'base',
-                schema: brandFields,
+                schema: brandFields(categoriesId),
                 listRule: '',
                 viewRule: ''
             });

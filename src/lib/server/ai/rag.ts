@@ -28,6 +28,12 @@ type BrandRecord = {
     category?: string;
     website?: string;
     total_outlets?: number;
+    expand?: {
+        category?: {
+            id: string;
+            name: string;
+        };
+    };
 };
 
 type OutletRecord = {
@@ -149,8 +155,10 @@ function buildFilter(
 
     if (intent.categoryQuery) {
         const matchedBrandIds = brands
-            .filter(b =>
-                b.category?.toLowerCase().includes(intent.categoryQuery!),
+            .filter((b) =>
+                b.expand?.category?.name
+                    ?.toLowerCase()
+                    .includes(intent.categoryQuery!),
             )
             .map(b => b.id);
         if (matchedBrandIds.length > 0) {
@@ -211,6 +219,7 @@ export async function getSuggestedActions(
         brands = await pb.collection('brands').getFullList<BrandRecord>({
             sort: 'name',
             fields: 'id,name,category',
+            expand: 'category',
         });
     } catch {
         brands = [];
@@ -294,14 +303,23 @@ export async function getSuggestedActions(
     }
 
     if (intent.categoryQuery && brands.length > 0) {
-        const categories = Array.from(new Set(brands.map(b => b.category).filter(Boolean))) as string[];
-        const matchedCategory = categories.find(c =>
-            c.toLowerCase().includes(intent.categoryQuery!)
+        const categoryNameToId = new Map(
+            brands
+                .map((b) => {
+                    const name = b.expand?.category?.name;
+                    const id = b.expand?.category?.id;
+                    return name && id ? [name, id] : null;
+                })
+                .filter(Boolean) as [string, string][],
+        );
+        const categories = Array.from(categoryNameToId.keys());
+        const matchedCategory = categories.find((c) =>
+            c.toLowerCase().includes(intent.categoryQuery!),
         );
         if (matchedCategory) {
             actions.push({
                 type: 'set_category',
-                value: matchedCategory,
+                value: categoryNameToId.get(matchedCategory),
                 label: `Filter kategori ${matchedCategory}`,
             });
         }
@@ -374,6 +392,7 @@ export async function getRelevantContext(
         const brands = await pb.collection('brands').getFullList<BrandRecord>({
             sort: 'name',
             fields: 'id,name,category,website,total_outlets',
+            expand: 'category',
         });
 
         let brandQuery = intent.brandQuery;
@@ -395,8 +414,10 @@ export async function getRelevantContext(
                     sort: '-totalScore',
                 });
 
+                const categoryName =
+                    matchedBrand.expand?.category?.name || 'Umum';
                 chunks.push(`**Brand: ${matchedBrand.name}**`);
-                chunks.push(`- Kategori: ${matchedBrand.category || 'Umum'}`);
+                chunks.push(`- Kategori: ${categoryName}`);
                 chunks.push(`- Website: ${matchedBrand.website || '-'}`);
                 chunks.push(`- Total outlet: ${matchedBrand.total_outlets || outlets.totalItems}`);
                 chunks.push(`- Outlet terdaftar di database: ${outlets.totalItems}`);
@@ -436,13 +457,18 @@ export async function getRelevantContext(
 
         // 4. If category mentioned, filter brands
         if (intent.categoryQuery) {
-            const catBrands = brands.filter(b =>
-                b.category?.toLowerCase().includes(intent.categoryQuery!)
+            const catBrands = brands.filter((b) =>
+                b.expand?.category?.name
+                    ?.toLowerCase()
+                    .includes(intent.categoryQuery!),
             );
             if (catBrands.length > 0) {
                 chunks.push(`\n**Brand kategori "${intent.categoryQuery}":**`);
                 for (const b of catBrands) {
-                    chunks.push(`  - ${b.name} (${b.total_outlets || '?'} outlet)`);
+                    const categoryName = b.expand?.category?.name || 'Umum';
+                    chunks.push(
+                        `  - ${b.name} (${categoryName}, ${b.total_outlets || '?'} outlet)`,
+                    );
                 }
                 sources.push(`Category: ${intent.categoryQuery}`);
             }
@@ -493,7 +519,10 @@ export async function getRelevantContext(
             // List all brands
             chunks.push(`\nDaftar brand:`);
             for (const b of brands) {
-                chunks.push(`  - ${b.name} (${b.category || 'Umum'}, ${b.total_outlets || '?'} outlet)`);
+                const categoryName = b.expand?.category?.name || 'Umum';
+                chunks.push(
+                    `  - ${b.name} (${categoryName}, ${b.total_outlets || '?'} outlet)`,
+                );
             }
             sources.push('General stats');
         }

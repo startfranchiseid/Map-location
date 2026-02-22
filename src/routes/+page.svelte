@@ -5,28 +5,47 @@
     import MapComponent from "$lib/components/Map.svelte";
     import OutletDetail from "$lib/components/OutletDetail.svelte";
     import AiChat from "$lib/components/AiChat.svelte";
-    import { brands, outlets, selectedBrands, isLoading } from "$lib/stores";
-    import { getBrands, getAllOutletsWithBrands } from "$lib/pocketbase";
+    import {
+        brands,
+        outlets,
+        selectedBrands,
+        isLoading,
+        categoriesData,
+        mapAction,
+    } from "$lib/stores";
+    import {
+        getBrands,
+        getAllOutletsWithBrands,
+        getCategories,
+    } from "$lib/pocketbase";
 
     let loadingText = "Memuat data...";
     let loadingProgress = 0;
+    let pendingFocusOutletId: string | null = null;
 
     onMount(async () => {
         try {
+            pendingFocusOutletId = new URLSearchParams(
+                window.location.search,
+            ).get("focus");
             const startTime = performance.now();
             console.log("Starting data load...");
 
             loadingText = "Mengambil data brand...";
             loadingProgress = 20;
 
-            // Phase 1: Fetch brands first to unblock UI
-            const brandsData = await getBrands();
+            // Phase 1: Fetch brands and categories first to unblock UI
+            const [brandsData, categoriesResult] = await Promise.all([
+                getBrands(),
+                getCategories(),
+            ]);
 
             loadingProgress = 50;
             loadingText = "Memproses data brand...";
 
             console.log("Brands loaded:", brandsData.length);
             brands.set(brandsData);
+            categoriesData.set(categoriesResult);
 
             // Unblock UI immediately
             isLoading.set(false);
@@ -59,6 +78,14 @@
         }
     });
 
+    $: if (pendingFocusOutletId && $outlets.length > 0) {
+        mapAction.set({
+            type: "open_outlet_detail",
+            outletId: pendingFocusOutletId,
+        });
+        pendingFocusOutletId = null;
+    }
+
     async function loadLocalData() {
         try {
             console.log("Loading local data...");
@@ -72,12 +99,25 @@
             const data = await response.json();
 
             const brandsMap = new Map();
+            const localCategories = new Map<
+                string,
+                { id: string; name: string; created: string; updated: string }
+            >();
+            const now = new Date().toISOString();
             const processedOutlets: any[] = [];
 
             for (const brand of data.brands) {
                 const brandId = brand.brandName
                     .toLowerCase()
                     .replace(/\s+/g, "-");
+                if (brand.category && !localCategories.has(brand.category)) {
+                    localCategories.set(brand.category, {
+                        id: brand.category,
+                        name: brand.category,
+                        created: now,
+                        updated: now,
+                    });
+                }
                 brandsMap.set(brandId, {
                     id: brandId,
                     name: brand.brandName,
@@ -124,6 +164,7 @@
             brands.set(Array.from(brandsMap.values()));
             selectedBrands.set(new Set(brandsMap.keys()));
             outlets.set(processedOutlets);
+            categoriesData.set(Array.from(localCategories.values()));
             isLoading.set(false);
         } catch (err) {
             console.error("Error loading local data:", err);

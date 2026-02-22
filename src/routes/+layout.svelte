@@ -9,7 +9,7 @@
 		// Load saved theme
 		const savedTheme =
 			(localStorage.getItem("brandmap-theme") as "dark" | "light") ||
-			"dark";
+			"light";
 		theme.set(savedTheme);
 	});
 

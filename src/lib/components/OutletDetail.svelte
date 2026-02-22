@@ -238,7 +238,7 @@
                             </div>
                         {/if}
                         <span class="category-pill"
-                            >{activeBrand?.category ||
+                            >{(activeBrand?.expand as any)?.category?.name ||
                                 outlet.category_name ||
                                 "General"}</span
                         >

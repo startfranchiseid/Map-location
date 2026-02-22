@@ -56,8 +56,39 @@ async function main() {
         console.log('   ❌ Failed to list collections:', e.message);
     }
 
+    // Check categories collection
+    console.log('\n4️⃣ Checking "categories" collection...');
+    let categoriesId = null;
+    try {
+        const categories = await pb.collections.getOne('categories');
+        categoriesId = categories.id;
+        console.log(`   ✅ Exists (ID: ${categories.id})`);
+        console.log('   Fields:', categories.schema?.map(f => `${f.name}(${f.type})`).join(', ') || 'none');
+    } catch {
+        console.log('   ⚠️  Does not exist. Creating...');
+        try {
+            const created = await pb.collections.create({
+                name: 'categories',
+                type: 'base',
+                schema: [
+                    { name: 'name', type: 'text', required: true },
+                    { name: 'description', type: 'text' },
+                    { name: 'icon', type: 'text' },
+                    { name: 'color', type: 'text' }
+                ],
+                listRule: '',
+                viewRule: ''
+            });
+            categoriesId = created.id;
+            console.log(`   ✅ Created (ID: ${created.id})`);
+        } catch (e) {
+            console.log('   ❌ Failed to create:', e.message);
+            console.log('   Data:', JSON.stringify(e.data || e.response || {}, null, 2));
+        }
+    }
+
     // Check brands collection
-    console.log('\n4️⃣ Checking "brands" collection...');
+    console.log('\n5️⃣ Checking "brands" collection...');
     let brandsId = null;
     try {
         const brands = await pb.collections.getOne('brands');
@@ -72,7 +103,7 @@ async function main() {
                 type: 'base',
                 schema: [
                     { name: 'name', type: 'text', required: true },
-                    { name: 'category', type: 'text' },
+                    { name: 'category', type: 'relation', options: { collectionId: categoriesId, cascadeDelete: false, maxSelect: 1 } },
                     { name: 'website', type: 'url' },
                     { name: 'logo', type: 'file', options: { maxSelect: 1, maxSize: 5242880, mimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'] } },
                     { name: 'color', type: 'text' },
@@ -91,7 +122,7 @@ async function main() {
     }
 
     // Check outlets collection
-    console.log('\n5️⃣ Checking "outlets" collection...');
+    console.log('\n6️⃣ Checking "outlets" collection...');
     try {
         const outlets = await pb.collections.getOne('outlets');
         console.log(`   ✅ Exists (ID: ${outlets.id})`);
@@ -126,7 +157,7 @@ async function main() {
     }
 
     // Count records
-    console.log('\n6️⃣ Counting records...');
+    console.log('\n7️⃣ Counting records...');
     try {
         const brands = await pb.collection('brands').getFullList();
         console.log(`   Brands: ${brands.length}`);

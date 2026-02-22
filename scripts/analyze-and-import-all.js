@@ -110,6 +110,16 @@ async function checkCollections() {
     const collections = {};
     
     try {
+        try {
+            const categoriesCol = await pb.collections.getOne('categories');
+            console.log('   ✅ categories collection exists');
+            console.log(`      Fields: ${categoriesCol.schema.map(f => f.name).join(', ')}`);
+            collections.categories = categoriesCol;
+        } catch (e) {
+            console.log('   ❌ categories collection not found');
+            collections.categories = null;
+        }
+        
         // Check brands collection
         try {
             const brandsCol = await pb.collections.getOne('brands');
@@ -136,6 +146,11 @@ async function checkCollections() {
         if (collections.brands) {
             const brandsCount = await pb.collection('brands').getList(1, 1);
             console.log(`   📊 Existing brands: ${brandsCount.totalItems}`);
+        }
+        
+        if (collections.categories) {
+            const categoriesCount = await pb.collection('categories').getList(1, 1);
+            console.log(`   📊 Existing categories: ${categoriesCount.totalItems}`);
         }
         
         if (collections.outlets) {
@@ -269,6 +284,28 @@ function filterValidOutlets(brandKey, data, config) {
 async function ensureCollectionsExist(collections) {
     console.log('\n🔧 Ensuring collections are properly configured...');
     
+    let categoriesId = collections.categories?.id;
+    if (!collections.categories) {
+        console.log('   Creating categories collection...');
+        try {
+            const record = await pb.collections.create({
+                name: 'categories',
+                type: 'base',
+                schema: [
+                    { name: 'name', type: 'text', required: true },
+                    { name: 'description', type: 'text' },
+                    { name: 'icon', type: 'text' },
+                    { name: 'color', type: 'text' }
+                ]
+            });
+            categoriesId = record.id;
+            console.log(`   ✅ Created categories collection: ${record.id}`);
+        } catch (e) {
+            console.error('   ❌ Failed to create categories:', e.message);
+            return false;
+        }
+    }
+    
     // Get brands collection ID for relation
     let brandsId = collections.brands?.id;
     
@@ -281,7 +318,11 @@ async function ensureCollectionsExist(collections) {
                 type: 'base',
                 schema: [
                     { name: 'name', type: 'text', required: true },
-                    { name: 'category', type: 'text' },
+                    {
+                        name: 'category',
+                        type: 'relation',
+                        options: { collectionId: categoriesId, cascadeDelete: false, maxSelect: 1 }
+                    },
                     { name: 'website', type: 'url' },
                     { name: 'logo', type: 'file', options: { maxSelect: 1, maxSize: 5242880 } },
                     { name: 'color', type: 'text' },
@@ -390,7 +431,26 @@ async function ensureCollectionsExist(collections) {
     return true;
 }
 
-async function getOrCreateBrand(brandName, config) {
+async function loadCategories() {
+    const categories = await pb.collection('categories').getFullList({
+        fields: 'id,name',
+    }).catch(() => []);
+    return new Map(categories.map((c) => [c.name, c.id]));
+}
+
+async function getCategoryId(categoryName, categoryMap) {
+    if (!categoryName) return '';
+    if (categoryMap.has(categoryName)) return categoryMap.get(categoryName);
+    const created = await pb.collection('categories').create({
+        name: categoryName,
+        icon: 'fa-tag',
+        color: '#8b5cf6',
+    });
+    categoryMap.set(created.name, created.id);
+    return created.id;
+}
+
+async function getOrCreateBrand(brandName, config, categoryMap) {
     // Try to find existing brand
     try {
         const existing = await pb.collection('brands').getFirstListItem(`name="${brandName}"`);
@@ -398,9 +458,10 @@ async function getOrCreateBrand(brandName, config) {
     } catch (e) {
         // Not found, create new
         try {
+            const categoryId = await getCategoryId(config.category, categoryMap);
             const record = await pb.collection('brands').create({
                 name: brandName,
-                category: config.category,
+                category: categoryId,
                 color: BRAND_COLORS[brandName] || '#667eea',
                 icon: BRAND_ICONS[brandName] || 'fa-store',
                 total_outlets: 0
@@ -560,6 +621,7 @@ async function main() {
         console.log('\n❌ Failed to setup collections. Exiting.');
         return;
     }
+    const categoryMap = await loadCategories();
     
     // Step 6: Import data
     console.log('\n📥 Importing data to PocketBase...');
@@ -577,7 +639,7 @@ async function main() {
         console.log(`   📌 ${brandData.config.name}...`);
         
         // Get or create brand
-        const brandId = await getOrCreateBrand(brandData.config.name, brandData.config);
+        const brandId = await getOrCreateBrand(brandData.config.name, brandData.config, categoryMap);
         if (!brandId) {
             console.log(`      ❌ Failed to get/create brand, skipping`);
             continue;

@@ -63,18 +63,40 @@ async function main() {
 async function setupCollections() {
     console.log('\n📦 Setting up collections...');
 
+    // --- Categories Collection ---
+    try {
+        await pb.collections.getOne('categories');
+        console.log('  ℹ️  Collection "categories" already exists.');
+    } catch {
+        console.log('  🆕 Creating "categories" collection...');
+        await pb.collections.create({
+            name: 'categories',
+            type: 'base',
+            schema: [
+                { name: 'name', type: 'text', required: true },
+                { name: 'description', type: 'text' },
+                { name: 'icon', type: 'text' },
+                { name: 'color', type: 'text' }
+            ],
+            listRule: '', // Public read
+            viewRule: '',
+        });
+        console.log('  ✅ Created "categories"');
+    }
+
     // --- Brands Collection ---
     try {
         await pb.collections.getOne('brands');
         console.log('  ℹ️  Collection "brands" already exists.');
     } catch {
         console.log('  🆕 Creating "brands" collection...');
+        const categoriesCol = await pb.collections.getOne('categories');
         await pb.collections.create({
             name: 'brands',
             type: 'base',
             schema: [
                 { name: 'name', type: 'text', required: true },
-                { name: 'category', type: 'text' },
+                { name: 'category', type: 'relation', options: { collectionId: categoriesCol.id, cascadeDelete: false, maxSelect: 1 } },
                 { name: 'website', type: 'url' },
                 { name: 'logo', type: 'file', options: { maxSelect: 1, maxSize: 5242880, mimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp', 'image/svg+xml'] } },
                 { name: 'color', type: 'text' },
@@ -145,17 +167,39 @@ async function migrateData() {
         'Laundry Klin': { color: '#60a5fa', icon: 'fa-shirt' }
     };
 
-    // 1. Import Brands
+    // 1. Import Categories
+    console.log('  Start importing categories...');
+    const existingCategories = await pb.collection('categories').getFullList().catch(() => []);
+    const categoryMap = new Map(existingCategories.map((c) => [c.name, c.id]));
+
+    for (const brand of jsonData.brands) {
+        const categoryName = (brand.category || 'Umum').trim();
+        if (categoryMap.has(categoryName)) continue;
+        try {
+            const created = await pb.collection('categories').create({
+                name: categoryName,
+                icon: 'fa-tag',
+                color: '#8b5cf6'
+            });
+            categoryMap.set(categoryName, created.id);
+        } catch (e) {
+            console.error(`    ❌ Failed to create category ${categoryName}:`, e.message);
+        }
+    }
+
+    // 2. Import Brands
     console.log('  Start importing brands...');
     const brandMap = new Map(); // Name -> ID
 
     for (const brand of jsonData.brands) {
         const meta = brandMeta[brand.brandName] || { color: '#667eea', icon: 'fa-store' };
+        const categoryName = (brand.category || 'Umum').trim();
+        const categoryId = categoryMap.get(categoryName) || '';
 
         try {
             const record = await pb.collection('brands').create({
                 name: brand.brandName,
-                category: brand.category,
+                category: categoryId,
                 website: brand.website,
                 total_outlets: brand.totalOutlets,
                 color: meta.color,

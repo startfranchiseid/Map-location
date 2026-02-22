@@ -120,10 +120,11 @@ export const POST: RequestHandler = async ({ request }) => {
                 const brandsRes = await pb.collection('brands').getFullList({
                     sort: 'category,name',
                     fields: 'id,name,category',
+                    expand: 'category',
                 });
                 const byCat = new Map<string, string[]>();
                 for (const b of brandsRes) {
-                    const cat = (b.category || 'Umum').trim();
+                    const cat = ((b.expand as any)?.category?.name || 'Umum').trim();
                     if (!byCat.has(cat)) byCat.set(cat, []);
                     byCat.get(cat)!.push(b.name);
                 }
