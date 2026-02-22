@@ -247,8 +247,11 @@
                 <div class="recent-list">
                     {#each recentOutlets as outlet}
                         <div
+                            role="button"
+                            tabindex="0"
                             class="recent-item"
                             onclick={() => goToMap(outlet.id)}
+                            onkeydown={(e) => e.key === 'Enter' && goToMap(outlet.id)}
                         >
                             <div class="recent-icon">
                                 <i class="fas fa-store"></i>

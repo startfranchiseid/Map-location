@@ -177,7 +177,6 @@
             name: brand.name,
             category:
                 (brand.expand as any)?.category?.id || brand.category || "",
-                (brand.expand as any)?.category?.id || brand.category || "",
             website: brand.website || "",
             color: brand.color || "#8b5cf6",
             icon: brand.icon || "",
